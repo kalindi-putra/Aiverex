@@ -1,0 +1,89 @@
+.profileDiv{
+    width:35% !important;
+    text-align: center;
+    padding: 10px;
+    color: #fff !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+    border: 1px solid #616161;
+}
+
+.profile{
+    display: inline-flex;
+    padding: 0px !important;
+    border-radius: 30px !important;
+
+}
+
+.profileDiv:nth-last-child(2){
+    align-items: flex-start;
+    padding: 15px 10px;
+}
+
+.profileDiv:nth-last-child(1){
+    border-radius: 0px 30px 30px 0px;
+}
+.profileDiv:nth-last-child(3){
+    border-radius: 30px 0px 0px 30px;
+}
+
+.edu{
+    padding: 10px !important;
+}
+
+.eduTitle{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff !important;
+    text-align: left;
+    letter-spacing:2px;
+}
+.eduItems{
+    padding: 0px !important;
+}
+
+.eduList{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.1rem !important;
+    width: 350px !important;
+    padding: 5px 10px;
+}
+.eduList .eduMed{
+    font-size: 1.2rem !important;
+    font-weight: 500;
+    color: #fff !important;
+    text-align: left;
+}
+
+.eduIcon{
+    font-size: 3rem !important;
+    font-weight: 500;
+    color: var(--primary) !important;
+    text-align: left;
+}
+
+.tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+@media (max-width:650px) {
+    .profileDiv{
+        width: 100% !important;
+        background-color: var(--secondary);
+        margin-bottom: 10px;
+        border-radius: 30px !important;
+    }
+    .profile{
+        flex-wrap: wrap;
+        background: transparent !important;
+    }
+}

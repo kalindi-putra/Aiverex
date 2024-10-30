@@ -1,0 +1,78 @@
+/* GitHubExplorer.module.css */
+
+.github-explorer {
+    margin: 10;
+    padding: 30px 10px !important;
+    background: #343434 !important;
+    color:#ccc !important;
+  }
+  
+  .github-explorer h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .github-explorer ul {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0;
+  }
+  
+  .github-explorer li {
+    border-bottom: 1px solid #e1e4e8;
+    color: black !important;
+  }
+  
+  .github-explorer li:last-child {
+    border-bottom: none;
+  }
+  
+  .github-explorer li:hover {
+    background-color: #f6f8fa;
+    cursor: pointer;
+  }
+  
+
+  .github-explorer {
+    margin: 20px;
+  }
+  
+  .card {
+    width: 100%;
+    cursor: pointer;
+    background-color: #242424 !important;
+  }
+  .goBack {
+    width: 100%;
+    cursor: pointer;
+    background-color: #242424 !important;
+    text-align: left;
+    color: white !important;
+    font-size: 20px;
+    height: 100%;
+    letter-spacing: 8px;
+  }
+  .goBack:hover{
+    box-shadow: 1px 0px 15px 0px black;
+  }
+  
+  .folder-icon {
+    color: #1890ff !important;
+    font-size: 24px;
+    margin-right: 8px;
+  }
+  
+  .file-icon {
+    color: #ccc;
+    font-size: 24px;
+    margin-right: 8px;
+  }
+  
+  .space {
+    width: 100%;
+  }
+  
+  /* .space .ant-card {
+    margin-bottom: 10px;
+  } */
+  

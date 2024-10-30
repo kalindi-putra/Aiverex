@@ -1,0 +1,145 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* color-scheme: light dark; */
+  color: #FFFFFF;
+  background: linear-gradient(180deg, #242424 0%, #000000 100%) ;
+  --primary: #6B11DB !important;
+  --secondary: #343434 !important;
+  --card:var(--secondary);
+  --card-bg:#242424;
+}
+
+#root,body{
+  background:linear-gradient(180deg, #242424 0%, #000000 100%) ;
+}
+
+.view{
+  color:white !important;
+  font-size: 12px;
+  border: 1px solid rgb(107, 17, 220);
+  padding:5px 15px;
+  border-radius:30px;
+  margin: 0px;
+}
+
+/* for progress text color chg */
+.ant-progress-text {
+  color: white !important;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.navbarLink a{
+  color: #fff !important;
+  font-size: 20px;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+/* Auto generated badges */
+
+.badge {
+  display: flex !important;
+  justify-content: space-evenly;
+  width: 200px;
+  flex-wrap: wrap;
+  /* background-color: #f5f5f5; */
+  padding: 5px !important;
+  /* background-color: rgb(107, 17, 220,0.5);
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgb(107, 17, 220, 0.5); */
+}
+
+.badge-icon {
+  margin-right: 5px;
+}
+
+.badge-icon img,.bagde .bagde-img {
+  width: 60px;
+  height: 60px;
+}
+
+.badge-text h3 {
+  margin: 0;
+  font-size: 15px !important;
+  /* font-weight: bold; */
+  color: #333333;
+  color: white;
+}
+
+.badge-text p {
+  margin: 0;
+  font-size: 12px;
+  color:#666666;
+  color: white;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+
+/* ::-webkit-scrollbar{
+  display: none;
+} */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+@media (max-width: 767px) {
+  .ant-layout-header,.ant-layout-footer,.ant-layout-content {
+    width: 90vw; /* Example: Apply a different style for small screens */
+    margin:2px;
+    padding: 5px;
+  }
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-form-vertical .ant-form-item-label >label{
+  color: #ffff !important;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-select-single.ant-select-show-arrow .ant-select-selection-item{
+  background-color: #fff;
+  color: #000000;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc)[class^="ant-select"] [class^="ant-select"], :where(.css-dev-only-do-not-override-yp8pcc)[class*=" ant-select"] [class^="ant-select"]{
+  background-color: #fff !important;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-card .ant-card-body {
+  padding: 10px;
+}
+
+.ant-input-data-count{
+  color: #fff !important;
+}
+
+.ant-input{
+  color: #000 !important;
+  background-color: #fff !important;
+}
+.anticon{
+  color: grey ;
+  /* background-color: ; */
+}
+.anticon-check-circle {
+  color: green;
+}

@@ -1,0 +1,58 @@
+.SideAndPage{
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  .SideMenu{
+    height: auto;
+    background-color: #262626 !important;
+    color: #fff;
+    width: 500px !important;
+    text-align: left;
+    
+  }
+  
+  .PageContent{
+    padding: 10px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  .SideMenu .ant-menu{
+    background-color: #262626;
+    color: #fff;
+    width: 200px !important;
+    height: 100%;
+  }
+  .SideMenu .ant-menu-item-active{
+    background-color: #6B11DC !important;
+    color: white !important;
+  }
+  .SideMenu .ant-menu-item-selected{
+    background-color: #6B11DB !important;
+    color: white !important;
+  }
+
+@media (max-width:850px) {
+    .SideMenu .ant-menu-title-content{
+      display: none !important;
+    }
+    .SideMenu{
+      width: 100px !important;
+    }
+    .SideMenu .ant-menu{
+      width: 70px !important;
+    }
+    .SideMenu aside{
+      width: 100px !important;
+      max-width: 80px !important;
+      min-width: 80px !important;
+
+    }
+  }
+
+
+  

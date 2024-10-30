@@ -1,0 +1,214 @@
+body,:root,#root{
+  background-color: #343434 !important;
+}
+
+.AuthDiv{
+  color:white !important;
+	min-height: 85vh;
+  
+    }
+
+
+.login-box{
+    font-size: 23px;
+    border-radius: 5px;
+    background: #343434;
+    color: white;
+    margin: 50px auto;
+    display: flex;
+    width:700px;
+    
+  }
+  .login-box .imgDiv img,.register-box .imgDiv img{
+    width: 300px;
+    height: 100%;
+    margin-right: 10px;
+    background: #222;
+    padding: 20px;
+  }
+  
+  .AuthDiv img:hover,.RegDiv img:hover{
+    transform: scale(1);
+  }
+  
+  .register-box{
+    font-size: 23px;
+    border-radius: 5px;
+    background: #343434;
+    color: white;
+    margin: 30px auto;
+    width: 400px;
+  }
+  
+  .hveImg{
+    display: flex;
+    width:800px;
+  }
+  .register-box .imgDiv img{
+    width:350px;
+  }
+  .formDiv{
+    margin: 20px 10px !important;
+  }
+
+  .login-box h2,.register-box h2{
+    padding: 0 0 20px;
+    font-size: 28px;
+    letter-spacing: 1.2px;
+  }
+
+  
+  
+  .form label {
+    display: flex;
+    font-size: 20px;
+    
+  }
+  
+  .para-2 {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 1px;
+  }
+
+  input::placeholder{
+    color: #343434 !important;
+  }
+  .ip,.form-btn{
+    width: 100% !important;
+    border: none !important;
+    outline: none !important;
+    height:40px;
+    border-radius:5px
+  }
+  
+  .para-2  {
+    color: white;
+    font-size: 15px;
+  }
+
+  .form{
+    width: 360px;
+    margin-left: 0px !important;
+  }
+
+  .register-box .form{
+    width: 410px;
+  }
+  
+  .form-btn{
+    
+    border-radius: 5px;
+    outline: none !important;
+    background-color: #6B11DC !important;
+  color: white !important;
+  text-align: center;
+  }
+
+  .ggl{
+    font-size: 18px;
+    width: auto;
+    margin: 50px;
+    color: var(--primary);
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--primary);
+    background-color: transparent !important;
+    margin: 0px !important;
+}
+.ggl:hover{
+  color: white;
+  background-color: var(--primary) !important;
+}
+
+  .redirect {
+    text-align:center;
+    font-size: 18px;
+    padding: 3px;
+  }
+
+  .or::before, .or::after {
+    content: "";
+    display: inline-block;
+    width: 30%;
+    margin: 0 5px;
+    border-top: 1px solid #ccc;
+    vertical-align: middle;
+  }
+
+.card_design{
+  background-color: #414141 !important;
+}
+
+.form-btn:hover{
+  color: white !important;
+}
+
+
+
+@media (max-width: 800px) {
+  .login-box .imgDiv,.register-box .imgDiv{
+    display: none;
+  }
+  .login-box,.register-box{
+    width: 350px;
+    padding: 10px;
+  }
+  .form{
+    width: 300px !important;
+  }
+}
+
+.RegDiv{
+  color:white !important;
+  min-height: 90vh;
+}
+
+.container{
+  width:700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .regImg{
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+}
+
+.container .cardReg{
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #262626 !important;
+}
+
+.container .cardReg h2{
+  font-size: 25px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.cardReg .redirect{
+  font-size: 18px;
+  color: #ccc;
+  margin-top: 20px;
+  text-decoration: none;
+
+}
+
+.RegDiv .cardReg:nth-child(1) .redirect:hover{
+  color: #4285F4;
+}
+
+.RegDiv .cardReg:nth-child(2) .redirect:hover{
+  color: #905CFF;
+}

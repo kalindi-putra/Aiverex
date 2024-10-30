@@ -1,0 +1,147 @@
+
+  .ant-typography{
+    color: #fff !important;
+  }
+  
+  
+  
+  .ant-space-item{
+  
+  display: flex ;
+  justify-content: space-between ;
+  align-items: center ;
+  /* padding: 4px 5px 4px 12px ; */
+  padding: 5px ;
+  }
+  .achCards{
+    background-color: #343434;
+    border-radius: 20px ;
+    
+  }
+  .ant-card{
+    border: 0 !important;
+  }
+  .achCards .ant-card-body{
+    padding: 10px !important;
+  }
+  
+  .achCards .ant-statistic-title{
+    color: #fff !important;
+    font-size: 15px !important;
+    
+  }
+  .achCards .ant-statistic-content{
+    color: #fff !important;
+    font-size: 25px !important;
+  }
+  /*
+  .ant-table-cell{
+    background-color: #343434 !important;
+    color:#fff !important;
+    
+    text-align: center !important;
+    font-size: 18px ;
+    border-right: 3px solid #242424 !important;
+    border-bottom: 3px solid #242424 !important;
+    
+  }
+  .ant-table-cell.ant-table-cell-row-hover{
+  background-color: #6B11DB !important;
+
+  }
+   
+  .ant-table-tbody > tr > td {
+    text-align: center !important;
+    background-color: #6B11DB;
+    font-size: 20;
+    font-weight: 600;
+  } 
+  
+  
+  .AppFooter{
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-top: 1px solid;
+  }
+
+
+   */
+
+
+   .TableLayoutDiv .ant-table-tbody  {
+    background-color: #343434 !important;
+    
+  }
+  
+ .TableLayoutDiv .ant-table-row a,.TableLayoutDiv .ant-table-row{
+      font-size: 15px;
+    height: 10px;
+    color: white !important;
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  
+  .TableLayoutDiv .ant-table-thead > tr > th {
+    color: white !important;
+    font-size: 20px;
+    background-color: #3E3E3E !important;
+    border-right: 3px solid #242424 !important;
+    border-bottom: 3px solid #242424 !important;
+    text-align: center !important;
+    padding: 10px !important;
+  }
+  .TableLayoutDiv .ant-table-thead > tr > th:before{
+     background-color: transparent !important;
+  
+  }
+  .TableLayoutDiv td{
+      border-right: 3px solid #242424 !important;
+      border-bottom: 3px solid #242424 !important;
+      text-align: center;
+      font-size: 15px;
+      padding: 10px !important;
+  }
+  .TableLayoutDiv .ant-table-tbody > tr.ant-table-row:hover > td,
+  .TableLayoutDiv .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+    background-color: #343434 !important;
+  }
+  
+  
+  .TableLayoutDiv .ant-pagination-item a {
+    color: rgb(107, 17, 220) !important; /* Set the desired text color */
+  }
+  .TableLayoutDiv .ant-pagination-total-text,.TableLayoutDiv .ant-pagination-item,
+  .TableLayoutDiv .ant-pagination-item-link{
+  color: white !important; /* Set the desired text color */
+  }
+  .TableLayoutDiv .ant-table-pagination-right{
+    justify-content: center !important;
+  }
+
+  /* For Ment Layout */
+
+  .ant-layout{
+    background: transparent !important;
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  @media (max-width:850px) {
+    .SideMenu .ant-menu-title-content{
+      display: none !important;
+    }
+    .SideMenu{
+      width: 100px !important;
+    }
+    .ant-menu{
+      width: 70px !important;
+    }
+    aside{
+      width: 100px !important;
+      max-width: 80px !important;
+      min-width: 80px !important;
+
+    }
+  }
