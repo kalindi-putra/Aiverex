@@ -12,7 +12,6 @@ const StudentsCodeReview = () => (
     margin:'40px 10px'
 
   }}>
-    {/* <h1>Hello</h1> */}
   <CustLayout/>
   </div>
   );

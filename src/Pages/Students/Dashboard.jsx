@@ -1,9 +1,12 @@
-import React from 'react';
-import { Col, Row, Typography } from 'antd';
-import {CusCard,CustDes,Learn} from "../../Components/Card";
-import CustTable from './Table';
-import CustLayout from './Layout';
 
+
+import React, { useContext, useState, useEffect } from 'react';
+import { Col, Row, Typography, Button, Input, Form } from 'antd';
+import { CusCard, CustDes, Learn } from "../../Components/Card";
+import CustLayout from './Layout';
+import { AuthContext } from '/src/context/UserContext';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '/src/firebase/Firebase';
 const CourseList = [
     {
         id: 1,
@@ -88,43 +91,83 @@ const CourseList = [
 ]
 
 const Dashboard = () => {
-    return (
-        <div style={{
-            padding: '20px 40px',
-            color: '#fff',
-            background: '#262626',
-            borderRadius: 30,
-            margin: {lg:'30px 10px',sm:'0px'},
-        }}>
-        <center><h1>Student Dashboard</h1></center>
-        Welcome Ajay Kumar
-        <br/>
-        <CustLayout/>
-        
-        {/* <Typography.Title level={2} style={{color:'#fff',textAlign:'right'}} >Ongoing Courses</Typography.Title>
-        <Row>
-            {Courses.map((course)=>(
-                <Col span={6}>
-                 <Learn content={course || NULL}/>
-                </Col>
-            ))}
-        </Row> */}
-        <Typography.Title level={2} style={{color:'#fff',textAlign:'center'}} >Try Taking this test<br/>
-        </Typography.Title>
-        <Row>
-            {CourseList.slice(0,4).map((course)=>(
-                <Col lg={6} md={8} sm={12}>
-                 <CustDes content={course } type='test'/>
-                </Col>
-            ))}
-        </Row>
-        <Typography.Title level={2} style={{color:'#fff',textAlign:'center'}} >
-        <a class="view">View More</a>
-        </Typography.Title>
+  const { userData, setUserData } = useContext(AuthContext);
+  const [editing, setEditing] = useState(false);
+  const [form] = Form.useForm();
 
-    
+  // Fetch updated user data from Firestore
+  useEffect(() => {
+    const fetchAdditionalUserData = async () => {
+      if (userData && !userData.skills) {
+        setEditing(true);
+      }
+    };
+
+    fetchAdditionalUserData();
+  }, [userData]);
+
+  const saveDataToFirestore = async (values) => {
+    const userDocRef = doc(db, 'users', auth.currentUser.uid);
+    await setDoc(userDocRef, { ...userData, ...values }, { merge: true });
+    setUserData((prev) => ({ ...prev, ...values }));
+    setEditing(false);
+  };
+
+  return (
+    <div style={{
+      padding: '20px 40px',
+      color: '#fff',
+      background: '#262626',
+      borderRadius: 30,
+      margin: { lg: '30px 10px', sm: '0px' },
+    }}>
+      <center><h1>Student Dashboard</h1></center>
+      
+      <p>Welcome {userData ? userData.displayName : "Student"}!</p>
+      <CustLayout />
+
+      {/* Display user's data if available */}
+      {userData && userData.skills ? (
+        <div>
+          <h2>Skills: {userData.skills}</h2>
+          <h2>Education: {userData.education}</h2>
         </div>
-    );
-}
+      ) : (
+        <div>
+          <Button onClick={() => setEditing(true)}>Add Skills and Education</Button>
+        </div>
+      )}
+
+      {/* Form for updating skills and education */}
+      {editing && (
+        <Form form={form} onFinish={saveDataToFirestore}>
+          <Form.Item label="Skills" name="skills">
+            <Input placeholder="Enter your skills" />
+          </Form.Item>
+          <Form.Item label="Education" name="education">
+            <Input placeholder="Enter your education" />
+          </Form.Item>
+          <Button type="primary" htmlType="submit">Save</Button>
+        </Form>
+      )}
+      
+      <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+        Try Taking this test
+      </Typography.Title>
+      <Row>
+        {CourseList.slice(0, 4).map((course) => (
+          <Col lg={6} md={8} sm={12} key={course.id}>
+            <CustDes content={course} type='test' />
+          </Col>
+        ))}
+      </Row>
+
+      <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+        <a className="view">View More</a>
+      </Typography.Title>
+    </div>
+  );
+};
+
 
 export { Dashboard,CourseList};

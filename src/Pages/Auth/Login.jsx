@@ -23,7 +23,7 @@ function Login() {
   useEffect(() => {
     //Redirect to home if user is logged in already
     if (isLoggedIn) {
-      navigate('/home');
+      navigate('/student');
     }
   }, [isLoggedIn, navigate]);
 

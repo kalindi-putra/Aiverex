@@ -1,89 +1,357 @@
-.profileDiv{
-    width:35% !important;
-    text-align: center;
-    padding: 10px;
-    color: #fff !important;
+/* General Profile Layout */
+button {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap:10px;
-    border: 1px solid #616161;
+    text-align: center;
 }
-
-.profile{
-    display: inline-flex;
-    padding: 0px !important;
-    border-radius: 30px !important;
-
-}
-
-.profileDiv:nth-last-child(2){
-    align-items: flex-start;
-    padding: 15px 10px;
-}
-
-.profileDiv:nth-last-child(1){
-    border-radius: 0px 30px 30px 0px;
-}
-.profileDiv:nth-last-child(3){
-    border-radius: 30px 0px 0px 30px;
-}
-
-.edu{
-    padding: 10px !important;
-}
-
-.eduTitle{
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #fff !important;
-    text-align: left;
-    letter-spacing:2px;
-}
-.eduItems{
-    padding: 0px !important;
-}
-
-.eduList{
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 1.1rem !important;
-    width: 350px !important;
-    padding: 5px 10px;
-}
-.eduList .eduMed{
-    font-size: 1.2rem !important;
-    font-weight: 500;
-    color: #fff !important;
-    text-align: left;
-}
-
-.eduIcon{
-    font-size: 3rem !important;
-    font-weight: 500;
-    color: var(--primary) !important;
-    text-align: left;
-}
-
-.tags{
+.profilePhotoContainer {
+    position: relative;
+    display: inline-block;
+  }
+  .profileImage {
+    width: 120px; /* Profile image size */
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #343434;
+  }
+  
+  .defaultAvatar {
+    background-color: #cccccc; /* Default background color for the avatar */
+    width: 120px; /* Matching size of the profile image */
+    height: 120px;
+    border-radius: 50%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    font-size: 40px; /* Larger icon size for visibility */
+  }
+  .uploadButton {
+    position: absolute;
+    bottom: 15px; /* Positioned in the bottom-right corner */
+    right: 5px;
+    border-radius: 50%;
+    background-color: #343434;
+    color: white;
+    width: 20px; /* Smaller button size */
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .uploadButton:hover {
+    background-color: #4b4b4b;
+  }
+
+
+.profileDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: var(--secondary);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
 }
 
-@media (max-width:650px) {
-    .profileDiv{
-        width: 100% !important;
-        background-color: var(--secondary);
-        margin-bottom: 10px;
-        border-radius: 30px !important;
-    }
-    .profile{
-        flex-wrap: wrap;
-        background: transparent !important;
-    }
+.profileDiv:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Profile Image */
+.profileImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.profileImage:hover {
+    transform: scale(1.05);
+}
+
+/* Profile Name */
+.profileName {
+    color: #fff;
+    font-size: 1.6rem;
+    margin-top: 15px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.profileName:hover {
+    color: var(--primary);
+}
+
+/* Edit Profile Button */
+.editProfileButton {
+    margin-top: 20px;
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    text-align: center;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.editProfileButton:hover {
+    background-color: #5a0cbb;
+    transform: scale(1.05);
+}
+/* In layout.module.css */
+
+/* Style for the section that contains profile links */
+.profileLinks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Style for individual profile link cards */
+  .profileLinkCard {
+    background-color: #f5f5f5;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Hover effect for the profile link cards */
+  .profileLinkCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Style for the GitHub and Resume button text */
+  .profileLinkCardText {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Button styles */
+  .addLinkButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addLinkButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .addLinkButton:focus {
+    outline: none;
+  }
+  
+  /* Modal Styles */
+  .modalHeader {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .modalFooterButton {
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    padding: 8px 20px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modalFooterButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .inputField {
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+
+/* Section Titles */
+.sectionTitle {
+    color: #fff;
+    font-size: 1.6rem;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.skillsSection, .educationSection {
+    margin-top: 25px;
+}
+
+.skillTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.skillTag {
+    background-color: #444;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.skillTag:hover {
+    transform: scale(1.05);
+}
+
+/* Edit and Delete Buttons */
+.editButton,
+.deleteButton {
+    margin-left: 10px;
+    background-color:  #5a0cbb;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Add Button for Skills and Education */
+.addButton {
+    margin-top: 20px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.addButton:hover {
+    background-color: var();
+    color: #cccccc;
+    transform: scale(1.05);
+}
+
+/* Education List */
+.educationList {
+    list-style: none;
+    padding-left: 0;
+}
+
+.educationItem {
+    background-color: #444;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.educationItem:hover {
+    cursor: pointer;
+}
+.name{
+    padding:10px;
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+}
+
+/* Modal Submit Button */
+.submitButton {
+    width: 100%;
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: #5a0cbb;
+    transform: scale(1.05);
+}
+
+/* Modal Styling */
+.ant-modal-header {
+    background-color: var(--secondary);
+    color: #fff;
+    border-bottom: 2px solid var(--primary);
+}
+
+.ant-modal-body {
+    background-color: #444;
+}
+
+.ant-modal-footer {
+    background-color: var(--secondary);
+}
+
+/* Form Items */
+.ant-form-item {
+    margin-bottom: 20px;
+}
+
+.ant-input {
+    background-color: #444;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    padding: 12px;
+}
+
+.ant-input:focus {
+    border-color: #5a0cbb;
+}
+
+/* Select Component */
+.ant-select-selector {
+    background-color: #444 !important;
+    color: #fff !important;
+    border: 1px solid var(--primary);
+}
+
+.ant-select-item-option-active {
+    background-color: var(--primary) !important;
+    color: #333 !important;
+}
+
+/* Footer Styling */
+.ant-layout-footer {
+    background-color: var(--secondary);
+    color: #fff;
+    padding: 30px 0;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }

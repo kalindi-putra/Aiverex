@@ -4,23 +4,21 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDERqhaqBK90iLmM1Qj2DgcOw1d9lkx73s",
-  authDomain: "avrex-auth-proj.firebaseapp.com",
-  projectId: "avrex-auth-proj",
-  storageBucket: "avrex-auth-proj.appspot.com",
-  messagingSenderId: "974100450020",
-  appId: "1:974100450020:web:17dfc809bb72797b88faf1",
-  measurementId: "G-36DKRDF25M"
-};
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyD5_nj44L6jfA8riWoUJ5jw83z8dRVErXw",
+  authDomain: "aivirex-educate-45bfb.firebaseapp.com",
+  projectId: "aivirex-educate-45bfb",
+  storageBucket: "aivirex-educate-45bfb.firebasestorage.app",
+  messagingSenderId: "658664554251",
+  appId: "1:658664554251:web:c23496a25d2b528711ec0e"
+};
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 export const db = getFirestore (app);
-// Firebase configuration code...
-
 const SignInWithGoogle = async (navigate) => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -31,19 +29,21 @@ const SignInWithGoogle = async (navigate) => {
     const userDocSnapshot = await getDoc(userDocRef);
     if (userDocSnapshot.exists()) {
       // User already exists, navigate to the "post" page
-      navigate('/home');
+      navigate('/student');
       console.log(user);
     } else {
       // User is signing in for the first time
       // Set user role as "student" by default
       const userData = {
+        displayName : user.displayName,
+        email: user.email,
         role: 'student',
       };
       // Save user role data in Firestore
       await setDoc(userDocRef, userData);
 
       // Navigate to the "post" page
-      navigate('/home');
+      navigate('/student');
 
       // Console log the user data
       console.log('First time sign in with Google. User role set as "student".');
@@ -54,5 +54,5 @@ const SignInWithGoogle = async (navigate) => {
   }
 };
 
-export { SignInWithGoogle, };
+export { SignInWithGoogle};
 

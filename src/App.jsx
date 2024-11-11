@@ -48,7 +48,7 @@ function App() {
     
       {path!='/'&&<MainNav />}
       <Routes>
-      <Route path='/home'element={
+      <Route path='/student'element={
       <Main items={role=='student'&&StudentItems||role=='mentor'&&MentItems}/>
       } >
           <Route path='' element={
