@@ -172,66 +172,70 @@ const StudentLayout = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
+    <Space direction='vertical' style={{ width: '100%' }} size={[0, 48]}>
       <Layout>
         <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>Student Dashboard</Typography.Title>
 
         <Footer style={{ background: '#343434', padding: 20, borderRadius: '20px' }}>
-          <div className={styles.profileDiv}>
-          <div className={styles.profilePhotoContainer}>
-              {studentData?.photoURL ? (
-                <img src={studentData.photoURL} className={styles.profileImage} alt="Profile" />
-              ) : (
-                <Avatar 
-                  size={100} 
-                  icon={<UserOutlined />} 
-                  className={styles.defaultAvatar}
-                />
-              )}
-              <Upload
-                  showUploadList={false}
-                  beforeUpload={(file) => {
-                    console.log("Before Upload triggered", file);
-                    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-                    
-                    if (!isJpgOrPng) {
-                      alert('You can only upload JPEG or PNG files!');
-                      return false;
-                    }
+        <div className={styles.profileDiv}>
+                <div className={styles.profilePhotoContainer}>
+                  {studentData?.photoURL ? (
+                    <img src={studentData.photoURL} className={styles.profileImage} alt="Profile" />
+                  ) : (
+                    <Avatar
+                      size={100}
+                      icon={<UserOutlined />}
+                      className={styles.defaultAvatar}
+                    />
+                  )}
+                  <Upload
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+                      if (!isJpgOrPng) {
+                        alert('You can only upload JPEG or PNG files!');
+                        return false;
+                      }
+                      handleProfilePhotoUpload(file);
+                      return false; 
+                    }}
+                  >
+                    <Button
+                      className={styles.uploadButton}
+                      icon={<EditOutlined />}
+                      disabled={isPhotoUploading}
+                    />
+                  </Upload>
+                </div>
+                <div className={styles.profileDetails}>
+                  <span className={styles.name}>{user?.displayName}</span><br></br>
+                  <div style={{paddingTop:"10px"}}>
+                  <Button onClick={() => auth.signOut()} className={styles.signOutButton}>
+                    Sign out
+                  </Button>
+                  </div>
+                  <Button type="primary" className={styles.editProfileButton}>
+                    Edit Profile
+                  </Button>
+                  <div className={styles.profileLinks}>
+                    {studentData?.github ? (
+                      <Button type="link" href={studentData.github} target="_blank">
+                        GitHub
+                      </Button>
+                    ) : (
+                      <Button onClick={() => setIsGitHubModalVisible(true)}>Add GitHub</Button>
+                    )}
+                    {studentData?.resume ? (
+                      <Button type="link" href={studentData.resume} target="_blank">
+                        Resume
+                      </Button>
+                    ) : (
+                      <Button onClick={() => setIsResumeModalVisible(true)}>Add Resume</Button>
+                    )}
+                  </div>
+                </div>
+              </div>
 
-                    handleProfilePhotoUpload(file);
-                    return false; 
-                  }}
-                >
-                  <Button
-                    className={styles.uploadButton}
-                    icon={<EditOutlined />}
-                    disabled={isPhotoUploading}
-                  />
-                </Upload>
-
-            </div>
-            <span className={styles.name}>{user?.displayName}</span>
-            <Button onClick={() => auth.signOut()} className={styles.signOutButton}>Sign out</Button>
-            <Typography.Title level={5} className={styles.profileName}>{userData?.name || 'N/A'}</Typography.Title>
-            <Button type="primary" className={styles.editProfileButton}>Edit Profile</Button>
-            <div className={styles.profileLinks}>
-              {studentData?.github ? (
-                <Button type="link" href={studentData.github} target="_blank">
-                  GitHub
-                </Button>
-              ) : (
-                <Button onClick={() => setIsGitHubModalVisible(true)}>Add GitHub</Button>
-              )}
-              {studentData?.resume ? (
-                <Button type="link" href={studentData.resume} target="_blank">
-                  Resume
-                </Button>
-              ) : (
-                <Button onClick={() => setIsResumeModalVisible(true)}>Add Resume</Button>
-              )}
-            </div>
-          </div>
           <div className={styles.skillsSection}>
             <Typography.Title level={4} className={styles.sectionTitle}>Skills</Typography.Title>
             <div className={styles.skillTags}>
@@ -243,13 +247,6 @@ const StudentLayout = () => {
                     className={styles.skillTag}
                   >
                     {tag} 
-                    <Button 
-                      size="small" 
-                      className={styles.editButton} 
-                      onClick={() => { setEditingSkill(tag); setIsSkillModalVisible(true); }}
-                    >
-                      Edit
-                    </Button>
                     <Button 
                       size="small" 
                       className={styles.deleteButton} 

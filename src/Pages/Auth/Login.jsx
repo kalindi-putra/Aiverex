@@ -66,7 +66,7 @@ function Login() {
     <div className={styles['AuthDiv']}>
       <div className={styles['login-box']}>
         <div className={styles['imgDiv']}>
-          <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_mjlh3hcy.json" background="transparent" speed="1" style={{ width: '300px', height: '100%' }} loop autoplay></lottie-player>
+          <lottie-player src="https://lottie.host/2c10e5d7-0737-4b91-b440-b8aaec2f1f89/c9ihv25chK.json" background="transparent" speed="1" style={{ width: '300px', height: '100%' }} loop autoplay></lottie-player>
         </div>
         <div className={styles['formDiv']}>
           <h2>Login</h2>

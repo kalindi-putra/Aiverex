@@ -82,7 +82,7 @@
 	color: white !important;
 }
 .dropdown-menu .dropdown-item:hover{
-	color: rgb(107, 17, 220) !important;
+	color: #1DACD6 !important;
 }
 .dropdown-menu .dropdown-item{
 	transition: all 200ms linear;
@@ -96,13 +96,13 @@
 
 .navLinks {
 	font-size: 0.9rem;
-	margin: 0.1rem 0.2rem !important;
+	margin: 0.1rem 1.5rem !important;
 	color: #fff !important;
 	letter-spacing: 1px;
 	text-decoration: none !important;
   }
 .activeLink{
-	color: #6B11DB !important;
+	color: #1DACD6 !important;
 
 }
 .navLogo{
@@ -110,7 +110,7 @@
   font-size: large;
 }
 .navLinks:hover {
-	color: #6B11DB !important;
+	color: #1DACD6 !important;
 	border: 0px;
   }
 .start-header nav{
@@ -128,7 +128,7 @@ ul.social-buttons {
   ul.social-buttons li a:focus,
   ul.social-buttons li a:hover {
     background-color: #fec503;
-    background-color: #6B11DB !important;
+    background-color: #1DACD6 !important;
   }
   
   ul.social-buttons li a {

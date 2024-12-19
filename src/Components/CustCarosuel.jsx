@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 import { CustDes } from './Card';
 const contentStyle= {
   height: '160px',
+  maxWidth:'1200px',
+  margin: 'auto',
   color: '#fff',
   lineHeight: '160px',
   textAlign: 'center',
   background: '#364d79',
   zIndex: 10,
 };
+
 const CustCarosuel = (props) => {
   const [scrWidth, setScrWidth] = useState(window.innerWidth);
   let srcSize = scrWidth
@@ -34,7 +37,7 @@ const CustCarosuel = (props) => {
 
     let arr = []
     for(let i=0;i<content.length;i+=incBy){
-    arr.push(<div>
+    arr.push(<div style={{paddingRight:"30px"}}>
           {content.slice(i,i+incBy).map((item) => {
               return <CustDes content={item} type='testi' />
           })}
@@ -64,6 +67,12 @@ const CustCarosuel = (props) => {
     <Carousel  effect='fade' autoplay 
     style={{
       paddingBottom:'5rem',
+      margin:'0 auto',
+      marginLeft: '70px',
+      maxWidth:'100%',
+      width:'100%',
+      display:'flex',
+      justifyContent:'center'
     }}
     >
       {/* {loop().map((i) => {
@@ -77,6 +86,7 @@ const CustCarosuel = (props) => {
         )
       })} */}
       {loop()}
+      
         
     </Carousel>
   );

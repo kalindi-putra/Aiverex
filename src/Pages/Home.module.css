@@ -35,7 +35,7 @@ html{
     display: block;
     width: 70px;
     height: 2px;
-    background-color: #6B11DB;
+    background-color: #1DACD6;
     margin: 10px auto;
   }
   .hero-container h4,.hero-container p{
@@ -48,14 +48,23 @@ html{
       color:  black;
   }
   .bg-primary-orange{
-    background-color: #6B11DB;
+    background-color: #1DACD6;
   }
   .primary-orange{
-    color: #6B11DB;
+    color: #1DACD6;
+  }
+  .expertCard img{
+    width: 100%;
+    height: auto;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+  .experCard img:hover{
+    width: 90%;
+    height: auto;
   }
   .org-btn,.btn{
-    border: 1px solid #6B11DB !important;
-    color: #6B11DB !important;
+    border: 1px solid #1DACD6 !important;
+    color: #1DACD6 !important;
     padding: 0;
     width:100%;
     margin: auto;
@@ -64,7 +73,7 @@ html{
   }
   .org-btn:hover,.btn:hover{
     background-color: #fec503;
-    background-color: #6B11DB !important;
+    background-color: #1DACD6 !important;
     color: white !important;
   }
   
@@ -87,11 +96,11 @@ html{
   
   /*  Card hover */
   .moveUp:hover{
-      background-color: rgb(107, 17, 219,0.7) !important;
-    /* background: linear-gradient(109.6deg, #242424 11.2%, #6B11DB 51.2%, #343434 98.6%) !important; */
+      background-color: #1DACD6 !important;
+    /* background: linear-gradient(109.6deg, #242424 11.2%, #1DACD6 51.2%, #343434 98.6%) !important; */
     color: white;
       transition: all .5s;
-      transform : translateY(-10px);
+      transform : translateY(-7px);
       cursor: pointer;
   }
   
@@ -121,7 +130,7 @@ html{
   }
   
   ::selection {
-    background: #6B11DB;
+    background: #1DACD6;
     text-shadow: none;
   }
   .footer-column {
@@ -129,7 +138,7 @@ html{
   }
   .navItems{
     font-size: 1rem;
-    color: #6B11DB !important;
+    color: #1DACD6 !important;
     letter-spacing: 1px;
   }
   .navLinks {
@@ -145,15 +154,15 @@ html{
         color: #6c757d;
       }
   .navLinks:hover {
-        color: #6B11DB !important;
-        /* border-bottom: 1px solid #6B11DB !important ; */
+        color: #1DACD6 !important;
+        /* border-bottom: 1px solid #1DACD6 !important ; */
       }
       /* .navLinks:hover::after{
         content: '';
         display: block;
         width: 60px;
         height: 2px;
-        background-color: #6B11DB;
+        background-color: #1DACD6;
       } */
   span.footer-title {
         font-size: 14px;
@@ -185,7 +194,7 @@ html{
   ul.social-buttons li a:focus,
   ul.social-buttons li a:hover {
     background-color: #fec503;
-    background-color: #6B11DB !important;
+    background-color: #1DACD6 !important;
   }
   
   ul.social-buttons li a {
@@ -223,14 +232,14 @@ html{
   
   .card{
     padding: 5px;
-    border-radius: 30px !important;
+    border-radius: 10px !important;
     color: #ccc;
     text-align: left;
     overflow: hidden;
     flex-wrap: wrap
   }
   .card img{
-    border-radius: 30px !important;
+    border-radius: 20px !important;
     height: 250px !important;
   }
 
@@ -269,7 +278,7 @@ img {
 }
 
 img:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1,1.1);
 }
 
 img:active {

@@ -49,9 +49,9 @@ button {
 
 
 .profileDiv {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
+    margin:auto;
     padding: 30px;
     background-color: var(--secondary);
     border-radius: 12px;

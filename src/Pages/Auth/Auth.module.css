@@ -100,7 +100,7 @@ body,:root,#root{
     
     border-radius: 5px;
     outline: none !important;
-    background-color: #6B11DC !important;
+    background-color: #1DACD6 !important;
   color: white !important;
   text-align: center;
   }
@@ -109,17 +109,17 @@ body,:root,#root{
     font-size: 18px;
     width: auto;
     margin: 50px;
-    color: var(--primary);
+    color: #1DACD6;
     padding: 10px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid var(--primary);
+    border: 1px solid #1DACD6;
     background-color: transparent !important;
     margin: 0px !important;
 }
 .ggl:hover{
   color: white;
-  background-color: var(--primary) !important;
+  background-color: #1DACD6 !important;
 }
 
   .redirect {

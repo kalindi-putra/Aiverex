@@ -58,10 +58,11 @@ return (
   <Card key={id}
     style={{
       padding: type=='testi'?'5px':'10px',
-      borderRadius: type=='testi'?5:40,
+      borderRadius: type=='testi'?5:15,
       // :'linear-gradient(109.6deg, black 11.2%, #242424 51.2%, black 98.6%)'
       background: '#343434',
       border:0,
+      overflow:'hidden',
       color: '#fff',
       margin: type=='testi'?8:10,
       width: type=='testi'&&290,
@@ -69,9 +70,10 @@ return (
     }}
     cover={type!='testi'&&<img alt="example" src={img} 
         style={{
-            borderRadius: 40,
+            borderRadius: 15,
             height: 180,
             backgroundSize: 'cover',
+            
         }}
     />}
     bodyStyle={{padding: "10px",}}
