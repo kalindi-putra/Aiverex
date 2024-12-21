@@ -60,7 +60,7 @@ function MyEditor(props) {
       //   },
       // );
     
-    };
+    }
     
     const handleInputChange = (event) => {
       setInputValue(event.target.value);

@@ -219,7 +219,7 @@ const CustLayout = () =>{
             padding: scrWidth?10:30,
           }}>
             <Typography.Title level={4} style={{ color: '#fff', margin:'2px',  }} >Scores 
-              <a class="view"style={{ float: 'right' }}>View More</a>
+              <a className="view"style={{ float: 'right' }}>View More</a>
             </Typography.Title>
 
             {progress.slice(0,scrWidth?1:2).map((pro,i)=>
@@ -231,7 +231,7 @@ const CustLayout = () =>{
         </Header>
         <Footer style={footerStyle}>
           <Typography.Title level={4} style={{ color: '#fff', margin: 0, padding: '10px 20px' }} >Certificates : 4
-            <a class="view"style={{ float: 'right' }}>View More</a>
+            <a className="view"style={{ float: 'right' }}>View More</a>
             <Row style={{ paddingTop: '10px',display:'flex',flexWrap:'wrap',width:'100%' }}>
               {CourseList.slice(0,4).map((course) => (
               <Col style={{margin:5}}>

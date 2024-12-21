@@ -3,8 +3,8 @@ import { Image,Typography } from "antd";
 const CustBadge = (props)=>{
     const {name,description,id,img} = props.content
     return(
-    <div class="badge" key={id} >
-        <div class="badge-icon">
+    <div className="badge" key={id} >
+        <div className="badge-icon">
         {/* <img src={img} alt="Logo"/> */}
 
         <Image 

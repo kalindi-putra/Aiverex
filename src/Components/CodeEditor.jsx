@@ -1,0 +1,92 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/mode-c_cpp';
+import 'ace-builds/src-noconflict/theme-monokai'; // This is a dark theme
+import './CodeEditor.css';
+
+const CodeEditor = () => {
+  const [code, setCode] = useState('');
+  const [language, setLanguage] = useState('python3');
+  const [output, setOutput] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Code templates for each language
+  const templates = {
+    python3: `# Python code template\n\nprint("Hello, World!")`,
+    java: `// Java code template\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`,
+    cpp: `// C++ code template\n\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}`,
+  };
+
+  // UseEffect to define the template language
+  useEffect(() => {
+    setCode(templates[language]);
+  }, [language]);
+
+  const handleCodeChange = (value) => {
+    setCode(value);
+  };
+
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/executeCode',
+        { code, language }
+      );
+      setOutput(response.data.output);
+    } catch (error) {
+      setOutput('Error executing code.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="CodeEditor">
+      <div className="editor-container">
+        <select onChange={handleLanguageChange} value={language}>
+          <option value="python3">Python</option>
+          <option value="java">Java</option>
+          <option value="cpp">C++</option>
+        </select>
+        <button onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Running...' : 'Run Code'}
+        </button>
+      </div>
+
+      {/* Ace Editor component with a dark theme */}
+      <AceEditor
+        style={{borderRadius:"5%"}}
+        mode={language} // Dynamically sets language mode
+        theme="monokai" // Dark theme
+        name="code_editor"
+        value={code}
+        onChange={handleCodeChange}
+        width="100%"
+        height="300px"
+        showPrintMargin={false}
+        showGutter={true}
+        highlightActiveLine={true}
+        setOptions={{
+          fontFamily: 'monospace',
+          fontSize: 16,       // Default tab size
+        }}
+      />
+          <div className="output-container">
+      <h3 style={{color:"white"}}>Output:</h3>
+      <pre>{output}</pre>
+    </div>
+    </div>
+
+  );
+};
+
+export default CodeEditor;

@@ -17,7 +17,7 @@ import {CustDes} from "../../Components/Card";
         ))}
     </Row>
     <Typography.Title level={2} style={{color:'#fff',textAlign:'center'}} >
-    <a class="view">View More</a>
+    <a className="view">View More</a>
     </Typography.Title>
     </>
   )

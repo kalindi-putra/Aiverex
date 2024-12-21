@@ -7,6 +7,7 @@ import CustLayout from './Layout';
 import { AuthContext } from '/src/context/UserContext';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '/src/firebase/Firebase';
+
 const CourseList = [
     {
         id: 1,

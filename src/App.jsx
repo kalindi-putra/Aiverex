@@ -22,7 +22,6 @@ import MentLayout from './Pages/Mentors/MentLayout'
 import {NavLinks} from './store/data'
 import StudentLayout from './Pages/Students/StudentLayout'
 import Main from './Components/Main'
-import { EditProfile, Notify } from './Components/Dummy'
 import { ProblemPage,LeaderBoard,Editorial,Submission,Discussion,Review } from './Pages/Students/Problem/home';
 import PageNotFound from './Components/404'
 import TakeTest from './Pages/Students/TakeTest'
@@ -55,8 +54,6 @@ function App() {
             role=='student'&&<StudentLayout/>||
             role=='mentor'&&<MentLayout/>
           }></Route>
-          <Route path='notify' element={<Notify />} />
-          <Route path='edit' element={<EditProfile/>}/>
           <Route path='review' element={<GitHubExplorer/>}/>
         </Route>
         <Route path='/student' element={<>
@@ -94,7 +91,6 @@ function App() {
         <Route path='/mentors' element={<Main/>}
         >
           <Route path='' element={<MentLayout/>}></Route>
-        <Route path='notify' element={<Notify />} />
         </Route>
         <Route path='/login' element={<>
         <Login/>

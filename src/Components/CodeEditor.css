@@ -1,0 +1,78 @@
+/* src/CodeEditor.css */
+
+.ace_editor {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+  
+  .CodeEditor {
+    background-color: #272822;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  
+  
+  select {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  pre {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 4px;
+    
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #333;
+  }
+  
+  .CodeEditor select,
+  .CodeEditor button {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .CodeEditor .editor-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .CodeEditor .output-container {
+    margin-top: 20px;
+  }
+  
