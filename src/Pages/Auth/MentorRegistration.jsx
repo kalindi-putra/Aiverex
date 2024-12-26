@@ -27,34 +27,29 @@ function Registration() {
   const navigate = useNavigate();
 
   const register = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
-      const { user } = userCredential;
-      console.log(user);
-      
-
-      // Store user's data in Firestore
-      const userDocRef = doc(db, 'users', user.uid);
-      await setDoc(userDocRef, {
+    const response = await fetch('http://localhost:5000/api/auth/mentor/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         name,
-        role,
-        company,
-        experience,
-        resumeLink,
-        githubLink,
-      });
+        email: registerEmail,
+        password: registerPassword,
+        company: company,
+        experience: experience,
+        resumeLink: resumeLink,
+        githubLink: githubLink
+      }),
+    });
 
-          // Redirect the user to their respective dashboard based on the role
-    if (role === 'student') {
-      navigate('/student');
-    } else if (role === 'mentor') {
-      navigate('/mentors');
-    }
+    const result = await response.json();
 
-      // Success: Registration and data storage complete
-      console.log('User registered successfully!');
-    } catch (error) {
-      console.log(error.message);
+    if (response.status === 201) {
+      console.log(result.message);
+      navigate(role === 'student' ? '/student' : '/mentors');
+    } else {
+      console.error(result.error);
     }
   };
     return (
@@ -165,23 +160,3 @@ function Registration() {
 }
 
 export default Registration
-
-// import React from 'react';
-// import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
-// import { Input, Tooltip } from 'antd';
-
-// const Registration  = () => (
-//   <>
-//     <Input
-//       placeholder="Enter your username"
-//       prefix={<UserOutlined className="site-form-item-icon" />}
-//       suffix={
-//         <Tooltip title="Extra information">
-//           <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-//         </Tooltip>
-//       }
-//     />
-//     </>
-// );
-
-// export default Registration;

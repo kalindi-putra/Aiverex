@@ -13,7 +13,6 @@ import PostCode from './Pages/Students/PostCode/'
 import StudentCodeReview from './Pages/Students/StudentsCodeReview'
 import MentDashboard from './Pages/Mentors/Dashboard'
 import SideMenu from './Components/SideMenu'
-import {Login,CustLogin} from './Pages/Auth/Login'
 import Registration from './Pages/Auth/Register'
 import StudentRegistration from './Pages/Auth/StudentRegistration'
 import MentorRegistration from './Pages/Auth/MentorRegistration'
@@ -29,6 +28,10 @@ import TakeTest from './Pages/Students/TakeTest'
 import ProtectedRoute from './ProtectedRoute';
 import { StudentItems,MentItems } from './store/data';
 import GitHubExplorer from './Pages/Mentors/GithubExplorer';
+import QuestionTemplate from './Components/QuestionTemplate';
+import LoginPage from './Pages/Auth/Login';
+import MentorLogin from './Pages/Auth/MentorLogin';
+import StudentLogin from './Pages/Auth/StudentLogin';
 
 
 function App() {
@@ -76,6 +79,9 @@ function App() {
         <Route path='/take-test' element={<>
           <TakeTest/>
         </>}></Route>
+        <Route path='/codeEditor' element={<QuestionTemplate/>}>
+
+        </Route>
         <Route path='/gitreview' element={<>
           <GitHubExplorer />
         </>}></Route>
@@ -93,7 +99,13 @@ function App() {
           <Route path='' element={<MentLayout/>}></Route>
         </Route>
         <Route path='/login' element={<>
-        <Login/>
+        <LoginPage/>
+        </>}></Route>
+        <Route path='/StudentLogin' element={<>
+        <StudentLogin/>
+        </>}></Route>
+        <Route path='/MentorLogin' element={<>
+        <MentorLogin/>
         </>}></Route>
         <Route path='/register' element={<>
           <Registration/>

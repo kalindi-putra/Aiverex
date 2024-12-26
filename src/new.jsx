@@ -7,7 +7,7 @@ const
 News = () => {
   return (
     <div>
-      <QuestionTemplate />
+      <App/>
     </div>
   )
 }

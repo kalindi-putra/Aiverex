@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase/Firebase';
 
 function Student() {
-  const [registerEmail, setRegisterEmail] = useState('');
+    const [registerEmail, setRegisterEmail] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
     const [name, setName] = useState('');
     const [role] = useState('student'); // Set the role as 'student' by default
@@ -24,33 +24,25 @@ function Student() {
     const navigate = useNavigate();
   
     const register = async () => {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
-        const { user } = userCredential;
-        console.log(user);
-        
-  
-        // Store user's data in Firestore
-        const userDocRef = doc(db, 'users', user.uid);
-        await setDoc(userDocRef, {
+      const response = await fetch('http://localhost:5000/api/auth/student/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           name,
-          role,
-          college,
-          experience,
-          resumeLink,
-          githubLink,
-          // courses,
-        });
+          email: registerEmail,
+          password: registerPassword,
+        }),
+      });
   
-            // Redirect the user to their respective dashboard based on the role
-      if (role) {
-        navigate('/login')
-      }
+      const result = await response.json();
   
-        // Success: Registration and data storage complete
-        console.log('User registered successfully!');
-      } catch (error) {
-        console.log(error.message);
+      if (response.status === 201) {
+        console.log(result.message);
+        navigate(role === 'student' ? '/student' : '/mentors');
+      } else {
+        console.error(result.error);
       }
     };
 
@@ -132,7 +124,7 @@ function Student() {
                  onClick={register}>Register</Button>
              </Form.Item>
              <p className={styles["para-2"]}>
-              Already Have An Account? <Link className={styles['redirect']} to="/login">Login</Link>
+              Already Have An Account? <Link className={styles['redirect']} to="/studentLogin">Login</Link>
             </p>
             <p className={`${styles['para-2']} ${styles['or']}`}> 
               OR
