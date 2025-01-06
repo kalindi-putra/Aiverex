@@ -8,8 +8,8 @@ const CustBadge = (props)=>{
         {/* <img src={img} alt="Logo"/> */}
 
         <Image 
-            src={img} className="badge-img" ></Image>
-            <h5>{name?name:''}</h5>
+            src={img} style={{borderRadius:'20px'}}className="badge-img" ></Image>
+            <h5 style={{color:'white'}}>{name?name:''}</h5>
         </div>
         {/* <div class="badge-text">
           <h3>{name?name:'C Programming'}</h3>

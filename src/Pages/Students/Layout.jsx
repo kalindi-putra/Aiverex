@@ -230,7 +230,7 @@ const CustLayout = () =>{
           </div>
         </Header>
         <Footer style={footerStyle}>
-          <Typography.Title level={4} style={{ color: '#fff', margin: 0, padding: '10px 20px' }} >Certificates : 4
+          <Typography.Title level={4} style={{ color: '#fff', margin: 0, padding: '10px 20px' }} >Certificates : 3
             <a className="view"style={{ float: 'right' }}>View More</a>
             <Row style={{ paddingTop: '10px',display:'flex',flexWrap:'wrap',width:'100%' }}>
               {CourseList.slice(0,4).map((course) => (

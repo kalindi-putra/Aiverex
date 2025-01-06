@@ -65,7 +65,10 @@ function MentorLogin() {
       console.log(e.message);
     }
   };
-  
+  const SignInWithLinkedIn= () => {
+    window.location.href = "http://localhost:5000/auth/linkedin";
+  };
+
 
   //     // Retrieve the user's role from Firestore
   //     const userDocRef = doc(db, 'users', user.uid);
@@ -152,9 +155,9 @@ function MentorLogin() {
             </p>
             <p className={`${styles['para-2']} ${styles['or']}`}>OR</p>
             <div className={styles['ggl']}>
-              <a className={styles['a4']} onClick={() => SignInWithGoogle(navigate)}>
+              <a className={styles['a4']} onClick={() => SignInWithLinkedIn(navigate)}>
                  
-                Sign in with Google
+                Sign in with LinkedIn
               </a>
             </div>
           </Form>

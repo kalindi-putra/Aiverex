@@ -32,6 +32,8 @@ import QuestionTemplate from './Components/QuestionTemplate';
 import LoginPage from './Pages/Auth/Login';
 import MentorLogin from './Pages/Auth/MentorLogin';
 import StudentLogin from './Pages/Auth/StudentLogin';
+import ErrorBoundary from './ErrorBoundary';
+import ExamInstructionsPage from './Pages/Students/Instructions';
 
 
 function App() {
@@ -41,87 +43,48 @@ function App() {
   // Check if userData exists and retrieve the name
   const name = userData ? userData.name : '';
   const role = userData ? userData.role : '';
-
   const path = useLocation().pathname;
   console.log(path,role)
   return (
     <>
-    {/* {path!='/'&&<CustNav custLinks={NavLinks} left="5" right="7" dropDown="1" href="0" isLoggedIn="0" />} */}
-    
-      {path!='/'&&<MainNav />}
+      {path !== '/' && <MainNav />}
       <Routes>
-      <Route path='/student'element={
-      <Main items={role=='student'&&StudentItems||role=='mentor'&&MentItems}/>
-      } >
-          <Route path='' element={
-            role=='student'&&<StudentLayout/>||
-            role=='mentor'&&<MentLayout/>
-          }></Route>
-          <Route path='review' element={<GitHubExplorer/>}/>
-        </Route>
-        <Route path='/student' element={<>
-        <Dashboard/>
-        </>}></Route>
-        <Route path='/courses' element={<>
-          <Courses />
-        </>} ></Route>
-        <Route path='/post' element={<PostCode />}>
-          <Route path='problem' element={<ProblemPage/>}></Route>
-          <Route path='submission' element={<Submission/>}></Route>
-          <Route path='leaderboard' element={<LeaderBoard/>}></Route>
-          {/* <Route path='editorial' element={<Editorial/>}></Route> */}
-          <Route path='discussion' element={<Discussion/>}></Route>
-          <Route path='status' element={<Review/>}></Route>
-        </Route>
-        {/* <Route path='/take-test/contents' element={
-          <CoursePage/>
-        }></Route> */}
-        <Route path='/take-test' element={<>
-          <TakeTest/>
-        </>}></Route>
-        <Route path='/codeEditor' element={<QuestionTemplate/>}>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/StudentLogin" element={<StudentLogin />} />
+        <Route path="/MentorLogin" element={<MentorLogin />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/StudentRegister" element={<StudentRegistration />} />
+        <Route path="/MentorRegister" element={<MentorRegistration />} />
 
+        {/* Student Routes */}
+        <Route path="/student" element={<ProtectedRoute role="student" element={<ErrorBoundary><Dashboard /></ErrorBoundary>} />}>
+          
         </Route>
-        <Route path='/gitreview' element={<>
-          <GitHubExplorer />
-        </>}></Route>
-        <Route path='/review' element={<>
-          <StudentCodeReview />
-        </>}></Route>
-        {/* <Route path='/mentors' element={<div className='SideAndPage'>
-          <SideMenu />
-          <div className="PageContent">
-          <MentDashboard />
-          </div>
-        </div>} /> */}
-        <Route path='/mentors' element={<Main/>}
-        >
-          <Route path='' element={<MentLayout/>}></Route>
+
+        {/* Other routes that do not need StudentLayout */}
+        <Route path="student/dashboard" element={<Dashboard />} />
+        <Route path="student/instructions" element={<ExamInstructionsPage/>}/>
+        <Route path="student/courses" element={<Courses />} />
+        <Route path="student/post/problem" element={<QuestionTemplate />} />
+        <Route path="student/post/submission" element={<Submission />} />
+        <Route path="student/post/leaderboard" element={<LeaderBoard />} />
+        <Route path="student/post/discussion" element={<Discussion />} />
+        <Route path="student/post/status" element={<Review />} />
+        <Route path="student/review" element={<StudentCodeReview />} />
+        <Route path="student/take-test" element={<TakeTest />} />
+        <Route path="student/codeEditor" element={<QuestionTemplate />} />
+
+
+        {/* Mentor Routes */}
+        <Route path="/mentors" element={<ProtectedRoute role="mentor" element={<MentLayout />} />}>
+          <Route path="dashboard" element={<MentDashboard />} />
+          <Route path="gitreview" element={<GitHubExplorer />} />
         </Route>
-        <Route path='/login' element={<>
-        <LoginPage/>
-        </>}></Route>
-        <Route path='/StudentLogin' element={<>
-        <StudentLogin/>
-        </>}></Route>
-        <Route path='/MentorLogin' element={<>
-        <MentorLogin/>
-        </>}></Route>
-        <Route path='/register' element={<>
-          <Registration/>
-        </>}></Route>
-        <Route path='/StudentRegister' element={<>
-          <StudentRegistration/>
-        </>}></Route>
-        <Route path='/MentorRegister' element={<>
-          <MentorRegistration/>
-        </>}></Route>
-        <Route path='/' element={
-          <Home/>
-        }></Route>
-        <Route path="*" element={
-          <PageNotFound/>
-        } />
+
+        {/* Fallback Route */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   )

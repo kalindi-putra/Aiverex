@@ -51,7 +51,7 @@ const CustDes = (props) =>{
   const navigate = useNavigate()
   const haddler = () =>{
     if(type=='test')
-    navigate('contents')
+    navigate('instructions')
     return 
   }
 return (

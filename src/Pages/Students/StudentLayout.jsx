@@ -9,8 +9,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
-
-
+import { Outlet } from 'react-router-dom';
 
 const { Footer } = Layout;
 
@@ -28,19 +27,6 @@ const StudentLayout = () => {
   const [isGitHubModalVisible, setIsGitHubModalVisible] = useState(false);
   const [isResumeModalVisible, setIsResumeModalVisible] = useState(false);
   const [certifiedSkills, setCertifiedSkills] = useState(null);
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD5_nj44L6jfA8riWoUJ5jw83z8dRVErXw",
-    authDomain: "aivirex-educate-45bfb.firebaseapp.com",
-    projectId: "aivirex-educate-45bfb",
-    storageBucket: "aivirex-educate-45bfb.firebasestorage.app",
-    messagingSenderId: "658664554251",
-    appId: "1:658664554251:web:c23496a25d2b528711ec0e"
-  };
-
-  
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
 
   const softwareEngineeringSkills = [
     'JavaScript',
@@ -84,8 +70,9 @@ const StudentLayout = () => {
   const handleProfilePhotoUpload = async (file) => {
   console.log("Uploading file:", file);
   setIsPhotoUploading(true);
-  
+  console.log(user)
   try {
+
     const storage = getStorage();
     const storageRef = ref(storage, `profilePhotos/${user.uid}`);
     console.log("Storage Reference:", storageRef);
@@ -387,6 +374,7 @@ const StudentLayout = () => {
           </Form>
         </Modal>
       </Layout>
+      <Outlet/>
     </Space>
   );
 };

@@ -412,7 +412,7 @@ const MainNav = () => {
                                   isActive && styles["activeLink"]
                                 }`
                               }
-                              to="/home"
+                              to="/student"
                             >
                               Home
                             </NavLink>
@@ -426,7 +426,7 @@ const MainNav = () => {
                                   isActive && styles["activeLink"]
                                 }`
                               }
-                              to="/courses"
+                              to="student/courses"
                             >
                               Courses
                             </NavLink>
@@ -440,7 +440,7 @@ const MainNav = () => {
                                   isActive && styles["activeLink"]
                                 }`
                               }
-                              to="/review"
+                              to="student/review"
                             >
                               Review
                             </NavLink>
@@ -454,7 +454,7 @@ const MainNav = () => {
                                   isActive && styles["activeLink"]
                                 }`
                               }
-                              to="/post/problem"
+                              to="student/post/problem"
                             >
                               PostCode
                             </NavLink>
