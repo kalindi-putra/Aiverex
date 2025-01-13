@@ -6,7 +6,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './Components/Navbar'
 import { Dashboard } from './Pages/Students/Dashboard'
-import { Route, BrowserRouter as Router, Routes,useLocation,createBrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes,useLocation,createBrowserRouter, useNavigate } from "react-router-dom";
 import {CustNav,MainNav} from './Components/CustNav'
 import Courses from './Pages/Students/Courses'
 import PostCode from './Pages/Students/PostCode/'
@@ -44,7 +44,11 @@ function App() {
   const name = userData ? userData.name : '';
   const role = userData ? userData.role : '';
   const path = useLocation().pathname;
-  console.log(path,role)
+
+  const navigate = useNavigate();
+
+  
+
   return (
     <>
       {path !== '/' && <MainNav />}

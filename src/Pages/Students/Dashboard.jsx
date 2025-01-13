@@ -5,6 +5,7 @@ import CustLayout from './Layout';
 import { AuthContext } from '/src/context/UserContext';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '/src/firebase/Firebase';
+import { useNavigate } from 'react-router';
 
 const CourseList = [
   {
@@ -38,8 +39,31 @@ const Dashboard = () => {
   const { userData, setUserData } = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
-  // Fetch updated user data from Firestore
+  useEffect(() => {
+    let timer = setTimeout(() => {
+        alert('Session expired! lease log in again.');
+        navigate('/login');
+    }, 30 * 60 * 1000);
+
+    const resetTimer = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            alert('Session expired! Please log in again.');
+        }, 30 * 60 * 1000);
+    };
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+
+    return () => {
+        clearTimeout(timer);
+        window.removeEventListener('mousemove', resetTimer);
+        window.removeEventListener('keydown', resetTimer);
+    };
+}, []);
+
   useEffect(() => {
     const fetchAdditionalUserData = async () => {
       if (userData && userData.skills) {
