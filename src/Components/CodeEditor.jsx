@@ -33,10 +33,46 @@ const CodeEditor = () => {
     const selectedLanguage = e.target.value;
     setLanguage(selectedLanguage);
   };
-  const handleCodeSubmit = ()=>{
 
+// main function when user click on submit button
+const handleSubmit = async () => {
+  if (!currentUser) {
+    setSubmissionMessage("You need to log in first.");
+    return;
   }
-  const handleSubmit = async () => {
+
+  setIsSubmitting(true);
+  setSubmissionMessage("Submitting your code...");
+
+  try {
+    // Firebase function call to submit code
+    const submitCode = functions.httpsCallable("submitCode");
+    const result = await submitCode({
+      codeContent: code,
+      userId: currentUser.uid,   // Use Firebase user ID or other identifier
+      userGitHubToken: currentUser.githubToken,  // GitHub OAuth token stored in Firebase auth context
+    });
+
+    if (result.data.success) {
+      setSubmissionMessage(
+        `Code submitted successfully! Check the repository for your code.`
+      );
+    } else {
+      setSubmissionMessage("Error submitting code. Please try again.");
+    }
+  } catch (error) {
+    setSubmissionMessage("There was an issue submitting your code.");
+  }
+
+  setIsSubmitting(false);
+};
+  
+/**
+ The above function submit the code and check if user has validated or not.
+ */
+
+
+  const handleRun = async () => {
     setLoading(true);
     try {
       const response = await axios.post(
@@ -64,10 +100,10 @@ const CodeEditor = () => {
           <option value="cpp">C++</option>
         </select>
         <div>
-          <button onClick={handleSubmit} disabled={loading}>
+          <button onClick={handleRun} disabled={loading}>
             {loading ? 'Running...' : 'Run Code'}
           </button>
-          <button onClick={handleCodeSubmit} className='submit-button'>
+          <button onClick={handleSubmit} className='submit-button'>
             Submit
           </button>
         </div>
@@ -80,7 +116,7 @@ const CodeEditor = () => {
         theme="monokai" // Dark theme
         name="code_editor"
         value={code}
-        onChange={handleCodeChange}
+          onChange={handleCodeChange}
         width="100%"
         height="300px"
         showPrintMargin={false}
