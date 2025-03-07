@@ -13,9 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
   <BrowserRouter>
   {/*
-  <TagForm/>
+  
 */}
-<News />
+<App />
 
   </BrowserRouter>
   </AuthProvider>

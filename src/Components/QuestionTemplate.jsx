@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './QuestionTemplate.css';
-import CodeEditor from './CodeEditor';
+import CodeEditor from '../Pages/Students/CodeEditor';
 
 const tabs = ['Statement', 'Submissions', 'Solution', 'Hints', 'AI Help'];
 

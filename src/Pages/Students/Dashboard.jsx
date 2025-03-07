@@ -40,46 +40,68 @@ const Dashboard = () => {
   const [editing, setEditing] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [studentData, setStudentData] = useState(null);
 
+  // Session timeout effect
   useEffect(() => {
-    let timer = setTimeout(() => {
-        alert('Session expired! lease log in again.');
+    const timer = setTimeout(() => {
+        alert('Please log in again. Session expired!');
         navigate('/login');
     }, 30 * 60 * 1000);
 
-    const resetTimer = () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            alert('Session expired! Please log in again.');
-        }, 30 * 60 * 1000);
-    };
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
-    window.addEventListener('mousemove', resetTimer);
-    window.addEventListener('keydown', resetTimer);
-
-    return () => {
-        clearTimeout(timer);
-        window.removeEventListener('mousemove', resetTimer);
-        window.removeEventListener('keydown', resetTimer);
-    };
-}, []);
-
+  // Fetch student data effect
   useEffect(() => {
-    const fetchAdditionalUserData = async () => {
-      if (userData && userData.skills) {
-        setEditing(true);
+    const fetchStudentData = async () => {
+      try {
+        if (!auth.currentUser) {
+          navigate('/login');
+          return;
+        }
+
+        const studentDocRef = doc(db, 'users', auth.currentUser.uid);
+        const studentDoc = await getDoc(studentDocRef);
+        
+        if (studentDoc.exists()) {
+          const data = studentDoc.data();
+          setStudentData(data);
+          setUserData(data); // Update context with fetched data
+        } else {
+          console.log('No student data found');
+        }
+      } catch (error) {
+        console.error('Error fetching student data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchAdditionalUserData();
-  }, [userData]);
+    fetchStudentData();
+  }, [setUserData, navigate]);
 
   const saveDataToFirestore = async (values) => {
-    const userDocRef = doc(db, 'users', auth.currentUser.uid);
-    await setDoc(userDocRef, { ...userData, ...values }, { merge: true });
-    setUserData((prev) => ({ ...prev, ...values }));
-    setEditing(false);
+    try {
+      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+      await setDoc(userDocRef, { 
+        ...studentData,
+        ...values,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      
+      setStudentData(prev => ({ ...prev, ...values }));
+      setUserData(prev => ({ ...prev, ...values }));
+      setEditing(false);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
   };
+
+  if (loading) {
+    return <div style={{ textAlign: 'center', padding: '20px' }}>Loading...</div>;
+  }
 
   return (
     <div style={{
@@ -91,14 +113,23 @@ const Dashboard = () => {
     }}>
       <center><h1>Student Dashboard</h1></center>
       
-      <p>Welcome {userData ? userData.displayName : "Student"}!</p>
+      <p>Welcome {studentData?.displayName || userData?.displayName || "Student"}!</p>
       <CustLayout />
 
-      {/* Display user's data if available */}
-      {userData && userData.skills ? (
+      {/* Display student profile data */}
+      <div style={{ marginBottom: '20px' }}>
+        <h2>Profile Information</h2>
+        <p>Email: {studentData?.email}</p>
+        <p>Role: {studentData?.role}</p>
+        <p>Join Date: {studentData?.createdAt && new Date(studentData.createdAt).toLocaleDateString()}</p>
+      </div>
+
+      {/* Display skills and education if available */}
+      {(studentData?.skills || studentData?.education) ? (
         <div>
-          <h2>Skills: {userData.skills}</h2>
-          <h2>Education: {userData.education}</h2>
+          <h2>Skills: {studentData.skills}</h2>
+          <h2>Education: {studentData.education}</h2>
+          <Button onClick={() => setEditing(true)}>Edit Information</Button>
         </div>
       ) : (
         <div style={{padding:'10px'}}>
@@ -106,7 +137,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Form for updating skills and education */}
+      {/* Rest of your existing code... */}
       {editing && (
         <div style={{paddingBottom:'20px'}}>
           <Form

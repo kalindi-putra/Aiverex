@@ -1,8 +1,0 @@
-/**import React from 'react';
-import CodeEditorTest from './Components/CodeEditorTest';
-
-function App() {
-  return <CodeEditorTest />;
-}
-
-export default App;**/
