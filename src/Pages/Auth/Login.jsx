@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Card, Typography, Tabs, Button } from 'antd';
 import { GoogleOutlined, LinkedinOutlined, UserOutlined } from '@ant-design/icons';
 import styles from "./Auth.module.css";
-import { SignInWithGoogle, SignInWithLinkedIn } from '../../firebase/Firebase';
+import { SignInWithGoogle } from '../../firebase/Firebase';
 
 const { TabPane } = Tabs;
 
 function LoginPage() {
   const [activeTab, setActiveTab] = useState('student');
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async (role) => {
     try {
-      await SignInWithGoogle(role);
+      await SignInWithGoogle(navigate,role);
     } catch (error) {
       console.error("Unable to login:", error);
     }
@@ -52,7 +54,7 @@ function LoginPage() {
                 icon={<GoogleOutlined />}
                 onClick={() => handleGoogleSignIn('student')}
                 className={styles.loginButton}
-                block
+                round
               >
                 Continue with Google
               </Button>
@@ -73,7 +75,7 @@ function LoginPage() {
                 icon={<GoogleOutlined />}
                 onClick={() => handleGoogleSignIn('mentor')}
                 className={styles.loginButton}
-                block
+                shape='round'
               >
                 Continue with Google
               </Button>
@@ -82,7 +84,7 @@ function LoginPage() {
                 icon={<LinkedinOutlined />}
                 onClick={handleLinkedInLogin}
                 className={styles.loginButton}
-                block
+                round
               >
                 Continue with LinkedIn
               </Button>
