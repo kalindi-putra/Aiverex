@@ -7,7 +7,7 @@ const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 const functions = require("firebase-functions");
 const axios = require("axios");
 const admin = require("firebase-admin");
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {S3Client, PutObjectCommand} from "@aws-sdk/client-s3";
 
 admin.initializeApp();
 
@@ -109,14 +109,14 @@ exports.submitCode = functions.https.onCall(async (data, context) => {
   const {codeContent, userId} = data;
 
   if (!context.auth) {
-  throw new functions.https.HttpsError("unauthenticated", "User must be authenticated.");
+    throw new functions.https.HttpsError("unauthenticated", "User must be authenticated.");
   }
 
   try {
     // Step 1: Upload the code to S3 (store it in your S3 bucket)
     const uploadParams = {
       Bucket: BUCKET_NAME,
-      Key: `user-${userId}-code-${Date.now()}.txt`, 
+      Key: `user-${userId}-code-${Date.now()}.txt`,
       // Store with a unique key based on userId and timestamp
       Body: codeContent,
       ContentType: "text/plain",

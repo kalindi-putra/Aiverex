@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card} from "antd";
+import { Button } from "antd";
+import { Input } from "antd";
+import { Alert} from "antd"
 import { ExternalLink, Loader } from "lucide-react";
 
 // Mock Firebase auth - Replace with actual Firebase implementation

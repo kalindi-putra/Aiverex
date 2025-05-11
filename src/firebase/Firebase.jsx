@@ -1,9 +1,7 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp,getApps } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-import { Link, useNavigate } from 'react-router-dom';
 
+import { initializeApp,getApps } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup , setPersistence,browserSessionPersistence } from 'firebase/auth';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 
 const firebaseConfig = {
@@ -16,38 +14,60 @@ const firebaseConfig = {
   measurementId: "G-VFQJHD8BP8"
 };
 
-// Initialize Firebase
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+console.log(app);
+
 
 export const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore (app);
 
 
-const SignInWithGoogle = async (navigate) => {
+
+const handlePersistance=()=>{
+    setPersistence(auth, browserSessionPersistence).
+    then(() => {
+      // Auth state changed
+      return signInWithPopup(auth, googleProvider);
+    })
+    .then((result) => {
+      console.log("User signed in:", result.user);
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+  })
+    
+  };
+
+
+
+const SignInWithGoogle = async (navigate , role) => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const { user } = result;
 
-    // Check if it's the user's first time signing in with Google
     const userDocRef = doc(db, 'users', user.uid); // Store under 'users' collection
     const userDocSnapshot = await getDoc(userDocRef);
 
     if (userDocSnapshot.exists()) {
-      // User already exists, navigate to the appropriate page based on role
       const userData = userDocSnapshot.data();
+
+      if(userData.role !== role){
+
+        alert(`You are trying to log in as a ${role}, but your account is registered as a ${userData.role}. Please log in with the correct role.`);
+        return;
+      }
+
       if (userData.role === 'mentor') {
-        navigate('/mentor-dashboard');
+        navigate('/mentor/dashboard');
       } else {
-        navigate('/student-dashboard');
+        navigate('/student/dashboard');
       }
       console.log(user);
     } else {
-      // User is signing in for the first time
-      // Ask for the user's role (student or mentor)
       const userRole = prompt("Are you a student or a mentor? Please type 'student' or 'mentor'.").toLowerCase();
 
-      // Validate the role input
       if (userRole !== 'student' && userRole !== 'mentor') {
         alert("Invalid role. Please sign up again with a valid role.");
         return;
@@ -56,17 +76,17 @@ const SignInWithGoogle = async (navigate) => {
       const userData = {
         displayName: user.displayName,
         email: user.email,
-        role: userRole, // Set the role based on user input
+        role: userRole,
+        provider: 'google',
+        createdAt:new Date().toISOString() // Set the role based on user input
       };
 
-      // Save user role data in Firestore
       await setDoc(userDocRef, userData);
 
-      // Navigate to the correct dashboard based on role
       if (userRole === 'mentor') {
-        navigate('/mentor-dashboard');
+        navigate('/mentor/dashboard');
       } else {
-        navigate('/student-dashboard');
+        navigate('/student/dashboard');
       }
 
       console.log('First time sign in with Google. User role set as:', userRole);
@@ -92,10 +112,8 @@ const SignInWithLinkedIn = async (role) => {
   }
 };
 
-// Add this new function to handle LinkedIn callback
 export const handleLinkedInCallback = async (code, state) => {
   try {
-    // Step 2: Exchange code for access token (this should be done on your backend)
     const response = await fetch('http://localhost:5173/mentor/auth/callback', {
       method: 'POST',
       headers: {
@@ -110,20 +128,18 @@ export const handleLinkedInCallback = async (code, state) => {
       throw new Error('No custom token received');
     }
 
-    // Step 3: Sign in to Firebase with custom token
     const userCredential = await signInWithCustomToken(auth, data.customToken);
     const { user } = userCredential;
 
-    // Step 4: Check/create user document in Firestore
+
     const userDocRef = doc(db, 'users', user.uid);
     const userDocSnapshot = await getDoc(userDocRef);
 
     if (!userDocSnapshot.exists()) {
-      // Create new user document
       await setDoc(userDocRef, {
         displayName: data.linkedInProfile.displayName,
         email: data.linkedInProfile.email,
-        role: state, // Use the state parameter we passed earlier
+        role: state, 
         provider: 'linkedin',
         createdAt: new Date().toISOString(),
       });
@@ -136,4 +152,4 @@ export const handleLinkedInCallback = async (code, state) => {
   }
 };
 
-export { SignInWithGoogle, SignInWithLinkedIn };
+export { SignInWithGoogle, SignInWithLinkedIn  , handlePersistance};

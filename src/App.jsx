@@ -1,5 +1,6 @@
-
-import { useContext } from 'react';
+import {auth} from './firebase/Firebase';
+import { signOut } from 'firebase/auth';
+import { useContext , useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/UserContext';
 import { MainNav } from './Components/CustNav';
@@ -25,11 +26,18 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
 function App() {
   const { userData } = useContext(AuthContext);
+  console.log("1--->",userData);
+  
   const location = useLocation();
+
+  useEffect(() => {
+    signOut(auth).then(() => console.log("User logged out on refresh."));
+  }, []);
+
 
   return (
     <>
-      {location.pathname !== '/' && <MainNav />}
+       {location.pathname !== '/' && <MainNav />} 
       
       <Routes>
         {/* Public Routes */}

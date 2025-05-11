@@ -4,7 +4,7 @@ import { CusCard, CustDes, Learn } from "../../Components/Card";
 import CustLayout from './Layout';
 import { AuthContext } from '/src/context/UserContext';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '/src/firebase/Firebase';
+import { db , auth } from '../../firebase/Firebase';
 import { useNavigate } from 'react-router';
 
 const CourseList = [
@@ -67,14 +67,17 @@ const Dashboard = () => {
         
         if (studentDoc.exists()) {
           const data = studentDoc.data();
+          console.log(data)
           setStudentData(data);
           setUserData(data); // Update context with fetched data
         } else {
           console.log('No student data found');
         }
-      } catch (error) {
+      } catch (error) 
+      {
         console.error('Error fetching student data:', error);
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };

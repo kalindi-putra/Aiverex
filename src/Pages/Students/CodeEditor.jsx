@@ -1,249 +1,194 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
-import AceEditor from 'react-ace';
-import axios from 'axios';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/mode-c_cpp';
-import 'ace-builds/src-noconflict/theme-monokai';
+import  { useState, useEffect, useCallback } from 'react';
 
+function Test() {
+  const [timeLeft, setTimeLeft] = useState(60 * 60);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [warningCount, setWarningCount] = useState(0);
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [testRunning, setTestRunning] = useState(false);
+  const [fullScreenViolated, setFullScreenViolated] = useState(false);
+  const [userIntuition, setUserIntuition] = useState("");
 
-const CodeEditor = () => {
-  const [code, setCode] = useState('');
-  const [language, setLanguage] = useState('python3');
-  const [output, setOutput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [currentProblem, setCurrentProblem] = useState({
-    title: 'Two Sum',
-    difficulty: 'Easy',
-    description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.',
-    examples: [
-      {
-        input: 'nums = [2,7,11,15], target = 9',
-        output: '[0,1]',
-        explanation: 'Because nums[0] + nums[1] == 9, we return [0, 1].'
-      },
-      {
-        input: 'nums = [3,2,4], target = 6',
-        output: '[1,2]',
-        explanation: 'Because nums[1] + nums[2] == 6, we return [1, 2].'
+  const questions = [
+    {
+      id: 'q1',
+      question: 'What is the time complexity of a binary search algorithm?',
+      options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
+    },
+    {
+      id: 'q2',
+      question: 'What is the worst-case time complexity of bubble sort?',
+      options: ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
+    },
+  ];
+
+  const requestFullScreen = () => {
+    const doc = document.documentElement;
+    if (doc.requestFullscreen) {
+      doc.requestFullscreen();
+    } else if (doc.mozRequestFullScreen) {
+      doc.mozRequestFullScreen();
+    } else if (doc.webkitRequestFullscreen) {
+      doc.webkitRequestFullscreen();
+    } else if (doc.msRequestFullscreen) {
+      doc.msRequestFullscreen();
+    }
+  };
+
+  const checkFullScreen = useCallback(() => {
+    if (!document.fullscreenElement && !fullScreenViolated) {
+      if (warningCount < 2) {
+        alert('Please stay in full-screen mode!');
+        setWarningCount(warningCount + 1);
+      } else {
+        alert('Test terminated due to multiple violations of full-screen mode!');
+        handleSubmit();
       }
-    ],
-    constraints: [
-      '2 <= nums.length <= 104',
-      '-109 <= nums[i] <= 109',
-      '-109 <= target <= 109',
-      'Only one valid answer exists.'
-    ]
-  });
-
-  const templates = {
-    python3: `def twoSum(nums, target):
-    # Your code here
-    pass
-
-# Example usage:
-nums = [2,7,11,15]
-target = 9
-print(twoSum(nums, target))`,
-    java: `class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        // Your code here
-        return new int[]{};
+      setFullScreenViolated(true);
     }
-}`,
-    cpp: `class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        // Your code here
-        return {};
+  }, [warningCount, fullScreenViolated]);
+
+  const runTest = () => {
+    if (!testRunning) {
+      setTestRunning(true);
+      alert('Running the test solution...');
+      setTimeout(() => {
+        alert('Solution run complete!');
+        setCanSubmit(true);
+      }, 2000);
     }
-};`
   };
 
-  useEffect(() => {
-    setCode(templates[language]);
-  }, [language]);
-
-  const handleCodeChange = (value) => {
-    setCode(value);
-  };
-
-  const handleLanguageChange = (e) => {
-    setLanguage(e.target.value);
-  };
-
-
-  const handleSubmitCode = async () => {
-    if (!currentUser) {
-      setSubmissionMessage("You need to log in first.");
+  const handleSubmit = useCallback(() => {
+    if (!canSubmit) {
+      alert('Please run the solution first before submitting the test.');
       return;
     }
-  
-    setIsSubmitting(true);
-    setSubmissionMessage("Submitting your code to S3...");
-  
-    try {
-      // Call Firebase function to submit the code to S3
-      const submitCode = functions.httpsCallable("submitCode");
-      const submitResult = await submitCode({
-        codeContent: code,
-        userId: currentUser.uid,
-      });
-  
-      if (submitResult.data.success) {
-        setSubmissionMessage("Code submitted to S3 successfully!");
+    setSubmitted(true);
+    alert('Test Submitted!');
+    console.log('Selected Answers:', selectedAnswers);
+    console.log('User Intuition:', userIntuition);
+  }, [canSubmit, selectedAnswers, userIntuition]);
+
+  useEffect(() => {
+    requestFullScreen();
+
+    const timerInterval = setInterval(() => {
+      if (timeLeft > 0) {
+        setTimeLeft(timeLeft - 1);
       } else {
-        setSubmissionMessage("Error submitting code to S3. Please try again.");
-      }
-    } catch (error) {
-      setSubmissionMessage("There was an issue submitting your code.");
-      console.error("Error submitting code:", error);
-    }
-  
-    setIsSubmitting(false);
-  };
-  
-
-
-
-
-  const handleRun = async () => {
-    setLoading(true);
-    setOutput(''); 
-    try {
-      // Use your deployed Firebase Function URL (don't forget to change it before production)
-      const response = await axios.post(
-        'https://us-central1-educate-5d670.cloudfunctions.net/executecode', // Replace <your-project-id>
-        {
-          code,
-          language,
+        clearInterval(timerInterval);
+        if (warningCount < 3) {
+          alert('Test terminated due to time limit!');
+          handleSubmit();
         }
-      );
-  
-      // Check if response contains output data
-      if (response.data && response.data.output) {
-        setOutput(response.data.output);  
-      } else {
-        setOutput('No output from the code execution.');
       }
-    } catch (error) {
-    
-      setOutput(`Error executing code: ${error.response ? error.response.data : error.message}`);
-      console.error('Error:', error);
-    } 
-    finally 
-    {
-      setLoading(false);  // Stop the loading indicator after completion
-    }
+    }, 1000);
+
+    const fullScreenInterval = setInterval(() => {
+      checkFullScreen();
+    }, 1000);
+
+    return () => {
+      clearInterval(timerInterval);
+      clearInterval(fullScreenInterval);
+    };
+  }, [timeLeft, warningCount, fullScreenViolated, checkFullScreen, handleSubmit]);
+
+  const handleAnswerChange = (questionId, answer) => {
+    setSelectedAnswers({ ...selectedAnswers, [questionId]: answer });
   };
-  
+
+  const handleIntuitionChange = (event) => {
+    setUserIntuition(event.target.value);
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900">
-      {/* Problem Description Panel - Top */}
-      <Card className="h-2/5 overflow-y-auto bg-gray-800 text-white p-4 m-4 rounded-lg">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">{currentProblem.title}</h2>
-          <span className={`px-3 py-1 rounded ${
-            currentProblem.difficulty === 'Easy' ? 'bg-green-600' :
-            currentProblem.difficulty === 'Medium' ? 'bg-yellow-600' :
-            'bg-red-600'
-          } text-white`}>
-            {currentProblem.difficulty}
-          </span>
+    <div className="App">
+      <header className="header">
+        <h1>Aiverex Educate</h1>
+      </header>
+
+      <div className="container">
+        <div className="test-info">
+          <h2>Test: Introduction to Algorithms</h2>
+          <p>Duration: 60 Minutes</p>
+          <p>Start Time: 22nd March, 2025 - 10:00 AM</p>
+          <p>Instructions: Solve the following problems within the given time.</p>
         </div>
-        
-        <div className="space-y-4">
-          <p className="text-gray-200">{currentProblem.description}</p>
-          
-          <div>
-            <h3 className="text-lg font-semibold">Examples:</h3>
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              {currentProblem.examples.map((example, index) => (
-                <div key={index} className="bg-gray-700 p-3 rounded">
-                  <p><strong>Input:</strong> {example.input}</p>
-                  <p><strong>Output:</strong> {example.output}</p>
-                  <p><strong>Explanation:</strong> {example.explanation}</p>
-                </div>
-              ))}
+
+        <div className="timer">
+          <p>Time Left: <span>{formatTime(timeLeft)}</span></p>
+        </div>
+
+        <div className="questions">
+          {questions.map((question) => (
+            <div key={question.id} className="question">
+              <h3>{question.question}</h3>
+              <div className="options">
+                {question.options.map((option, index) => (
+                  <div key={index}>
+                    <input
+                      type="radio"
+                      id={`${question.id}-${index}`}
+                      name={question.id}
+                      value={option}
+                      onChange={() => handleAnswerChange(question.id, option)}
+                      checked={selectedAnswers[question.id] === option}
+                      disabled={submitted}
+                    />
+                    <label htmlFor={`${question.id}-${index}`}>{option}</label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold">Constraints:</h3>
-            <ul className="list-disc pl-5 text-gray-200">
-              {currentProblem.constraints.map((constraint, index) => (
-                <li key={index}>{constraint}</li>
-              ))}
-            </ul>
-          </div>
+          ))}
         </div>
-      </Card>
 
-      {/* Code Editor Panel - Bottom */}
-      <div className="flex-1 p-4 space-y-4">
-        <div className="flex justify-between items-center">
-          <select 
-            onChange={handleLanguageChange} 
-            value={language}
-            className="bg-gray-700 text-white p-2 rounded"
+        <div className="run-section">
+          <button
+            className="run-btn"
+            onClick={runTest}
+            disabled={testRunning || submitted}
           >
-            <option value="python3">Python</option>
-            <option value="java">Java</option>
-            <option value="cpp">C++</option>
-          </select>
-          
-          <div className="space-x-2">
-            <button 
-              onClick={handleRun} 
-              disabled={loading}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-            >
-              {loading ? 'Running...' : 'Run Code'}
-            </button>
-            <button 
-              onClick={handleSubmitCode}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              Submit
-            </button>
-          </div>
+            {testRunning ? 'Test Running...' : 'Run Solution'}
+          </button>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 h-full">
-          {/* Code Editor */}
-          <div className="col-span-2">
-            <AceEditor
-              mode={language}
-              theme="monokai"
-              name="code_editor"
-              value={code}
-              onChange={handleCodeChange}
-              width="100%"
-              height="300px"
-              showPrintMargin={false}
-              showGutter={true}
-              highlightActiveLine={true}
-              className="rounded"
-              setOptions={{
-                fontFamily: 'monospace',
-                fontSize: 16,
-              }}
-            />
-          </div>
+        <div className="submit-section">
+          <button
+            className="submit-btn"
+            onClick={handleSubmit}
+            disabled={!canSubmit || submitted}
+          >
+            {submitted ? 'Test Submitted' : 'Submit Test'}
+          </button>
+        </div>
 
-          {/* Output Panel */}
-          <div className="bg-gray-800 p-4 rounded">
-            <h3 className="text-white text-lg font-semibold mb-2">Output:</h3>
-            <pre className="text-white font-mono bg-gray-700 p-3 rounded h-[calc(100%-2rem)] overflow-y-auto">
-              {output}
-            </pre>
-          </div>
+        <div className="intuition-tab">
+          <h3>Your Problem Solving Intuition</h3>
+          <textarea
+            className="intuition-textarea"
+            placeholder="Write your intuition or approach to solve the problem here..."
+            value={userIntuition}
+            onChange={handleIntuitionChange}
+            disabled={submitted}
+          />
         </div>
       </div>
+
+      <footer className="footer">
+        <p>&copy; 2025 HackerRank Replica</p>
+      </footer>
     </div>
   );
-};
+}
 
-export default CodeEditor;
+export default Test;

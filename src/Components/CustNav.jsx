@@ -154,7 +154,7 @@ function CustNav(props) {
                     })}
                     {isLoggedIn == "1" && (
                       <li
-                        className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
+                        className={`${styles["navItems"]} nav-item 1 pl-2 pl-md-0 ml-0 ml-md-2`}
                       >
                         <Link
                           className={`${styles["navLinks"]} nav-link`}
@@ -318,7 +318,7 @@ const LandNav = () => {
                     )}
                     {isLoggedIn && (
                       <li
-                        className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
+                        className={`${styles["navItems"]} nav-item 2 pl-2 pl-md-0 ml-0 ml-md-2`}
                       >
                         <Link
                           className={`${styles["navLinks"]} nav-link`}
@@ -343,19 +343,16 @@ const MainNav = () => {
   const { userData, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogout = () => {
-    //   const navigate = useNavigate()
-    auth
-      .signOut()
+    auth.signOut()
       .then(() => {
-        // Sign-out successful.
         navigate("/");
         console.log("User signed out");
       })
       .catch((error) => {
-        // An error happened.
         console.error("Sign-out error", error);
       });
   };
+
   return (
     <>
       <link
@@ -363,14 +360,12 @@ const MainNav = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
       />
 
-      <div
-        className={`${styles["navigation-wrap"]} ${styles["start-header"]} sticky-top`}
-      >
+      <div className={`${styles["navigation-wrap"]} ${styles["start-header"]} ${styles["start-style"]} sticky-top`}>
         <div className={"container-fluid"}>
           <div className="row">
             <div className="col p-0">
               <nav className={`navbar navbar-expand-md navbar-dark p-2`}>
-                <Link className={`${styles["navLogo"]} navbar-brand`} to="/">
+                <Link className={`${styles["navLogo"]} px-4 navbar-brand`} to="/">
                   <img
                     src="https://aivirex.in/assets/img/favicon/apple-touch-icon.png"
                     alt=""
@@ -381,218 +376,65 @@ const MainNav = () => {
                   AIVIREX
                 </Link>
 
-                <button
-                  className={`${styles["navbarToggler"]} navbar-toggler`}
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span
-                    className={`${styles["navbarTogglerIcon"]} navbar-toggler-icon`}
-                  ></span>
-                </button>
-
-                {userData && (
-                  <div
-                    className="collapse navbar-collapse"
-                    id="navbarSupportedContent"
+                <div className={`px-4`}>
+                  <button
+                    className={`${styles["navbarToggler"]} navbar-toggler`}
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
                   >
-                    <ul className="navbar-nav py-4 py-md-0">
-                      {userData.role == "student" && (
-                        <>
-                          <li
-                            className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                          >
-                            <NavLink
-                              className={({ isActive }) =>
-                                `${styles["navLinks"]} nav-link ${
-                                  isActive && styles["activeLink"]
-                                }`
-                              }
-                              to="/student"
-                            >
-                              Home
-                            </NavLink>
-                          </li>
-                          <li
-                            className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                          >
-                            <NavLink
-                              className={({ isActive }) =>
-                                `${styles["navLinks"]} nav-link ${
-                                  isActive && styles["activeLink"]
-                                }`
-                              }
-                              to="student/courses"
-                            >
-                              Courses
-                            </NavLink>
-                          </li>
-                          <li
-                            className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                          >
-                            <NavLink
-                              className={({ isActive }) =>
-                                `${styles["navLinks"]} nav-link ${
-                                  isActive && styles["activeLink"]
-                                }`
-                              }
-                              to="student/review"
-                            >
-                              Review
-                            </NavLink>
-                          </li>
-                          <li
-                            className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                          >
-                            <NavLink
-                              className={({ isActive }) =>
-                                `${styles["navLinks"]} nav-link ${
-                                  isActive && styles["activeLink"]
-                                }`
-                              }
-                              to="student/post/problem"
-                            >
-                              PostCode
-                            </NavLink>
-                          </li>
-                        </>
-                      )}
-                      {userData.role == "mentor" && (
-                        <li
-                          className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                        >
-                          <NavLink
-                            className={({ isActive }) =>
-                              `${styles["navLinks"]} nav-link ${
-                                isActive && styles["activeLink"]
-                              }`
-                            }
-                            to="/home"
-                          >
-                            Home
-                          </NavLink>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                )}
-                <div
-                  className="collapse navbar-collapse"
-                  id="navbarSupportedContent"
-                >
+                    <span className={`${styles["navbarTogglerIcon"]} navbar-toggler-icon`}></span>
+                  </button>
+                </div>
+
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav ml-auto py-4 py-md-0">
-                    <li
-                      className={`${styles["navItems"]} nav-item position-relative`}
-                    >
-                      {/*  dropdown-toggle */}
-                      <Link
-                        className={`${styles["navLinks"]} nav-link`}
-                        data-toggle="dropdown"
-                        href="#"
-                        role="button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <SmileTwoTone size={150} />
-                      </Link>
-                      <div
-                        className={`${styles["dropdown-menu"]} ${styles["bg-black"]} dropdown-menu position-absolute`}
-                      >
-                        {isLoggedIn && (
-                          <>
-                            <Link
-                              className={`${styles["dropdown-item"]} ${styles["text-white"]} ${styles["navLinks"]} nav-link `}
-                              to="/home"
-                            >
-                              Dashboard
-                            </Link>
-                            <Link
-                              className={`${styles["dropdown-item"]} ${styles["text-white"]} ${styles["navLinks"]} nav-link `}
-                              to="/home/notify"
-                            >
-                              Notification
-                            </Link>
-                            <Link
-                              className={`${styles["dropdown-item"]} ${styles["text-white"]} ${styles["navLinks"]} nav-link `}
-                              to="/home/edit"
-                            >
-                              Edit Profile
-                            </Link>
-                          </>
-                        )}
-                        {!isLoggedIn && (
-                          <Link
-                            className={`${styles["navLinks"]} nav-link`}
-                            to="/login"
-                          >
-                            Login
-                          </Link>
-                        )}
-                        {!isLoggedIn && (
-                          <Link
-                            className={`${styles["navLinks"]} nav-link`}
-                            to="/register"
-                          >
-                            Register
-                          </Link>
-                        )}
-                        {isLoggedIn && (
-                          <Link className={`${styles["navLinks"]} nav-link`}>
-                            Logout
-                          </Link>
-                        )}
-                      </div>
+                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                      <Link className={`${styles["navLinks"]} nav-link`} to="/">Home</Link>
                     </li>
-                    <ul className="navbar-nav ml-auto py-4 py-md-0">
-                      {!isLoggedIn && (
-                        <li
-                          className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                        >
-                          <NavLink
-                            className={({ isActive }) =>
-                              `${styles["navLinks"]} nav-link ${
-                                isActive && styles["activeLink"]
-                              }`
-                            }
-                            to="/login"
-                          >
-                            Login
-                          </NavLink>
+                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                      <Link className={`${styles["navLinks"]} nav-link`} to="/about">About</Link>
+                    </li>
+                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                      <Link className={`${styles["navLinks"]} nav-link`} to="#progress">How it works</Link>
+                    </li>
+                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                      <Link className={`${styles["navLinks"]} nav-link`} to="#team">Team</Link>
+                    </li>
+                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                      <Link className={`${styles["navLinks"]} nav-link`} to="#featured">Featured</Link>
+                    </li>
+
+                    {/* Add Dashboard and Take Test Links when logged in as student */}
+                    {isLoggedIn && userData && userData.role === 'student' && (
+                      <>
+                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                          <Link className={`${styles["navLinks"]} nav-link`} to="/student/dashboard">Dashboard</Link>
                         </li>
-                      )}
-                      {!isLoggedIn && (
-                        <li
-                          className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                        >
-                          <NavLink
-                            className={({ isActive }) =>
-                              `${styles["navLinks"]} nav-link ${
-                                isActive && styles["activeLink"]
-                              }`
-                            }
-                            to="/register"
-                          >
-                            Register
-                          </NavLink>
+                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                          <Link className={`${styles["navLinks"]} nav-link`} to="/student/take-test">Take Test</Link>
                         </li>
-                      )}
-                      {isLoggedIn && (
-                        <li
-                          className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
-                        >
-                          <Link
-                            className={`${styles["navLinks"]} nav-link`}
-                            onClick={handleLogout}
-                          >
-                            Logout
-                          </Link>
+                      </>
+                    )}
+
+                    {/* Auth Links */}
+                    {!isLoggedIn ? (
+                      <>
+                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                          <Link className={`${styles["navLinks"]} nav-link`} to="/login">Login</Link>
                         </li>
-                      )}
-                    </ul>
+                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                          <Link className={`${styles["navLinks"]} nav-link`} to="/register">Register</Link>
+                        </li>
+                      </>
+                    ) : (
+                      <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                        <Link className={`${styles["navLinks"]} nav-link`} onClick={handleLogout}>Logout</Link>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </nav>

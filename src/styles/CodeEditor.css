@@ -1,0 +1,19 @@
+.test-timer {
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.warning-count {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.vertical-split {
+  display: flex;
+  height: 100vh;
+}
+
+.problem-panel {
+  border-right: 1px solid #333;
+}
