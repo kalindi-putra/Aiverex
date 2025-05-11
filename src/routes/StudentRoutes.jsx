@@ -1,4 +1,4 @@
-import { Dashboard } from '../Pages/Students/Dashboard';
+import Dashboard from '../Pages/Students/Dashboard';
 import Courses from '../Pages/Students/Courses';
 import TakeTest from '../Pages/Students/CodeEditor';
 import Home2 from '../Pages/Home2';

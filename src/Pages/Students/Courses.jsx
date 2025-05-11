@@ -1,5 +1,5 @@
 import React from 'react'
-import { CourseList } from './Dashboard';
+import { CourseList } from '../../store/data';
 import { Typography,Row,Col } from 'antd';
 import {CustDes} from "../../Components/Card";
 

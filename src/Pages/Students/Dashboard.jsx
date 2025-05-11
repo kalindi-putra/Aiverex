@@ -1,216 +1,249 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Col, Row, Typography, Button, Input, Form } from 'antd';
-import { CusCard, CustDes, Learn } from "../../Components/Card";
-import CustLayout from './Layout';
-import { AuthContext } from '/src/context/UserContext';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db , auth } from '../../firebase/Firebase';
-import { useNavigate } from 'react-router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { AuthContext } from '../../context/UserContext';
+import { Layout, Typography, Row, Col, Affix } from 'antd';
+import { CustDes } from '../../Components/Card';
+const { Header, Footer, Content } = Layout;
+import { Link, useNavigate } from 'react-router-dom';
+import styles from './layout.module.css';
+import { CourseList } from '../../store/data';
+import { auth } from '../../firebase/Firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import Profile from './Profile';
+import Education from './Education';
+import TestScores from './TestScores';
+import Certificates from './Certificates';
+import SubmittedTests from './SubmittedTests';
 
-const CourseList = [
+const progress = [
   {
-    id: 1,
+    name: 'C',
+    marks: 415,
+    color: '#6B11DC',
+  },
+  {
     name: 'C++',
-    img: '/assets/course.png',
-    description: 'C++ is a general-purpose programming language created by Bjarne Stroustrup. It is widely used for system/software development and game programming due to its performance and efficiency.',
-    price: 5000,
-    duration: '2 months',
+    marks: 330,
+    color: '#6B11DC',
   },
   {
-    id: 2,
     name: 'Java',
-    img: '/assets/course2.png',
-    description: 'Java is a high-level, class-based, object-oriented programming language. It is designed to have as few implementation dependencies as possible, making it ideal for building cross-platform applications.',
-    price: 6000,
-    duration: '2 months',
+    marks: 457,
+    color: '#6B11DC',
   },
   {
-    id: 3,
-    name: 'Python',
-    img: '/assets/course3.jpeg',
-    description: 'Python is a widely used, high-level programming language known for its simplicity and readability. It is used for web development, data analysis, machine learning, and automation tasks.',
-    price: 4000,
-    duration: '2 months',
-  }
+    name: 'C',
+    marks: 415,
+    color: '#6B11DC',
+  },
+  {
+    name: 'C++',
+    marks: 330,
+    color: '#6B11DC',
+  },
+  {
+    name: 'Java',
+    marks: 457,
+    color: '#6B11DC',
+  },
 ];
 
 
+
+// Add this mock data near your other mock data
+const sampleCertificates = [
+  {
+    id: 1,
+    title: 'React Development',
+    issuer: 'Meta',
+    date: 'March 2024',
+    image: 'https://media.licdn.com/dms/image/v2/D4D22AQEwHguGYe8Cuw/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1686231313965?e=2147483647&v=beta&t=jHLpvQa7zVybNNiS7mF3gtee77ndYAGeDOnywj0LdA8'
+  },
+  {
+    id: 2,
+    title: 'Angular Development',
+    issuer: 'Google',
+    date: 'February 2024',
+    image: 'https://campus.w3schools.com/cdn/shop/files/certificate_of_completion_angularjs_professional_d94c03b2-215c-4863-9c95-c4d8494440b5_844x667.jpg?v=1710928752'
+  },
+  {
+    id: 3,
+    title: 'Vue',
+    issuer: 'Facebook',
+    date: 'January 2024',
+    image: 'https://campus.w3schools.com/cdn/shop/files/certificate_of_completion_vue.js_professional_844x667.jpg?v=1711023352'
+  }
+];
+
+const eduArray = [
+  {
+    id: 1,
+    title: 'School',
+    name: 'Adithiya Vidyasharam',
+    year: '2010-2018',
+    grade: 'till 10th',
+    marks: '69%'
+  },
+  {
+    id: 2,
+    title: 'Higher Studies',
+    name: 'Slam Academy',
+    year: '2018-2020',
+    grade: 'till 12th',
+    marks: '89%'
+  },
+  {
+    id: 3,
+    title: 'College',
+    name: 'Panimalar College Of Eng',
+    year: '2020-Present',
+    grade: 'Final Year',
+    marks: '8.0 cgpa'
+  },
+]
+
 const Dashboard = () => {
-  const { userData, setUserData } = useContext(AuthContext);
-  const [editing, setEditing] = useState(false);
-  const [form] = Form.useForm();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [studentData, setStudentData] = useState(null);
+  const [user, loading] = useAuthState(auth);
+  const { userData } = useContext(AuthContext);
+  const [visibleSection, setVisibleSection] = useState('profile');
+  const [scrollDirection, setScrollDirection] = useState('down');
+  const lastScrollTop = useRef(0);
+  const [modal, setModal] = useState(false);
+  const [scrWidth, setScrWidth] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef(null);
+  const navigate = useNavigate() ;
 
-  // Session timeout effect
   useEffect(() => {
-    const timer = setTimeout(() => {
-        alert('Please log in again. Session expired!');
-        navigate('/login');
-    }, 30 * 60 * 1000);
-
-    return () => clearTimeout(timer);
-  }, [navigate]);
-
-  // Fetch student data effect
-  useEffect(() => {
-    const fetchStudentData = async () => {
-      try {
-        if (!auth.currentUser) {
-          navigate('/login');
-          return;
-        }
-
-        const studentDocRef = doc(db, 'users', auth.currentUser.uid);
-        const studentDoc = await getDoc(studentDocRef);
-        
-        if (studentDoc.exists()) {
-          const data = studentDoc.data();
-          console.log(data)
-          setStudentData(data);
-          setUserData(data); // Update context with fetched data
-        } else {
-          console.log('No student data found');
-        }
-      } catch (error) 
-      {
-        console.error('Error fetching student data:', error);
-      } 
-      finally {
-        setLoading(false);
-      }
+    const handleResize = () => {
+      const isMobileQuery = window.matchMedia('(max-width: 807px)');
+      setScrWidth(isMobileQuery.matches);
     };
 
-    fetchStudentData();
-  }, [setUserData, navigate]);
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
-  const saveDataToFirestore = async (values) => {
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const sectionRefs = {
+    profile: useRef(null),
+    education: useRef(null),
+    certifications: useRef(null),
+    scores: useRef(null),
+    tests: useRef(null),
+    courses: useRef(null)
+  };
+
+  const fetchProgress = (userData) => {
     try {
-      const userDocRef = doc(db, 'users', auth.currentUser.uid);
-      await setDoc(userDocRef, { 
-        ...studentData,
-        ...values,
-        updatedAt: new Date().toISOString()
-      }, { merge: true });
-      
-      setStudentData(prev => ({ ...prev, ...values }));
-      setUserData(prev => ({ ...prev, ...values }));
-      setEditing(false);
+      // Retrieve the progress array from `userData`
+      const progressArray = userData && userData.prog ? userData.prog : [];
+
+      // Convert the progress array into an array of JavaScript objects
+      const progressObjects = progressArray.map((progressItem) => ({
+        name: progressItem.name,
+        marks: progressItem.marks,
+        ps1: progressItem.ps1,
+        ps2: progressItem.ps2,
+        pstate1: progressItem.pstate1,
+        pstate2: progressItem.pstate2,
+      }));
+
+      console.log('Progress fetched successfully:', progressObjects);
+      return progressObjects;
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error('Error fetching progress:', error);
+      return [];
     }
   };
 
-  if (loading) {
-    return <div style={{ textAlign: 'center', padding: '20px' }}>Loading...</div>;
-  }
+  // Call the fetchProgress function with the `userData` object
+  const progressObjects = fetchProgress(userData);
+
+  //----------------------------------------------------------
+
+  const courselist = userData ? userData.courselist : '';
+
+
+  const fetchCourse = (userData) => {
+    try {
+      // Retrieve the progress array from `userData`
+      const colist = userData && userData.courselist ? userData.courselist : [];
+
+      // Convert the progress array into an array of JavaScript objects
+      const CourseObjects = colist.map((courseItem) => ({
+        description: courseItem.description,
+        id: courseItem.id,
+        img: courseItem.img,
+        name: courseItem.name,
+        price: courseItem.price,
+
+      }));
+
+      console.log('Progress fetched successfully:', CourseObjects);
+      return CourseObjects;
+    } catch (error) {
+      console.error('Error fetching progress:', error);
+      return [];
+    }
+  };
+
+  // Call the fetchProgress function with the `userData` object
+  const CourseObjects = fetchCourse(userData);
 
   return (
-    <div style={{
-      padding: '20px 40px',
-      color: '#fff',
-      background: '#262626',
-      borderRadius: 30,
-      margin: { lg: '30px 10px', sm: '0px' },
-    }}>
-      <center><h1>Student Dashboard</h1></center>
-      
-      <p>Welcome {studentData?.displayName || userData?.displayName || "Student"}!</p>
-      <CustLayout />
+    <div className={styles['dashboardContainer']}>
 
-      {/* Display student profile data */}
-      <div style={{ marginBottom: '20px' }}>
-        <h2>Profile Information</h2>
-        <p>Email: {studentData?.email}</p>
-        <p>Role: {studentData?.role}</p>
-        <p>Join Date: {studentData?.createdAt && new Date(studentData.createdAt).toLocaleDateString()}</p>
+      {/* Main Content */}
+      <div className={styles['scrollSection']} ref={scrollContainerRef}>
+        {/* Profile Section */}
+        <div id="profile-section">
+          <Profile />
+        </div>
+
+        {/* Education Section */}
+        <div id="education-section">
+          <Education eduArray={eduArray} userData={userData} />
+        </div>
+
+        {/* Test Scores Section */}
+        <div id="scores-section">
+          <TestScores progress={progress} scrWidth={scrWidth} />
+        </div>
+
+        {/* Certificates Section */}
+        <div id="certificates-section">
+          <Certificates userData={userData} sampleCertificates={sampleCertificates} />
+        </div>
+
+        {/* Tests Section */}
+        <div id="tests-section">
+          <SubmittedTests />
+        </div>
+
+        {/* Courses Section */}
+        <div id="courses-section" className={styles['scrollItem']}>
+          <section className={styles['section']}>
+            <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+              Try Taking this test
+            </Typography.Title>
+            <Row>
+              {CourseList.slice(0, 4).map((course) => (
+                <Col key={course.id} lg={6} md={8} sm={12}>
+                  <CustDes content={course} type='test' />
+                </Col>
+              ))}
+            </Row>
+            <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+              <Link to='/courses' className="view">View More</Link>
+            </Typography.Title>
+          </section>
+        </div>
       </div>
-
-      {/* Display skills and education if available */}
-      {(studentData?.skills || studentData?.education) ? (
-        <div>
-          <h2>Skills: {studentData.skills}</h2>
-          <h2>Education: {studentData.education}</h2>
-          <Button onClick={() => setEditing(true)}>Edit Information</Button>
-        </div>
-      ) : (
-        <div style={{padding:'10px'}}>
-          <Button onClick={() => setEditing(true)}>Add Skills and Education</Button>
-        </div>
-      )}
-
-      {/* Rest of your existing code... */}
-      {editing && (
-        <div style={{paddingBottom:'20px'}}>
-          <Form
-            form={form}
-            onFinish={saveDataToFirestore}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              maxWidth: '400px',
-              margin: '0 auto',
-              padding: '20px',
-              backgroundColor: '#f9f9f9',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <Form.Item label="Skills" name="skills" style={{ marginBottom: '15px' }}>
-              <Input
-                placeholder="Enter your skills"
-                style={{
-                  padding: '10px',
-                  borderRadius: '4px',
-                  border: '1px solid #ddd',
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item label="Education" name="education" style={{ marginBottom: '20px' }}>
-              <Input
-                placeholder="Enter your education"
-                style={{
-                  padding: '10px',
-                  borderRadius: '4px',
-                  border: '1px solid #ddd',
-                }}
-              />
-            </Form.Item>
-
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
-              Save
-            </Button>
-          </Form>
-        </div>
-      )}
-
-      <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-        Try Taking this test
-      </Typography.Title>
-      <center>
-        <div >
-      <Row style={{display:'flex', justifyContent:'space-evenly'}}>
-        {CourseList.slice(0, 4).map((course) => (
-          <Col lg={6} md={8} sm={12} key={course.id}>
-            <CustDes content={course} type='test' />
-          </Col>
-        ))}
-      </Row>
-      </div>
-      </center>
-
-      <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-        <a className="view">View More</a>
-      </Typography.Title>
     </div>
   );
 };
 
-
-export { Dashboard,CourseList};
+export default Dashboard;

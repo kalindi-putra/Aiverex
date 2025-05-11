@@ -1,0 +1,82 @@
+.notification-badge {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px;
+}
+
+.notification-bell {
+    font-size: 24px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.notification-bell:hover {
+    color: #6B11DC;
+    transform: scale(1.1);
+}
+
+.notification-dropdown {
+    background: #343434;
+    border-radius: 12px;
+    padding: 20px;
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification-item {
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #343434;
+}
+
+.notification-item:hover {
+    background: #2f2f2f;
+    border-radius: 10px;
+}
+
+.notification-item .ant-list-item-meta-title {
+    color: #fff !important;
+    margin-bottom: 4px;
+}
+
+.notification-item .ant-list-item-meta-description {
+    color: #ccc !important;
+}
+
+.notification-time {
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    color: #888 !important;
+}
+
+/* Custom scrollbar for the dropdown */
+.notification-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-dropdown::-webkit-scrollbar-track {
+    background: #242424;
+    border-radius: 3px;
+}
+
+/* .notification-dropdown::-webkit-scrollbar-thumb {
+    background: #383434;
+    border-radius: 3px;
+} */
+
+/* Animation for dropdown */
+.ant-dropdown {
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Initially hidden (handled by Ant Design internally), just animate when it becomes visible */
+  .ant-dropdown-hidden {
+    opacity: 0 !important;
+    transform: translateY(-10px) !important;
+    pointer-events: none;
+  }

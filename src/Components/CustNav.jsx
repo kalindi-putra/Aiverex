@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/UserContext";
 import { auth } from "../firebase/Firebase";
+import NotificationBell from './NotificationBell';
 
 function CustNav(props) {
   const {
@@ -342,6 +343,34 @@ const LandNav = () => {
 const MainNav = () => {
   const { userData, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const mockNotifications = [
+		{
+			id: 1,
+			description: ' Had a nice meeting. Duration can be used to specify how long the notification stays open. After the duration time elapses, the notification closes automatically. If not specified, default value is 4.5 seconds. If you set the value to 0, the notification box will never close automatically.',
+			time: '2 hours ago'
+		},
+		{
+			id: 2,
+			description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+			time: '5 hours ago'
+		},
+		{
+			id: 3,
+			description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+			time: '5 hours ago'
+		},
+		{
+			id: 4,
+			description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+			time: '5 hours ago'
+		},
+		{
+			id: 5,
+			description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+			time: '5 hours ago'
+		}
+	];
   const handleLogout = () => {
     auth.signOut()
       .then(() => {
@@ -416,6 +445,9 @@ const MainNav = () => {
                         </li>
                         <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
                           <Link className={`${styles["navLinks"]} nav-link`} to="/student/take-test">Take Test</Link>
+                        </li>
+                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                          <NotificationBell notifications={mockNotifications} />
                         </li>
                       </>
                     )}

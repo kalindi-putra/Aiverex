@@ -1,7 +1,6 @@
 import { Menu } from "antd";
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { debounce } from 'lodash';
 import './Side.css';
 
 function SideMenu(props) {

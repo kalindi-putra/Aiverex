@@ -5,6 +5,10 @@ import {
   BugOutlined,
   FormOutlined,
   FileProtectOutlined,
+  ReadOutlined,
+  FileSearchOutlined,
+  SafetyCertificateOutlined,
+  FileDoneOutlined,
   PlusCircleOutlined,
 
 } from "@ant-design/icons";
@@ -222,19 +226,34 @@ const ExpertsData = [
 
 const StudentItems = [
   {
-      label: 'Dashboard',
-      icon:<AppstoreOutlined />,
-      key: '/home',
+    label: 'Profile',
+    icon: <AppstoreOutlined />,
+    key: 'profile-section',
   },
   {
-      label: 'Notifications',
-      icon:<MessageOutlined/>,
-      key: '/home/notify',
+    label: 'Education',
+    icon: <ReadOutlined />,
+    key: 'education-section',
   },
   {
-      label: 'Edit Profile',
-      icon:<PlusCircleOutlined />,
-      key: '/home/edit',
+    label: 'Test Scores',
+    icon: <FileSearchOutlined />,
+    key: 'scores-section',
+  },
+  {
+    label: 'Certificates',
+    icon: <SafetyCertificateOutlined />,
+    key: 'certificates-section',
+  },
+  {
+    label: 'Submitted Tests',
+    icon: <FileDoneOutlined />,
+    key: 'tests-section',
+  },
+  {
+    label: 'Edit Profile',
+    icon: <PlusCircleOutlined />,
+    key: 'edit',
   },
   // {
   //     label: 'Reviews',

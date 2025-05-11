@@ -1,357 +1,624 @@
-/* General Profile Layout */
-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-.profilePhotoContainer {
-    position: relative;
-    display: inline-block;
-  }
-  .profileImage {
-    width: 120px; /* Profile image size */
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #343434;
-  }
-  
-  .defaultAvatar {
-    background-color: #cccccc; /* Default background color for the avatar */
-    width: 120px; /* Matching size of the profile image */
-    height: 120px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px; /* Larger icon size for visibility */
-  }
-  .uploadButton {
-    position: absolute;
-    bottom: 15px; /* Positioned in the bottom-right corner */
-    right: 5px;
-    border-radius: 50%;
-    background-color: #343434;
-    color: white;
-    width: 20px; /* Smaller button size */
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  }
-  
-  .uploadButton:hover {
-    background-color: #4b4b4b;
-  }
-
-
-.profileDiv {
-    display: inline-flex;
-    align-items: center;
-    margin:auto;
-    padding: 30px;
-    background-color: var(--secondary);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease-in-out;
+/* Base styles */
+:root {
+  --primary: #6B11DC;
+  --secondary: #343434;
+  --background: #242424;
+  --text: #fff;
+  --text-secondary: #ccc;
+  --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.profileDiv:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+/* Dashboard container */
+.dashboardContainer {
+  min-height: 100vh;
+  background: #242424;
+  color: #fff;
+  width: 100%;
 }
 
-/* Profile Image */
-.profileImage {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    object-fit: cover;
-    transition: all 0.3s ease;
+.header {
+  background: #242424;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
 }
 
-.profileImage:hover {
-    transform: scale(1.05);
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Profile Name */
-.profileName {
-    color: #fff;
-    font-size: 1.6rem;
-    margin-top: 15px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+.mainContent {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
 }
 
-.profileName:hover {
-    color: var(--primary);
+.section {
+  background: #343434;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transform: none;
+  transition: all 0.3s ease;
 }
 
-/* Edit Profile Button */
-.editProfileButton {
-    margin-top: 20px;
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-    text-align: center;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.editProfileButton:hover {
-    background-color: #5a0cbb;
-    transform: scale(1.05);
+.sectionContent {
+  opacity: 1;
 }
-/* In layout.module.css */
 
-/* Style for the section that contains profile links */
-.profileLinks {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+/* Profile Grid */
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.profileCard {
+  background: #242424;
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+/* Education Grid */
+.educationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  color:white;
+}
+
+.educationCard {
+  background: #242424;
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: white;
+}
+
+/* Scores Grid */
+.scoresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 15px;
+}
+
+.scoreCard {
+  background: var(--secondary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: var(--transition);
+}
+
+.scoreCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.scoreInfo {
+  flex: 1;
+}
+
+.scoreProgress {
+  min-width: 80px;
+}
+
+/* Certifications Grid */
+.certificationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* Courses Grid */
+.coursesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Skills Tags */
+.skillsTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.skillsTags :global(.ant-tag) {
+  font-size: 1rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 0 1rem;
   }
-  
-  /* Style for individual profile link cards */
-  .profileLinkCard {
-    background-color: #f5f5f5;
-    padding: 15px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
+
+  .section {
+    padding: 1.5rem;
   }
-  
-  /* Hover effect for the profile link cards */
-  .profileLinkCard:hover {
-    transform: translateY(-5px);
+
+  .profileGrid,
+  .educationGrid,
+  .scoresGrid,
+  .certificationsGrid,
+  .coursesGrid {
+    grid-template-columns: 1fr;
   }
-  
-  /* Style for the GitHub and Resume button text */
-  .profileLinkCardText {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+}
+
+/* Animation classes */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Button styles */
-  .addLinkButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    transition: background-color 0.3s ease;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .addLinkButton:hover {
-    background-color: #0056b3;
+}
+
+.section {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Scroll animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
   }
-  
-  .addLinkButton:focus {
-    outline: none;
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  /* Modal Styles */
-  .modalHeader {
-    font-size: 18px;
-    font-weight: 600;
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  .modalFooterButton {
-    background-color: #007bff;
-    color: white;
-    border-radius: 10px;
-    padding: 8px 20px;
-    border: none;
-    transition: background-color 0.3s ease;
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
   }
-  
-  .modalFooterButton:hover {
-    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .inputField {
-    border-radius: 10px;
-    padding: 10px;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section specific styles */
+.scores-section,
+.certifications-section,
+.tests-section,
+.courses-section {
+  background: var(--secondary);
+  border-radius: 30px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+/* temporary */
+
+.feature-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2c2c2c;
+  color: white;
+  position: relative;
+}
+
+.feature-card {
+  max-width: 80%;
+  padding: 40px;
+  border-radius: 20px;
+  background-color: #4c4c4c;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  position: absolute;
+}
+
+.feature-card.next {
+  animation: slideInLeft 0.5s forwards;
+}
+
+.feature-card.prev {
+  animation: slideInRight 0.5s forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+/* Dashboard Section Animations */
+.dashboard-section {
+  min-height: auto;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.5s ease-out;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  background: #242424;
+  border-radius: 30px;
+}
+
+.dashboard-section:not(.visible) {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.dashboard-section.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Section content styling */
+.section-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-out;
+}
+
+/* Container styling */
+.dashboard-container {
+  position: relative;
+  overflow-x: hidden;
+  padding: 1rem;
+}
+
+/* Section specific styling */
+.profile-section,
+.education-section,
+.certifications-section,
+.scores-section,
+.tests-section,
+.courses-section {
+  margin-bottom: 2rem;
+  background: #242424;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section transitions */
+.transition-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Social Links */
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* No Skills State */
+.noSkills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.noSkillsIcon {
+  width: 64px;
+  height: 64px;
+  opacity: 0.6;
+}
+
+/* Certificate Cards */
+.certificateCard {
+  background: #242424 !important;
+  border: 1px solid #343434 !important;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.certificateCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #6B11DC !important;
+}
+
+.certificateImageContainer {
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  padding: 1rem;
+}
+
+.certificateImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.certificateDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.addCertificateCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  border: 2px dashed #343434 !important;
+  background: transparent !important;
+}
+
+.addCertificateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: #666;
+}
+
+.addCertificateCard:hover .addCertificateContent {
+  color: #6B11DC;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .socialLinks {
+    flex-direction: column;
     width: 100%;
-    margin-bottom: 15px;
   }
-  
 
-/* Section Titles */
-.sectionTitle {
-    color: #fff;
-    font-size: 1.6rem;
-    margin-top: 30px;
-    font-weight: bold;
-}
-
-.skillsSection, .educationSection {
-    margin-top: 25px;
-}
-
-.skillTags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.skillTag {
-    background-color: #444;
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 30px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.skillTag:hover {
-    transform: scale(1.05);
-}
-
-/* Edit and Delete Buttons */
-.editButton,
-.deleteButton {
-    margin-left: 10px;
-    background-color:  #5a0cbb;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.editButton:hover,
-.deleteButton:hover {
-    color: white;
-    transform: scale(1.05);
-}
-
-/* Add Button for Skills and Education */
-.addButton {
-    margin-top: 20px;
-    background-color: #444;
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.addButton:hover {
-    background-color: var();
-    color: #cccccc;
-    transform: scale(1.05);
-}
-
-/* Education List */
-.educationList {
-    list-style: none;
-    padding-left: 0;
-}
-
-.educationItem {
-    background-color: #444;
-    color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    transition: background-color 0.3s ease;
-}
-
-.educationItem:hover {
-    cursor: pointer;
-}
-.name{
-    padding:10px;
-    color: white;
-    font-weight: bold;
-    font-size: larger;
-}
-
-/* Modal Submit Button */
-.submitButton {
+  .socialButton {
     width: 100%;
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    justify-content: center;
+  }
+
+  .certificationsGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.submitButton:hover {
-    background-color: #5a0cbb;
-    transform: scale(1.05);
+/* Tests Container */
+.testsContainer {
+  background: var(--background);
+  border-radius: 15px;
+  padding: 1rem;
+  overflow: hidden;
 }
 
-/* Modal Styling */
-.ant-modal-header {
-    background-color: var(--secondary);
-    color: #fff;
-    border-bottom: 2px solid var(--primary);
+.testsContainer :global(.ant-table) {
+  background: transparent;
 }
 
-.ant-modal-body {
-    background-color: #444;
+.testsContainer :global(.ant-table-thead > tr > th) {
+  background: var(--secondary);
+  color: var(--text);
+  border-bottom: 2px solid var(--primary);
 }
 
-.ant-modal-footer {
-    background-color: var(--secondary);
+.testsContainer :global(.ant-table-tbody > tr > td) {
+  background: var(--background);
+  color: var(--text);
+  border-bottom: 1px solid var(--secondary);
 }
 
-/* Form Items */
-.ant-form-item {
-    margin-bottom: 20px;
+.testsContainer :global(.ant-table-tbody > tr:hover > td) {
+  background: var(--secondary) !important;
 }
 
-.ant-input {
-    background-color: #444;
-    color: #fff;
-    border-radius: 8px;
-    border: 1px solid var(--primary);
-    padding: 12px;
+.testsContainer :global(.ant-table-pagination) {
+  margin: 16px 0;
 }
 
-.ant-input:focus {
-    border-color: #5a0cbb;
+.testsContainer :global(.ant-pagination-item-active) {
+  border-color: var(--primary);
+  background: var(--primary);
 }
 
-/* Select Component */
-.ant-select-selector {
-    background-color: #444 !important;
-    color: #fff !important;
-    border: 1px solid var(--primary);
+.testsContainer :global(.ant-pagination-item-active a) {
+  color: var(--text);
 }
 
-.ant-select-item-option-active {
-    background-color: var(--primary) !important;
-    color: #333 !important;
+.testsContainer :global(.ant-btn-primary) {
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
-/* Footer Styling */
-.ant-layout-footer {
-    background-color: var(--secondary);
-    color: #fff;
-    padding: 30px 0;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+.testsContainer :global(.ant-btn-primary:hover) {
+  background: color-mix(in srgb, var(--primary) 80%, white);
+  border-color: color-mix(in srgb, var(--primary) 80%, white);
+}
+
+/* Scroll effect styles */
+.scrollSection {
+  height: calc(100vh - 64px);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  padding: 2rem;
+}
+
+.scrollSection::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollItem {
+  height: calc(100vh - 64px);
+  margin: 0 0 2rem 0;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollItem .section {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  transition: transform 0.2s ease-out;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.scrollItem .section.active {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+/* No skills state */
+.noSkills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.noSkillsIcon {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.noSkillsIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Certificate image container */
+.certificateImageContainer {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scrollSection {
+    padding: 1rem;
+  }
+
+  .scrollItem {
+    height: auto;
+    min-height: calc(100vh - 64px);
+  }
 }
