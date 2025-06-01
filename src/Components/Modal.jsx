@@ -3,7 +3,7 @@ import { useState } from 'react';
 const CustModal = (props) => {
   const [open, setOpen] = useState(true);
   return (
-    <>
+    <div>
       {/* <Button type="primary" onClick={() => setOpen(true)}>
         Open Modal of 1000px width
       </Button> */}
@@ -21,7 +21,7 @@ const CustModal = (props) => {
       >
         <p>{props.text}</p>
       </Modal>
-    </>
+    </div>
   );
 };
 export default CustModal;

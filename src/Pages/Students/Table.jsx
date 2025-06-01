@@ -1,8 +1,7 @@
 import React,{useState} from 'react';
 import { Space, Table, Tag,Button,Modal} from 'antd';
 import CustModal from '../../Components/Modal';
-
-
+import styles from './layout.module.css';
 
 
 
@@ -44,7 +43,7 @@ const CustTable = () =>
               </Tag>
             );
           })} */}
-              <Tag color='purple' key={tags[0]} onClick={modalHandler}>
+              <Tag color='purple' style={{cursor:'pointer' , border:'none' , backgroundColor:'rgba(255, 255, 255, 0.1)' , color:'white'}} key={tags[0]} onClick={modalHandler}>
                 {tags[0].toUpperCase()}
                 <input type='hidden' value={tags[1]}/>
               </Tag>
@@ -110,10 +109,12 @@ const CustTable = () =>
   
   
   return(
-    <>
-     {modal&&<CustModal text={modal} onClose={onClose} />}
-  <Table columns={columns} dataSource={data} pagination={paginationConfig} style={{color:'white !important'}} />
-    </>
+    <div className="custom-dark-table tests-section dashboard-section visible">
+      {modal && <CustModal text={modal} onClose={onClose} />}
+      <div className={styles['tableWrapper']}>
+        <Table columns={columns} dataSource={data} pagination={paginationConfig} />
+      </div>
+    </div>
   )}
 
 export default CustTable;

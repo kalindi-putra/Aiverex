@@ -3,8 +3,6 @@ import { redirect, useNavigate } from 'react-router';
 const { Title,Text,Paragraph } = Typography;
 const { Meta } = Card;
 
-// Simple Card without any props
-
 const CusCard = () => (
   <Card
     style={{
@@ -45,63 +43,160 @@ const CusCard = () => (
 
 // Cards Constructed using props content
 
-const CustDes = (props) =>{
-  const {id,img,name,description,price,styles} = props.content
-  const type = props.type
-  const navigate = useNavigate()
-  const haddler = () =>{
-    if(type=='test')
-    navigate('instructions')
-    return 
-  }
-return (
-  <Card key={id}
-    style={{
-      padding: type=='testi'?'5px':'10px',
-      borderRadius: type=='testi'?5:15,
-      // :'linear-gradient(109.6deg, black 11.2%, #242424 51.2%, black 98.6%)'
-      background: '#343434',
-      border:0,
-      overflow:'hidden',
-      color: '#fff',
-      margin: type=='testi'?8:10,
-      width: type=='testi'&&290,
-      display: type=='testi'&&'inline-block',
-    }}
-    cover={type!='testi'&&<img alt="example" src={img} 
-        style={{
-            borderRadius: 15,
-            height: 180,
-            backgroundSize: 'cover',
-            
-        }}
-    />}
-    bodyStyle={{padding: "10px",}}
-  >
-    {type!='testi'&&<Text style={{ color: 'white',fontWeight:'2px',fontSize:'23px' }}>{name}<br/></Text>}
-    <Paragraph ellipsis={{ rows: type=='testi'?5:3, expandable: false }}
-    style={{ color: '#ccc',
-    
-  }}  
-  type='secondary'>
-    {description}
-  </Paragraph>
-  {type=='testi'&&<Rate disabled allowHalf defaultValue={5} style={{display:'flex',justifyContent:'center'}}/>}
+const CustDes = (props) => {
+  const { id, index, img, name, description, price, styles } = props.content;
+  const type = props.type;
+  const isLeft = id % 2 === 1;
+  const navigate = useNavigate();
 
-  {type=='testi'&&<Text style={{ color: 'white',fontWeight:'2px',fontSize:'13px',display: 'flex', justifyContent: 'flex-end' }} italic={true}>- {name}<br/></Text>}
+  const handler = () => {
+    if (type === 'test') navigate('instructions');
+    return;
+  };
 
-    {type!='testi'&&type!='expert'&&<Button type="primary" shape="round"   style={{
-      width: '100%',
-      textAlign: 'center',
-      background:'#6B11DC'
-    }} onClick={haddler} >
-            {type=='test'&&'Take Test' || type=='course'&&'View Course'}
-          </Button>}
-          {/* {type=='expert'&& <a href="#" >View Expert</a>} */}
-        {/* <Typography.Title level={5} style={{color:'#ccc',textAlign:'left',borderTop:'1px solid #ccc',fontSize:'15px'}} > 22/07/2023 </Typography.Title > */}
-  </Card>
-)
-}
+  return (
+    <Card
+      key={id}
+      style={{
+        padding: type !== 'expert' ? '5px' : '0px 20px',
+        position: type === 'expert' && 'relative',
+        borderRadius: type !== 'expert' ? 5 : 15,
+        color: 'white',
+        background: type === 'expert' ? 'transparent' : '#343434',
+        border: 0,
+        overflow: 'hidden',
+        margin: type !== 'expert' ? 8 : "-60px 10px 0px 10px",
+        width: type !== 'expert' ? 290 : 600,
+        display: type !== 'expert' ? 'inline-block' : 'block',
+        marginLeft: type === 'expert' && !isLeft ? "212%" : "0%" ,
+        overflow: type === 'expert' && 'visible' ,
+        // animation: 'movedown 1s linear forwards',
+        // opacity: '0'
+      }}
+      bodyStyle={{ padding: '10px' }}
+    >
+      {type === 'expert' ? (
+        <div style={{ display: 'flex', flexDirection: isLeft ? 'row-reverse' : 'row', alignItems: 'center', gap: 20 }}>
+          <img src='assets/primaryDot.png' style={{ position:'absolute' , zIndex:'20' ,height:'50px' , width:'50px' , left: !isLeft && '-79px' , right: isLeft && '-81px' , top:'140px'}}></img>
+          <span style={{
+            height: '0',
+            width: '0',
+            position: 'absolute',
+            top: '140px',
+            zIndex: '1',
+            borderTop: '20px solid transparent',
+            borderBottom: '20px solid transparent',
+            borderLeft: isLeft && '20px solid white',
+            borderRight: !isLeft && '20px solid white',
+            right: isLeft && '15px',
+            left: !isLeft && '16px',
+          }}></span>
+          <img
+            src={img}
+            alt="expert"
+            style={{
+              borderRadius: 15,
+              height: 180,
+              width: 180,
+              objectFit: 'cover',
+            }}
+          />
+          <div style={{ flex: 1 }}>
+            <Text style={{ color: 'white', fontSize: '23px' }}>{name}</Text>
+            <Paragraph
+              ellipsis={{ rows: 3 }}
+              style={{ color: '#ccc' , paddingTop: '15px' }}
+              type="secondary"
+            >
+              {description}
+            </Paragraph>
+
+            {type !== 'expert' && (
+              <Button
+                type="primary"
+                shape="round"
+                style={{
+                  width: '100%',
+                  background: '#6B11DC',
+                }}
+                onClick={handler}
+              >
+                {type === 'test' && 'Take Test'}
+                {type === 'course' && 'View Course'}
+              </Button>
+            )}
+          </div>
+        </div>
+      ) : type === 'test' ? (
+        <div>
+          <img
+            src={img}
+            alt="expert"
+            style={{
+              borderRadius: 15,
+              height: 180,
+              width: 180,
+              objectFit: 'cover',
+            }}
+          />
+          <div style={{ flex: 1 }}>
+            <Text style={{ color: 'white', fontSize: '23px' }}>{name}</Text>
+            <Paragraph
+              ellipsis={{ rows: 3 }}
+              style={{ color: '#ccc' , paddingTop: '15px' }}
+              type="secondary"
+            >
+              {description}
+            </Paragraph>
+
+            {type !== 'expert' && (
+              <Button
+                type="primary"
+                shape="round"
+                style={{
+                  width: '100%',
+                  background: '#6B11DC',
+                }}
+                onClick={handler}
+              >
+                {type === 'test' && 'Take Test'}
+                {type === 'course' && 'View Course'}
+              </Button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <>
+          <Paragraph
+            ellipsis={{ rows: 5 }}
+            style={{ color: '#ccc' }}
+            type="secondary"
+          >
+            {description}
+          </Paragraph>
+          <Rate
+            disabled
+            allowHalf
+            defaultValue={5}
+            style={{ display: 'flex', justifyContent: 'center', color: 'white' }}
+          />
+          <Text
+            italic
+            style={{
+              color: 'white',
+              fontSize: '13px',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            - {name}
+          </Text>
+        </>
+      )}
+    </Card>
+  );
+};
+
 
 /// Not Yet used card comp
 

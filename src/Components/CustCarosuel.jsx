@@ -2,6 +2,8 @@ import React from 'react';
 import { Carousel,Col,Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { CustDes } from './Card';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const contentStyle= {
   height: '160px',
   maxWidth:'1200px',
@@ -15,39 +17,52 @@ const contentStyle= {
 
 const CustCarosuel = (props) => {
   const [scrWidth, setScrWidth] = useState(window.innerWidth);
+  //AOS Styling
+  const [currentSlide, setCurrentSlide] = useState(0);
+  useEffect(() => {
+    AOS.init({ duration: 300, once: true });
+  }, []);
+
+  const handleSlideChange = (index) => {
+    setCurrentSlide(index);
+    AOS.refresh(); // Re-initialize animations after slide change
+  };
+
+
   let srcSize = scrWidth
   const [incBy,setIncBy] = useState(4);
   useEffect(() => {
     const handleResize = () => {
-      // const isMobileQuery = window.matchMedia('(max-width: 807px)');
-      setScrWidth(window.innerWidth);
-      setIncBy(Math.floor((scrWidth-100)/300))
+      const width = window.innerWidth;
+      setScrWidth(width);
+      setIncBy(Math.floor((width - 100) / 300));
     };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
-    handleResize(); // Check on component mount
-
-    window.addEventListener('resize', handleResize); // Add event listener for window resize
-
-    // return () => {
-    //   window.removeEventListener('resize', handleResize); // Clean up event listener on component unmount
-    // };
-  }, [scrWidth]);
   const content = props.content;
-  const loop = () =>{
 
-    let arr = []
-    for(let i=0;i<content.length;i+=incBy){
-    arr.push(<div style={{paddingRight:"30px"}}>
-          {content.slice(i,i+incBy).map((item) => {
-              return <CustDes content={item} type='testi' />
-          })}
-
-        </div>)
+  const loop = () => {
+    let arr = [];
+    for (let i = 0; i < content.length; i += incBy) {
+      arr.push(
+        <div
+          key={i}
+          style={{ paddingRight: "30px" }}
+        >
+          {content.slice(i, i + incBy).map((item, j) => (
+            <CustDes key={j} content={item} type="testi" />
+          ))}
+        </div>
+      );
     }
-    return arr
-  }
+    return arr;
+  };
 
-     
   return (
     // <Carousel  effect='fade' afterChange={onChange}
     // >
@@ -64,16 +79,21 @@ const CustCarosuel = (props) => {
     //     // </Col>
     //   )})}
     // </Carousel>
-    <Carousel  effect='fade' autoplay 
-    style={{
-      paddingBottom:'5rem',
-      margin:'0 auto',
-      marginLeft: '70px',
-      maxWidth:'100%',
-      width:'100%',
-      display:'flex',
-      justifyContent:'center'
-    }}
+    <Carousel  
+      effect="fade"
+      autoplay
+      afterChange={handleSlideChange}
+      style={{
+        paddingBottom: '1rem',
+        paddingTop:'1rem',
+        margin: '0 auto',
+        marginLeft: '70px',
+        maxWidth: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems:'center',
+      }}
     >
       {/* {loop().map((i) => {
         console.log(i)

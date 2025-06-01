@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../context/UserContext';
-import { Layout, Typography, Row, Col, Affix } from 'antd';
+import { Layout, Typography, Row, Col, Affix , Tabs } from 'antd';
 import { CustDes } from '../../Components/Card';
 const { Header, Footer, Content } = Layout;
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,10 +9,10 @@ import { CourseList } from '../../store/data';
 import { auth } from '../../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Profile from './Profile';
-import Education from './Education';
 import TestScores from './TestScores';
 import Certificates from './Certificates';
 import SubmittedTests from './SubmittedTests';
+import SideMenu from './SideMenu';
 
 const progress = [
   {
@@ -31,18 +31,18 @@ const progress = [
     color: '#6B11DC',
   },
   {
-    name: 'C',
-    marks: 415,
+    name: 'ReactJS',
+    marks: 215,
     color: '#6B11DC',
   },
   {
-    name: 'C++',
-    marks: 330,
+    name: 'SpringBoot',
+    marks: 390,
     color: '#6B11DC',
   },
   {
-    name: 'Java',
-    marks: 457,
+    name: 'Ruby',
+    marks: 427,
     color: '#6B11DC',
   },
 ];
@@ -71,47 +71,27 @@ const sampleCertificates = [
     issuer: 'Facebook',
     date: 'January 2024',
     image: 'https://campus.w3schools.com/cdn/shop/files/certificate_of_completion_vue.js_professional_844x667.jpg?v=1711023352'
-  }
+  },
+  {
+    id: 4,
+    title: 'Vue',
+    issuer: 'Facebook',
+    date: 'January 2024',
+    image: 'https://campus.w3schools.com/cdn/shop/files/certificate_of_completion_vue.js_professional_844x667.jpg?v=1711023352'
+  },
 ];
-
-const eduArray = [
-  {
-    id: 1,
-    title: 'School',
-    name: 'Adithiya Vidyasharam',
-    year: '2010-2018',
-    grade: 'till 10th',
-    marks: '69%'
-  },
-  {
-    id: 2,
-    title: 'Higher Studies',
-    name: 'Slam Academy',
-    year: '2018-2020',
-    grade: 'till 12th',
-    marks: '89%'
-  },
-  {
-    id: 3,
-    title: 'College',
-    name: 'Panimalar College Of Eng',
-    year: '2020-Present',
-    grade: 'Final Year',
-    marks: '8.0 cgpa'
-  },
-]
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const { userData } = useContext(AuthContext);
-  const [visibleSection, setVisibleSection] = useState('profile');
-  const [scrollDirection, setScrollDirection] = useState('down');
+  const [activeTab, setActiveTab] = useState("certificates");
   const lastScrollTop = useRef(0);
   const [modal, setModal] = useState(false);
   const [scrWidth, setScrWidth] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef(null);
   const navigate = useNavigate() ;
+  const { TabPane } = Tabs;
 
   useEffect(() => {
     const handleResize = () => {
@@ -134,6 +114,14 @@ const Dashboard = () => {
     scores: useRef(null),
     tests: useRef(null),
     courses: useRef(null)
+  };
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setSelectedKey(id);
+    }
   };
 
   const fetchProgress = (userData) => {
@@ -194,8 +182,11 @@ const Dashboard = () => {
   const CourseObjects = fetchCourse(userData);
 
   return (
+    <div>
     <div className={styles['dashboardContainer']}>
-
+      <div>
+    <SideMenu />
+    </div>
       {/* Main Content */}
       <div className={styles['scrollSection']} ref={scrollContainerRef}>
         {/* Profile Section */}
@@ -203,45 +194,47 @@ const Dashboard = () => {
           <Profile />
         </div>
 
-        {/* Education Section */}
-        <div id="education-section">
-          <Education eduArray={eduArray} userData={userData} />
-        </div>
+          <div>
+            <Tabs className={`${styles['styledTabPane']} ${styles['ant-tabs-ink-bar']}`} defaultActiveKey="certificates" activeKey={activeTab} onChange={(key) => setActiveTab(key)} tabBarStyle={{margin: '20px 60px 10px 80px', paddingLeft:'20px', marginTop:'30px'}}>
+              {/* Certificates Tab */}
+              <TabPane tab={<span className={`${styles['dashBoardTabPane']} ${activeTab === "certificates" ? styles.activeTab : ''}`}>Certificates</span>} key="certificates">
+                <Certificates userData={userData} sampleCertificates={sampleCertificates} />
+              </TabPane>
 
-        {/* Test Scores Section */}
-        <div id="scores-section">
-          <TestScores progress={progress} scrWidth={scrWidth} />
-        </div>
+              {/* Test Scores Tab */}
+              <TabPane tab={<span className={`${styles['dashBoardTabPane']} ${activeTab === "scores" ? styles.activeTab : ''}`}>Test Scores</span>} key="scores">
+                <TestScores progress={progress} scrWidth={scrWidth} />
+              </TabPane>
 
-        {/* Certificates Section */}
-        <div id="certificates-section">
-          <Certificates userData={userData} sampleCertificates={sampleCertificates} />
-        </div>
+              {/* Submitted Tests Tab */}
+              <TabPane tab={<span  className={`${styles['dashBoardTabPane']} ${activeTab === "tests" ? styles.activeTab : ''}`}>Tests</span>} key="tests">
+                <SubmittedTests />
+              </TabPane>
 
-        {/* Tests Section */}
-        <div id="tests-section">
-          <SubmittedTests />
-        </div>
-
-        {/* Courses Section */}
-        <div id="courses-section" className={styles['scrollItem']}>
-          <section className={styles['section']}>
-            <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-              Try Taking this test
-            </Typography.Title>
-            <Row>
-              {CourseList.slice(0, 4).map((course) => (
-                <Col key={course.id} lg={6} md={8} sm={12}>
-                  <CustDes content={course} type='test' />
-                </Col>
-              ))}
-            </Row>
-            <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-              <Link to='/courses' className="view">View More</Link>
-            </Typography.Title>
-          </section>
-        </div>
+              {/* Courses Tab */}
+              <TabPane tab={<span className={`${styles['dashBoardTabPane']} ${activeTab === "courses" ? styles.activeTab : ''}`}>Courses</span>} key="courses">
+                <div className={styles['scrollItem']}>
+                  <section className={styles['section']}>
+                    <Typography.Title level={3} style={{ color: '#fff' }}>
+                      Try Taking this test
+                    </Typography.Title>
+                    <Row>
+                      {CourseList.slice(0, 4).map((course) => (
+                        <Col key={course.id} lg={6} md={8} sm={12}>
+                          <CustDes content={course} type="test" />
+                        </Col>
+                      ))}
+                    </Row>
+                    <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
+                      <Link to="/courses" className="view">View More</Link>
+                    </Typography.Title>
+                  </section>
+                </div>
+              </TabPane>
+            </Tabs>
+          </div>
       </div>
+    </div>
     </div>
   );
 };

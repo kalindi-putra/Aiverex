@@ -1,119 +1,238 @@
-import React, { useContext } from 'react';
-import { Typography, Avatar, Button, Tag, Affix, Layout } from 'antd';
-const { Header, Footer, Content } = Layout;
-import { UserOutlined } from '@ant-design/icons';
-import styles from './layout.module.css';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { Typography, Avatar, Button, Tag } from 'antd';
+import { UserOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { auth } from '../../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import Education from './Education';
 import { AuthContext } from '../../context/UserContext';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import styles from './layout.module.css';
+
+const { Title, Paragraph, Text } = Typography;
 
 const Profile = () => {
+  const navigate = useNavigate(); 
   const [user] = useAuthState(auth);
   const { userData } = useContext(AuthContext);
-  const fullname = user?.displayName;
-  const name = fullname?.split(' ')[0];
-  const skills = [];
+  const fullname = user?.displayName || 'User';
+  const name = user?.displayName?.split(' ')[0] || 'User';
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    if (userData?.skills) {
+      const trimmedSkills = userData.skills.length > 6
+        ? userData.skills.slice(0, 6)
+        : userData.skills;
+
+      setSkills(trimmedSkills);
+    }
+  }, [userData?.skills]);
+
+  const eduArray = [
+    {
+      id: 1,
+      title: 'School',
+      name: 'Adithiya Vidyasharam',
+      year: '2010-2018',
+      grade: 'till 10th',
+      marks: '69%'
+    },
+    {
+      id: 2,
+      title: 'Higher Studies',
+      name: 'Slam Academy',
+      year: '2018-2020',
+      grade: 'till 12th',
+      marks: '89%'
+    },
+    {
+      id: 3,
+      title: 'College',
+      name: 'Panimalar College Of Eng',
+      year: '2020-Present',
+      grade: 'Final Year',
+      marks: '8.0 cgpa'
+    },
+  ]
+
+  useEffect(() => {
+    AOS.init({ duration: 300, once: true });
+  }, []);
 
   return (
-    <div className={styles['scrollItem']}>
-      <section className={styles['section']}>
-        <div className={styles['sectionContent']}>
-          <div className={styles['header']} style={{ display: "flex", height: "180px", borderRadius: "20px", marginBottom: "25px" }}>
-            <div className={styles['headerContent']}>
-              <Typography.Title level={2} style={{ color: 'white', margin: 0, justifyContent: 'flex-start' }}>
-                <p style={{ color: 'white', fontSize: '38px', fontWeight: 'bold' }}>Welcome back, {name} !</p>
-                <p style={{ color: 'white', fontSize: '14px', fontWeight: 'normal', opacity: '0.6' }}>Learning isn't about getting it all right—it's about showing up and improving.</p>
-              </Typography.Title>
+    <div className={styles.scrollItem}>
+      <section>
+        <div className={`${styles.sectionContent} ${styles.gridParent}`} style={{display:'flex'}}>
+          <div className={styles['gradientBorderRight']} style={{display:'flex' , flexDirection:'column' , width:'40%'}}>
+          {/* Profile Picture & Name */}
+            <div className={`${styles["gridlayout-userprofile"]} ${styles.profileCard}`} data-aos="zoom-in-right">
+              <div >
+                <EditOutlined
+                 className={styles['overIconEffect']}
+                  style={{
+                    position: 'absolute',
+                    marginTop:'15px',
+                    marginRight:'10px',
+                    top: 0,
+                    right: 0,
+                    fontSize: '18px',
+                    cursor: 'pointer',
+                    padding: '8px',
+                  }}
+                  onClick={() => navigate('/student/edit-profile')}/>
+                 <div style={{ display: 'flex', justifyContent:'space-between' , gap:'25px'}}>
+                  {
+                    user?.photoURL ? (
+                      <img src={user.photoURL} alt="Profile" style={{ borderRadius: '50%', height: 80, width: 80 }} />
+                    ) : (
+                      <Avatar size={64} icon={<UserOutlined />} />
+                    )}
+                  <Title level={4} style={{ color: 'white', marginTop: 16 }}>{fullname}</Title>
+                </div>
+              </div>
             </div>
-            <div style={{ justifyContent: 'flex-end' }}>
-              <img src='/assets/welcome_img.png' alt="Welcome" style={{ width: '280px', height: '150px' }} />
+
+          {/* Personal Information */}
+            <div className={`${styles.profileCard}`} style={{ textAlign: 'left' }}>
+              <Title level={4} style={{ color: 'white', marginBottom:'30px' }}>Personal Information</Title>
+              <Paragraph style={{ color: user?.email === undefined ? '#707070' : 'white' , display: 'flex', gap: '15px', }}>
+                <MailOutlined style={{color: user?.email === undefined ? '#707070' : 'white'}} /> {user?.email || 'Add email'}
+              </Paragraph>
+              <Paragraph style={{ color: user?.phone === undefined ? '#707070' : 'white', display: 'flex' , gap:'15px' }}>
+                <PhoneOutlined style={{color: user?.phone === undefined ? '#707070' : 'white'}} /> {userData?.phone || 'Add phone number'}
+              </Paragraph>
+              <Paragraph style={{ color: user?.location === undefined ? '#707070' : 'white', display: 'flex' , gap:'15px' }}>
+                <EnvironmentOutlined style={{color: user?.location === undefined ? '#707070' : 'white'}} /> {userData?.location || 'Add location'}
+              </Paragraph>
+            </div>
+          {/* Resume */}
+            <div className={`${styles["gridlayout-resume"]} ${styles.profileCard}`}>
+              <Title level={4} style={{ color: 'white', margin: 0, flexShrink: 0 , marginBottom:'25px'}}>Resume</Title>
+
+              {userData?.resumeLink ? (
+                <a
+                  href={userData.resumeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#6B11DC', textDecoration: 'underline', flexGrow: 1 }}
+                >
+                  View Resume
+                </a>
+              ) : (<div style={{display:'flex'}}>
+                <span style={{ color: '#707070', flexGrow: 1 }}>Add your resume here</span>
+                <Link
+                  to="/link"
+                  style={{
+                    backgroundColor: '#6B11DC',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    width:'80px',
+                    textDecoration: 'none',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <PlusOutlined style={{ color: 'white', paddingRight: '10px' }} />
+                  Add
+                </Link>
+              </div>
+              )}
+            </div>
+            {/* GitHub */}
+            <div className={`${styles["gridlayout-github"]} ${styles.profileCard}`}>
+              <Title level={4} style={{ color: 'white', margin: 0, flexShrink: 0, marginBottom: '25px' }}>GitHub</Title>
+
+              {userData?.githubLink ? (
+                <a
+                  href={userData.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#6B11DC', textDecoration: 'underline', flexGrow: 1 }}
+                >
+                  View GitHub
+                </a>
+              ) : (
+                <div style={{ display: 'flex' }}>
+                  <span style={{ color: '#707070', flexGrow: 1 }}>Add your GitHub here</span>
+                  <Link
+                    to="/link"
+                    style={{
+                      backgroundColor: '#6B11DC',
+                      padding: '5px 10px',
+                      borderRadius: '5px',
+                      width: '80px',
+                      textDecoration: 'none',
+                      color: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <PlusOutlined style={{ color: 'white', paddingRight: '10px' }} />
+                    Add
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className={styles['profileGrid']}>
-            {/* Profile Info */}
-            <div className={styles['profileCard']}>
-              {user?.photoURL ? (
-                <img src={user.photoURL} alt="Profile" style={{ borderRadius: '50%', height: '25%', width: '25%' }} />
+          <div  style={{display:'flex' , flexDirection:'column' , width:'100%' , marginLeft:'50px'}}>
+          {/* Top Welcome Banner */}
+          <div className={styles["gridlayout-welcome"]} style={{  background: 'linear-gradient(135deg,rgb(35, 35, 35) , #343434)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '180px', borderRadius: '20px', padding: '20px' }}>
+            <div style={{paddingLeft:'70px' , paddingTop:'50px'}}>
+              <Title level={2} style={{ color: 'white', margin: 0 }}>
+                Welcome back, {name}!
+              </Title>
+              <p style={{ color: 'white', fontSize: '14px', opacity: 0.6 , paddingTop:'20px' }}>Learning isn't about getting it all right—it's about showing up and improving.</p>
+            </div>
+            <img src="/assets/welcome_img.png" alt="Welcome" style={{ width: '280px', height: '150px' }} />
+          </div>
+
+            <div>
+          <Education eduArray={eduArray} userData={userData} />
+          </div>
+
+          {/* Skills */}
+          <div className={`${styles["gridlayout-skills"]} ${styles.profileCard}`} style={{marginTop:'20px'}}>
+            <Title level={4} style={{ color: 'white' ,  marginBottom:'20px' }}>Skills</Title>
+            <div style={{display:"flex"}}>
+              {skills.length > 0 ? (
+                skills.map((tag, i) => {
+                  return (
+                    <Tag color={"#343434"} key={tag} style={{ fontSize: '1.1rem',  padding:'8px'}}>
+                      {tag}
+                    </Tag>
+                  );
+                })
               ) : (
-                <Avatar size={64} icon={<UserOutlined />} />
+                <div style={{ display: 'flex' , gap:'300px'}}>
+                      <div style={{display:"flex" , gap:'20px' , justifyContent:'center' , alignItems:'center'}} >
+                        <div style={{ width: 50, height: 50, overflow: 'hidden', borderRadius: '50%' }}>
+                          <img
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV73P_dxq7WW6judhHiZphAA2ogJW0hTQX6h_nHTVw4wIgfkGDl7sVmdN_sPdiPGUZobQ&usqp=CAU"
+                            alt="No skills"
+                          />
+                        </div>
+                        <p>No skills found</p>
+                      </div>
+                  <Link to="edit" style={{
+                    height: '35px',
+                    backgroundColor: '#6B11DC',
+                    padding: '5px 20px',
+                    borderRadius: '5px',
+                    textDecoration: 'none',
+                    color: 'white'
+                  }}> <PlusOutlined style={{color:'white'}} /> Add Skills</Link>
+                </div>
               )}
-              <Typography.Title level={4} style={{ color: 'white', margin: '16px 0' }}>
-                {user?.displayName}
-              </Typography.Title>
-              <Typography.Text style={{ color: '#ccc', fontSize: '24px' }}>
-                {userData?.role || 'STUDENT'}
-              </Typography.Text>
-              <Button type="primary" onClick={() => auth.signOut()}>
-                Sign out
-              </Button>
             </div>
-
-            {/* About */}
-            <div className={styles['profileCard']}>
-              <Typography.Title level={4} style={{ color: 'white' }}>
-                About
-              </Typography.Title>
-              <Typography.Paragraph style={{ color: '#ccc' }}>
-                {userData?.about || 'Add a brief description about yourself'}
-              </Typography.Paragraph>
-              <div style={{ paddingTop: '5px' }}>
-                <Link to="https://google.com" style={{
-                  marginRight: '10px',
-                  backgroundColor: '#6B11DC',
-                  padding: '5px 20px',
-                  borderRadius: '5px',
-                  textDecoration: 'none',
-                  color: 'white'
-                }}>Github</Link>
-                <Link to="/link" style={{
-                  marginRight: '10px',
-                  backgroundColor: '#6B11DC',
-                  padding: '5px 20px',
-                  borderRadius: '5px',
-                  textDecoration: 'none',
-                  color: 'white'
-                }}>Resume</Link>
-              </div>
-            </div>
-
-            {/* Skills */}
-            <div className={styles['profileCard']}>
-              <Typography.Title level={4} style={{ color: 'white' }}>
-                Skills
-              </Typography.Title>
-              <div className={styles['tags']}>
-                {skills.length > 0 ? (
-                  skills.map((tag, i) => {
-                    let color = i % 2 === 0 ? 'geekblue' : 'green';
-                    return (
-                      <Tag color={color} key={tag} style={{ fontSize: '1.1rem' }}>
-                        {tag}
-                      </Tag>
-                    );
-                  })
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
-                    <div style={{ width: '50px', height: '50px', overflow: 'hidden', borderRadius: '50%' }}>
-                      <img
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV73P_dxq7WW6judhHiZphAA2ogJW0hTQX6h_nHTVw4wIgfkGDl7sVmdN_sPdiPGUZobQ&usqp=CAU'
-                        alt="No skills"
-                      />
-                    </div>
-                    <p>No skills found</p>
-                    <Link to="edit" style={{
-                      backgroundColor: '#6B11DC',
-                      padding: '5px 20px',
-                      borderRadius: '5px',
-                      textDecoration: 'none',
-                      color: 'white'
-                    }}>Add Skills</Link>
-                  </div>
-                )}
-              </div>
-            </div>
+          </div>
           </div>
         </div>
       </section>

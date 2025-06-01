@@ -28,8 +28,8 @@ const Certificates = (props) => {
                               title={<Typography.Text style={{ color: 'white' }}>{cert.title}</Typography.Text>}
                               description={
                                   <div className={styles['certificateDetails']}>
-                                      <Typography.Text type="secondary">{cert.issuer}</Typography.Text>
-                                      <Typography.Text type="secondary">{cert.date}</Typography.Text>
+                                      <Typography.Text type="secondary" style={{color:'white'}}>{cert.issuer}</Typography.Text>
+                                      <Typography.Text type="secondary" style={{color:'white'}}>{cert.date}</Typography.Text>
                                   </div>
                               }
                           />

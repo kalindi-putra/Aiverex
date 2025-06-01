@@ -11,9 +11,9 @@ function Scores(props) {
   const name = userData ? userData.name : '';
 
   return (
-    <div style={{display:'inline-flex',margin:10,width:'350px'}}>
-             <Progress type="circle" percent={(pro.marks/500)*100} size={80} strokeColor={'#6B11DC'}
-              style={{ padding: 10,fontSize:'15px !important' }}
+    <div style={{display:'inline-flex',margin:10,width:'350px' , paddingBottom:'30px'}}>
+             <Progress type="circle" percent={(pro.marks/500)*100} size={90} strokeColor={'#6B11DC'}
+              style={{padding: 10,fontSize:'15px !important' }}
               format={(per) => { return `${pro.marks}/500` }}
               
             />

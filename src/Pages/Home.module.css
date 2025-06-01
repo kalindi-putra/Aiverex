@@ -2,8 +2,6 @@
     background: transparent;
     background: linear-gradient(109.6deg, black 11.2%, #343434 51.2%, black 98.6%);
     background:#1a1d20;
-
-
 }
 html{
     scroll-behavior: smooth;
@@ -62,20 +60,45 @@ html{
     width: 90%;
     height: auto;
   }
-  .org-btn,.btn{
-    border: 1px solid #1DACD6 !important;
-    color: #1DACD6 !important;
-    padding: 0;
-    width:100%;
-    margin: auto;
-    background-color: transparent !important;
-    
-  }
-  .org-btn:hover,.btn:hover{
-    background-color: #fec503;
-    background-color: #1DACD6 !important;
-    color: white !important;
-  }
+ 
+.btn,
+.org-btn {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #1DACD6 !important;
+  color: #1DACD6 !important;
+  background-color: transparent !important;
+  transition: color 0.4s ease;
+  z-index: 1;
+  width: 100%;
+}
+
+.btn::before,
+.org-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background-color: #1DACD6;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.7s ease;
+  z-index: -1;
+}
+
+.btn:hover::before,
+.org-btn:hover::before {
+  transform: translate(-50%, -50%) scale(4);
+  transition-delay: 0.1s;
+}
+
+.btn:hover,
+.org-btn:hover {
+  color: white !important;
+}
+
   
   .light-grey{
     color:#6c757d;
@@ -95,14 +118,19 @@ html{
   }
   
   /*  Card hover */
-  .moveUp:hover{
-      background-color: #1DACD6 !important;
-    /* background: linear-gradient(109.6deg, #242424 11.2%, #1DACD6 51.2%, #343434 98.6%) !important; */
-    color: white;
-      transition: all .5s;
-      transform : translateY(-7px);
+    .moveUp:hover {
+      background-color: #555a60 !important;
+      color: white;
       cursor: pointer;
-  }
+      transform: scale(1.15) !important;
+      transition: transform 0.1s ease-in-out;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15) !important;
+      z-index: 2;
+    }
+
+    .featured-course-wrapper:hover> :not(:hover) {
+      opacity: 0.9;
+    }
   
   .ng-mrg-t{
     margin-top: -50px;
@@ -145,6 +173,7 @@ html{
         font-size: 0.9rem;
         color: #fff !important;
         padding: auto 0px !important;
+        filter: brightness(0.5);
       }
     .navbar-brand{
       color: #fff !important;
@@ -155,6 +184,7 @@ html{
       }
   .navLinks:hover {
         color: #1DACD6 !important;
+        filter: brightness(1.5);
         /* border-bottom: 1px solid #1DACD6 !important ; */
       }
       /* .navLinks:hover::after{
@@ -237,6 +267,7 @@ html{
     overflow: hidden;
     flex-wrap: wrap
   }
+
   .card img{
     border-radius: 20px !important;
     height: 250px !important;
@@ -296,3 +327,79 @@ img:active {
 .head img{
   filter: none !important;
 }
+
+.lottiePlayer {
+  position: relative; 
+  z-index: 10;    
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+.font-mono {
+  font-family: monospace;
+}
+.text-center {
+  text-align: center;
+}
+
+@keyframes blink {
+  0%, 100% { background-color: #555; }
+  50% { background-color: transparent; }
+}
+
+.typewriter-wrapper {
+  font-size: 60px;
+  font-weight: 600;
+  padding-bottom: 40px;
+  margin-top: 5px;
+  color: #1DACD6 !important;
+}
+
+.typewriter-wrapper .cursor {
+  display: inline-block;
+  width: 30px;         
+  height: 1em;       
+  margin-left: 4px;
+  animation: blink 1s step-end infinite;
+  color: transparent !important;
+}
+
+.timeline{
+  position: relative;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;   
+  height: 100%; 
+  top: 0;
+  left: 49%;  
+  transform: translateX(-50%);
+  background: #1DACD6 !important; 
+  z-index: 10; 
+  animation: moveline 6s linear forwards;
+}
+
+@keyframes moveline{
+  0%{
+    height: 0;
+  }
+  100%{
+    height: 100%;
+  }
+}
+
+@keyframes movedown {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+

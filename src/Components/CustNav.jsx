@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState, useEffect, useRef , useContext } from 'react';
 import { SmileTwoTone } from "@ant-design/icons";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button , Avatar , Dropdown , Menu} from "antd";
+import { SmileOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../context/UserContext";
 import { auth } from "../firebase/Firebase";
 import NotificationBell from './NotificationBell';
@@ -180,18 +179,30 @@ function CustNav(props) {
 const LandNav = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
-    //   const navigate = useNavigate()
     auth
       .signOut()
       .then(() => {
-        // Sign-out successful.
-        navigate("/");
-        console.log("User signed out");
+        navigate('/');
+        console.log('User signed out');
       })
       .catch((error) => {
-        // An error happened.
-        console.error("Sign-out error", error);
+        console.error('Sign-out error', error);
       });
   };
   return (
@@ -319,14 +330,47 @@ const LandNav = () => {
                     )}
                     {isLoggedIn && (
                       <li
-                        className={`${styles["navItems"]} nav-item 2 pl-2 pl-md-0 ml-0 ml-md-2`}
+                        className={`${styles.navItems} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
+                        ref={dropdownRef}
+                        style={{ position: 'relative' , marginRight:'40px'}}
                       >
-                        <Link
-                          className={`${styles["navLinks"]} nav-link`}
-                          onClick={handleLogout}
+                        <div
+                          onClick={() => setDropdownVisible((prev) => !prev)}
+                          style={{ cursor: 'pointer' }}
                         >
-                          Logout
-                        </Link>
+                          <Avatar size={35} icon={<UserOutlined style={{ color: 'white' }} />} />
+                        </div>
+
+                        {dropdownVisible && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              top: '45px',
+                              right: 0,
+                              background: '#343434' ,
+                              borderRadius: '4px',
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                              zIndex: 1000,
+                              minWidth: '160px',
+                              color:'white',
+                            }}
+                          >
+                            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                              <li style={{ padding: '10px 20px'  ,}}>
+                                <Link to="/student/dashboard" style={{color:'white' , textDecoration:'none' ,}}>Profile</Link>
+                              </li>
+                              <li style={{ padding: '10px 20px' , }}>
+                                <Link to="/student/edit-profile" style={{color:'white' , textDecoration:'none'}}>Edit Profile</Link>
+                              </li>
+                              <li
+                                style={{ padding: '10px 20px', cursor: 'pointer' }}
+                                onClick={handleLogout}
+                              >
+                                Logout
+                              </li>
+                            </ul>
+                          </div>
+                        )}
                       </li>
                     )}
                   </ul>
@@ -343,6 +387,20 @@ const LandNav = () => {
 const MainNav = () => {
   const { userData, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const mockNotifications = [
 		{
@@ -421,7 +479,9 @@ const MainNav = () => {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav ml-auto py-4 py-md-0">
-                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                    {!isLoggedIn ? (
+                      <>
+                      <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
                       <Link className={`${styles["navLinks"]} nav-link`} to="/">Home</Link>
                     </li>
                     <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
@@ -436,23 +496,20 @@ const MainNav = () => {
                     <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
                       <Link className={`${styles["navLinks"]} nav-link`} to="#featured">Featured</Link>
                     </li>
-
-                    {/* Add Dashboard and Take Test Links when logged in as student */}
-                    {isLoggedIn && userData && userData.role === 'student' && (
+                      </>
+                    ) : (
                       <>
-                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                          <Link className={`${styles["navLinks"]} nav-link`} to="/student/dashboard">Dashboard</Link>
-                        </li>
-                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                          <Link className={`${styles["navLinks"]} nav-link`} to="/student/take-test">Take Test</Link>
-                        </li>
-                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                          <NotificationBell notifications={mockNotifications} />
-                        </li>
+                          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+                            <Link className={`${styles["navLinks"]} nav-link`} to="/">Home</Link>
+                          </li>
+                          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`} style={{paddingLeft:'10px'}}>
+                            <NotificationBell notifications={mockNotifications} />
+                          </li>
                       </>
                     )}
 
                     {/* Auth Links */}
+                    <ul className="navbar-nav ml-auto py-4 py-md-0">
                     {!isLoggedIn ? (
                       <>
                         <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
@@ -463,10 +520,52 @@ const MainNav = () => {
                         </li>
                       </>
                     ) : (
-                      <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                        <Link className={`${styles["navLinks"]} nav-link`} onClick={handleLogout}>Logout</Link>
-                      </li>
+                      <>
+                        <li
+                          className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-5 mr-5`}
+                          onClick={() => setDropdownVisible(!dropdownVisible)}
+                          style={{ cursor: 'pointer', color: 'white' }}
+                        >
+                          <Avatar size={35} icon={<UserOutlined style={{ color: 'white' , }} />} />
+                        </li>
+                      </>
                     )}
+                  </ul>
+
+                  {isLoggedIn && dropdownVisible && (
+                    <div
+                      ref={dropdownRef}
+                      style={{
+                        position: 'absolute',
+                        top: '70px',
+                        right: '20px',
+                        background: '#343434',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        zIndex: 1000,
+                        minWidth: '160px',
+                        color: 'white',
+                      }}
+                    >
+                      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                          <li style={{ padding: '10px 20px', }}>
+                            <Link to="/student/dashboard" style={{ color: 'white', textDecoration: 'none', }}>Profile</Link>
+                          </li>
+                        <li style={{ padding: '10px 20px' }}>
+                          <Link to="/student/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>
+                            Edit Profile
+                          </Link>
+                        </li>
+                        <li
+                          style={{ padding: '10px 20px', cursor: 'pointer' }}
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+
                   </ul>
                 </div>
               </nav>

@@ -20,7 +20,7 @@ const TestScores = (props) => {
                       Test Scores
                       <a className="view" style={{ float: 'right' }}>View More</a>
                   </Typography.Title>
-                  {progress.slice(0, scrWidth ? 1 : 2).map((pro, i) => (
+                  {progress.slice(0, scrWidth ? 2 : 6).map((pro, i) => (
                       <Scores key={i} pro={pro} />
                   ))}
               </div>

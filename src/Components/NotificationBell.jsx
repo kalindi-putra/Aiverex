@@ -31,7 +31,7 @@ const NotificationBell = ({ notifications = [] }) => {
 
     return (
         <Dropdown
-            menu={{ items: [] }} // Required dummy prop to satisfy API
+            menu={{ items: [] }}
             trigger={['click']}
             open={visible}
             onOpenChange={setVisible}

@@ -2,6 +2,11 @@ import {
   AppstoreOutlined,
   MessageOutlined,
   UserOutlined,
+  BarChartOutlined,
+  TrophyOutlined,
+  CheckCircleOutlined ,
+  BookOutlined,
+  EditOutlined,
   BugOutlined,
   FormOutlined,
   FileProtectOutlined,
@@ -148,6 +153,33 @@ const ExpertsData = [
       description:'A very talented and hardworking person with a lot of experience in the field of web development and software development.',
       img:'https://img.freepik.com/free-vector/work-time-concept-illustration_114360-1074.jpg',
     },
+    {
+      id:13,
+      name: 'Martina doena',
+      title: 'Web Developer',
+      img:'https://img.freepik.com/free-vector/work-time-concept-illustration_114360-1474.jpg',
+      description: 'Highly proficient in Web3 and AI and professional in Designing Websites with tools of Web3.0.',
+    },
+    {
+      id:14,
+      name: 'George',
+      title: 'Devops Engineer',
+      img:'https://img.freepik.com/free-vector/work-time-concept-illustration_114360-1474.jpg',
+      description: 'Highly proficient in Web3 and AI and professional in Designing Websites with tools of Web3.0.',
+    },
+    {
+      id:15,
+      name: 'Stella Sweety',
+      title: 'Data Analyst',
+      img:'https://img.freepik.com/free-vector/work-time-concept-illustration_114360-1474.jpg',
+      description: 'Highly proficient in Web3 and AI and professional in Designing Websites with tools of Web3.0.',
+    },
+    {
+      id:16,
+      name:'Ajay Rao',
+      description:'A professional web designer with a wealth of knowledge about the web Development and Software Development.',
+      img:'https://img.freepik.com/free-vector/work-time-concept-illustration_114360-1074.jpg',
+    },
   ]
 
   const MentItems = [
@@ -226,35 +258,47 @@ const ExpertsData = [
 
 const StudentItems = [
   {
+    key: 'profile',
     label: 'Profile',
-    icon: <AppstoreOutlined />,
-    key: 'profile-section',
+    icon: UserOutlined,
+    sectionId: 'profile-section'
   },
-  {
-    label: 'Education',
-    icon: <ReadOutlined />,
-    key: 'education-section',
+  // { 
+  //   key: 'certificates', 
+  //   label: 'Certificates', 
+  //   icon: TrophyOutlined, 
+  //   sectionId: 'certificates-section' 
+  // },
+  // { 
+  //   key: 'scores', 
+  //   label: 'Scores', 
+  //   icon: BarChartOutlined, 
+  //   sectionId: 'scores-section' 
+  // },
+  // { 
+  //   key: 'tests', 
+  //   label: 'Submitted Tests', 
+  //   icon: CheckCircleOutlined, 
+  //   sectionId: 'tests-section' 
+  // },
+  // { 
+  //   key: 'courses', 
+  //   label: 'Courses', 
+  //   icon: BookOutlined, 
+  //   sectionId: 'courses-section' 
+  // },
+  { 
+    key: 'take-tests', 
+    label: 'Take Tests', 
+    icon: FileDoneOutlined, 
+    sectionId: '/student/take-test' 
   },
-  {
-    label: 'Test Scores',
-    icon: <FileSearchOutlined />,
-    key: 'scores-section',
-  },
-  {
-    label: 'Certificates',
-    icon: <SafetyCertificateOutlined />,
-    key: 'certificates-section',
-  },
-  {
-    label: 'Submitted Tests',
-    icon: <FileDoneOutlined />,
-    key: 'tests-section',
-  },
-  {
-    label: 'Edit Profile',
-    icon: <PlusCircleOutlined />,
-    key: 'edit',
-  },
+  // { 
+  //   key: 'editProfile', 
+  //   label: 'Edit Profile', 
+  //   icon: EditOutlined, 
+  //   sectionId: '/student/edit-profile' 
+  // },
   // {
   //     label: 'Reviews',
   //     icon:<FileProtectOutlined />,
@@ -348,7 +392,7 @@ const CourseList = [
   {
       id: 1,
       name: 'React',
-      img:'/assets/course.png',
+      img:'/assets/react.png',
       description: 'React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies.',
       price: 5000,
       duration: '2 months',
@@ -356,7 +400,7 @@ const CourseList = [
   {
       id: 2,
       name: 'Angular',
-      img:'/assets/course2.png',
+      img:'/assets/Angular.png',
       description: 'Angular is a TypeScript-based open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.',
       price: 6000,
       duration: '2 months',
@@ -364,16 +408,16 @@ const CourseList = [
   {
       id: 3,
       name: 'Vue',
-      img:'/assets/course3.png',
+      img:'/assets/VueJS.jpg',
       description: 'Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.',
       price: 4000,
       duration: '2 months',
   },
   {
       id: 4,
-      name: 'Vue',
-      img:'/assets/course2.png',
-      description: 'Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.',
+      name: 'SpringBoot',
+      img:'/assets/Springboot.jpg',
+      description: 'Springboot is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.',
       price: 4000,
       duration: '2 months',
   },
