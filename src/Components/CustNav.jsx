@@ -177,7 +177,7 @@ function CustNav(props) {
 }
 
 const LandNav = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const {userData , isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef();
@@ -356,11 +356,19 @@ const LandNav = () => {
                             }}
                           >
                             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                              <li style={{ padding: '10px 20px'  ,}}>
-                                <Link to="/student/dashboard" style={{color:'white' , textDecoration:'none' ,}}>Profile</Link>
+                              <li style={{ padding: '10px 20px', }}>
+                                {(isLoggedIn && userData?.role === 'mentor') ? (
+                                  <Link to="/mentor/dashboard" style={{ color: 'white', textDecoration: 'none', }}>Profile</Link>
+                                ) : (
+                                  <Link to="/student/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Profile</Link>
+                                )}
                               </li>
-                              <li style={{ padding: '10px 20px' , }}>
-                                <Link to="/student/edit-profile" style={{color:'white' , textDecoration:'none'}}>Edit Profile</Link>
+                              <li style={{ padding: '10px 20px' }}>
+                                {(isLoggedIn && userData?.role === 'mentor') ? (
+                                  <Link to="/mentor/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
+                                ) : (
+                                  <Link to="/student/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
+                                )}
                               </li>
                               <li
                                 style={{ padding: '10px 20px', cursor: 'pointer' }}
@@ -386,9 +394,12 @@ const LandNav = () => {
 
 const MainNav = () => {
   const { userData, isLoggedIn } = useContext(AuthContext);
+  const role = userData?.role || 'student'; 
+  console.log("User Role:", role);
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef();
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -547,22 +558,28 @@ const MainNav = () => {
                         color: 'white',
                       }}
                     >
-                      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                           <li style={{ padding: '10px 20px', }}>
-                            <Link to="/student/dashboard" style={{ color: 'white', textDecoration: 'none', }}>Profile</Link>
+                            {(isLoggedIn && userData?.role === 'mentor') ? (
+                              <Link to="/mentor/dashboard" style={{ color: 'white', textDecoration: 'none', }}>Profile</Link>
+                            ) : (
+                              <Link to="/student/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Profile</Link>
+                            )}
                           </li>
-                        <li style={{ padding: '10px 20px' }}>
-                          <Link to="/student/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>
-                            Edit Profile
-                          </Link>
-                        </li>
-                        <li
-                          style={{ padding: '10px 20px', cursor: 'pointer' }}
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </li>
-                      </ul>
+                          <li style={{ padding: '10px 20px' }}>
+                            {(isLoggedIn && userData?.role === 'mentor') ? (
+                              <Link to="/mentor/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
+                            ) : (
+                              <Link to="/student/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
+                            )}
+                          </li>
+                          <li
+                            style={{ padding: '10px 20px', cursor: 'pointer' }}
+                            onClick={handleLogout}
+                          >
+                            Logout
+                          </li>
+                        </ul>
                     </div>
                   )}
 

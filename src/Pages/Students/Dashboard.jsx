@@ -94,6 +94,12 @@ const Dashboard = () => {
   const { TabPane } = Tabs;
 
   useEffect(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       const isMobileQuery = window.matchMedia('(max-width: 807px)');
       setScrWidth(isMobileQuery.matches);

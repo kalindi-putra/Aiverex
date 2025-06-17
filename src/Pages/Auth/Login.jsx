@@ -16,6 +16,12 @@ function Login() {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
 
+  useEffect(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, []);
+
   const handleGoogleSignIn = async (role) => {
     try {
       await SignInWithGoogle(navigate, role);

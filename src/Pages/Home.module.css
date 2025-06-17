@@ -375,11 +375,10 @@ img:active {
   width: 6px;   
   height: 100%; 
   top: 0;
-  left: 49%;  
+  left: 49%; 
   transform: translateX(-50%);
   background: #1DACD6 !important; 
-  z-index: 10; 
-  animation: moveline 6s linear forwards;
+  z-index: 10;
 }
 
 @keyframes moveline{
@@ -402,4 +401,18 @@ img:active {
   }
 }
 
+
+@font-face {
+  font-family: 'Mooxy';
+  src: url('/assets/font/darkforce.ttf') format('truetype');
+}
+
+
+.darkforce-text {
+  font-family: 'Mooxy', sans-serif;
+  font-size: 70px;
+  font-weight: 100;
+  letter-spacing: 4px;
+  word-spacing: 8px;
+}
 

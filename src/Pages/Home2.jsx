@@ -21,6 +21,12 @@ function Home2() {
   const { isLoggedIn } = useContext(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
 
+  useEffect(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, []);
+
   const LandLinks = [
     {
       name: "Home",
@@ -53,9 +59,9 @@ function Home2() {
   ];
 
   const sequence = [
-    'Take the Test',
-    'Earn the Batch',
-    'Become the Expert',
+    'TAKE A TEST',
+    'EARN A BATCH',
+    'BE AN EXPERT',
   ];
   const getLoopedSequence = () => {
     return [...sequence];
@@ -97,16 +103,18 @@ function Home2() {
               <div className="px-5 py-5 mt-5">
                 <div className="px-2 py-2 align-middle">
                   <div className={`${styles['typewriter-wrapper']} font-mono text-center`}>
-                    <Typewriter
-                      words={getLoopedSequence()}
-                      loop={true}
-                      cursor
-                      cursorStyle="|"
-                      cursorColor="green"
-                      typeSpeed={100}
-                      deleteSpeed={100}
-                      delaySpeed={3000}
-                    />
+                    <div className={styles['darkforce-text']}>
+                      <Typewriter
+                        words={getLoopedSequence()}
+                        loop={true}
+                        cursor
+                        cursorStyle="|"
+                        cursorColor="green"
+                        typeSpeed={100}
+                        deleteSpeed={100}
+                        delaySpeed={3000}
+                      />
+                    </div>
                   </div>
                   <h4>Get all your needs Here</h4>
                   <p>

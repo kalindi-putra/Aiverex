@@ -1,39 +1,135 @@
-import  { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import ProblemData from './../../store/Problems';
+import styles from './CodeEditor.module.css';
+import IntuitionForm from '../../Components/IntuitionForm';
+import { CheckCircleOutlined, ClockCircleOutlined, UnorderedListOutlined, } from '@ant-design/icons';
+import { EditorView, basicSetup } from 'codemirror';
+import { EditorState } from '@codemirror/state';
+import { javascript } from '@codemirror/lang-javascript';
+import { java } from '@codemirror/lang-java';
+import { python } from '@codemirror/lang-python';
+import { cpp } from '@codemirror/lang-cpp';
+import Split from '@uiw/react-split';
+
+const languageExtensions = {
+  javascript,
+  java,
+  python,
+  cpp
+};
+
+const defaultCodeSnippets = {
+  "cpp": `#include <iostream>
+using namespace std;
+
+int main() {
+    // Your code here
+
+}`,
+  "python": `# Your code here`,
+  "java": `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+  "javascript": `// Your code here` ,
+  "java": `public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+  }`,
+};
+
 
 function Test() {
-  const [timeLeft, setTimeLeft] = useState(60 * 60);
+  const [currentProblem, setCurrentProblem] = useState(ProblemData["Sum Of Two Integers"]);
+  const [problemListVisible, setProblemListVisible] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(parseInt(currentProblem.duration) * 60);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [warningCount, setWarningCount] = useState(0);
   const [canSubmit, setCanSubmit] = useState(false);
   const [testRunning, setTestRunning] = useState(false);
+  const [duration, setDuration] = useState(currentProblem.duration);
   const [fullScreenViolated, setFullScreenViolated] = useState(false);
   const [userIntuition, setUserIntuition] = useState("");
+  const editorRef = useRef(null);
+  const viewRef = useRef(null);
+  const [language, setLanguage] = useState('javascript');
+  const [code , setCode] = useState(defaultCodeSnippets[language]);
+  const leftRef = useRef(null);
+  const problemListRef = useRef();
+  const [inputValues, setInputValues] = useState({});
+  const [codeOutput, setCodeOutput] = useState(currentProblem.exampleOutput);
 
-  const questions = [
-    {
-      id: 'q1',
-      question: 'What is the time complexity of a binary search algorithm?',
-      options: ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)'],
-    },
-    {
-      id: 'q2',
-      question: 'What is the worst-case time complexity of bubble sort?',
-      options: ['O(1)', 'O(n)', 'O(n^2)', 'O(log n)'],
-    },
-  ];
+  const handleIntuitionSubmit = (data) => {
+    setUserIntuition(data);
+    setCanSubmit(true);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (problemListRef.current && !problemListRef.current.contains(event.target)) {
+        setProblemListVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (leftRef.current) {
+      setLeftHeight(leftRef.current.offsetHeight);
+    }
+  }, []);
+
+  const handleInputChange = (key, value) => {
+    setInputValues(prev => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  useEffect(() => {
+    setDuration(currentProblem.duration);
+    setTimeLeft(parseInt(currentProblem.duration) * 60);
+    setInputValues(currentProblem.exampleInput);
+    setCodeOutput(currentProblem.exampleOutput);
+    setUserIntuition("");
+    setSubmitted(false);
+    setCanSubmit(false);
+    setSelectedAnswers({});
+  }, [currentProblem]);
+
+  const createEditor = (lang) => {
+    if (viewRef.current) viewRef.current.destroy();
+    const extension = languageExtensions[lang]();
+
+    viewRef.current = new EditorView({
+      state: EditorState.create({
+        doc: defaultCodeSnippets[lang],
+        extensions: [basicSetup, extension]
+      }),
+      parent: editorRef.current
+    });
+  };
+
+  useEffect(() => {
+    createEditor(language);
+    setLanguage(language) ;
+    setCode(defaultCodeSnippets[language]);
+    return () => viewRef.current?.destroy();
+  }, [language]);
 
   const requestFullScreen = () => {
     const doc = document.documentElement;
-    if (doc.requestFullscreen) {
-      doc.requestFullscreen();
-    } else if (doc.mozRequestFullScreen) {
-      doc.mozRequestFullScreen();
-    } else if (doc.webkitRequestFullscreen) {
-      doc.webkitRequestFullscreen();
-    } else if (doc.msRequestFullscreen) {
-      doc.msRequestFullscreen();
-    }
+    if (doc.requestFullscreen) doc.requestFullscreen();
+    else if (doc.mozRequestFullScreen) doc.mozRequestFullScreen();
+    else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+    else if (doc.msRequestFullscreen) doc.msRequestFullscreen();
   };
 
   const checkFullScreen = useCallback(() => {
@@ -56,6 +152,7 @@ function Test() {
       setTimeout(() => {
         alert('Solution run complete!');
         setCanSubmit(true);
+        setTestRunning(false);
       }, 2000);
     }
   };
@@ -63,6 +160,11 @@ function Test() {
   const handleSubmit = useCallback(() => {
     if (!canSubmit) {
       alert('Please run the solution first before submitting the test.');
+      return;
+    }
+    if (userIntuition == "") {
+      setCanSubmit(false);
+      alert('Please submit your intuition before submitting the test.');
       return;
     }
     setSubmitted(true);
@@ -75,15 +177,17 @@ function Test() {
     requestFullScreen();
 
     const timerInterval = setInterval(() => {
-      if (timeLeft > 0) {
-        setTimeLeft(timeLeft - 1);
-      } else {
-        clearInterval(timerInterval);
-        if (warningCount < 3) {
-          alert('Test terminated due to time limit!');
-          handleSubmit();
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerInterval);
+          if (warningCount < 3) {
+            alert('Test terminated due to time limit!');
+            handleSubmit();
+          }
+          return 0;
         }
-      }
+        return prev - 1;
+      });
     }, 1000);
 
     const fullScreenInterval = setInterval(() => {
@@ -94,14 +198,14 @@ function Test() {
       clearInterval(timerInterval);
       clearInterval(fullScreenInterval);
     };
-  }, [timeLeft, warningCount, fullScreenViolated, checkFullScreen, handleSubmit]);
+  }, [checkFullScreen, handleSubmit]);
 
   const handleAnswerChange = (questionId, answer) => {
     setSelectedAnswers({ ...selectedAnswers, [questionId]: answer });
   };
 
-  const handleIntuitionChange = (event) => {
-    setUserIntuition(event.target.value);
+  const handleIntuitionChange = (e) => {
+    setUserIntuition(e.target.value);
   };
 
   const formatTime = (seconds) => {
@@ -111,82 +215,183 @@ function Test() {
   };
 
   return (
-    <div className="App">
-      <header className="header">
-        <h1>Aiverex Educate</h1>
-      </header>
+    <div className={styles["container"]} style={{ height: '100vh' }}>
+      <Split mode="horizontal" renderBar={({ onMouseDown, ...props }) => {
+        return (
+          <div {...props} style={{ boxShadow: 'none', background: 'transparent' }}>
+            <div onMouseDown={onMouseDown} style={{ backgroundColor: 'transparent', boxShadow: 'none' }} />
+          </div>
+        );
+      }} style={{ height: '100%' }} gutterSize={6}>
+        {/* 1. Problem Description */}
+        <div className={styles["problem-sidebar"]} style={{ width: '50%', minWidth: '25%', maxWidth: '75%' }} >
+          <div>
+            <div className={styles["problem-toggle-icon"]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className={styles['problem-list-icon']} style={{ display: 'flex', alignItems: 'center' }}>
+                <UnorderedListOutlined style={{ fontSize: 15, color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)} />
+                <h6 style={{ marginTop: '5px', color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)}>Problem List</h6>
+              </div>
 
-      <div className="container">
-        <div className="test-info">
-          <h2>Test: Introduction to Algorithms</h2>
-          <p>Duration: 60 Minutes</p>
-          <p>Start Time: 22nd March, 2025 - 10:00 AM</p>
-          <p>Instructions: Solve the following problems within the given time.</p>
+              <div>
+                {userIntuition ? <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                  <CheckCircleOutlined style={{ color: 'green', fontSize: '20px' }} />
+                  <span style={{ color: 'white', marginLeft: '5px' }}>Intuition Submitted</span>
+                </div>
+                  : <IntuitionForm onSubmit={handleIntuitionSubmit} />}
+              </div>
+            </div>
+            {problemListVisible && (
+              <div
+                ref={problemListRef}
+                className={styles["problem-items-visible"]}
+              >
+                <div className={styles["problem-items"]}>
+                  {Object.entries(ProblemData).map(([key, problem], index) => (
+                    <div
+                      key={key}
+                      className={problem.title === currentProblem.title ? styles['problem-item-active'] : styles['problem-item']}
+                      onClick={() => {
+                        setCurrentProblem(problem);
+                        setProblemListVisible(false);
+                      }}
+                    >
+                      {problem.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <h2>{currentProblem.title}</h2>
+          <p style={{ marginBottom: '30px' }}>Duration: {duration} Minutes</p>
+          {currentProblem.description.map((desc, idx) => (
+            <p key={idx}>{desc}</p>
+          ))}
+          <p style={{ marginTop: '50px' }}><b>Input:</b> {currentProblem.inputFormat} </p>
+          <p><b>Output:</b> {currentProblem.outputFormat} </p>
+
+          <div className={styles['wrapper']}>
+            <table className={styles['table']}>
+              <thead>
+                <tr>
+                  <th className={styles['header']}>Input</th>
+                  <th className={styles['header']}>Output</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentProblem.examples.map((ex, index) => (
+                  <tr key={index}>
+                    <td className={styles['cell']}>{ex.input}</td>
+                    <td className={styles['cell']}>{ex.output}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p style={{ marginTop: '25px', marginBottom: '20px' }}><b>Explanation :</b></p>
+          <p> {currentProblem.explanation} </p>
         </div>
 
-        <div className="timer">
-          <p>Time Left: <span>{formatTime(timeLeft)}</span></p>
-        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '50%', gap: '8px', maxHeight: '800px', minWidth: '25%', maxWidth: '75%' }}>
+          {/* 2. Questions */}
+          <Split mode="vertical"
+            renderBar={({ onMouseDown, ...props }) => {
+              return (
+                <div {...props} style={{ boxShadow: 'none', background: 'transparent' }}>
+                  <div onMouseDown={onMouseDown} style={{ backgroundColor: 'transparent', boxShadow: 'none' }} />
+                </div>
+              );
+            }} style={{ height: '100%' }} gutterSize={6}>
+            <div className={styles['editor-sidebar']} style={{ padding: '1rem', backgroundColor: '#343434', color: 'white', height: '50%', minHeight: '25%', maxHeight: '75%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <h5 style={{ marginBottom: '5px' }}>Select Language</h5>
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    style={{ padding: '0.3rem', backgroundColor: '#272822', color: 'white', border: 'none' }}
+                  >
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                  </select>
+                </div>
+                <p className={styles.timer}>
+                  <ClockCircleOutlined style={{ color: 'green' }} /> {formatTime(timeLeft)}
+                </p>
+              </div>
 
-        <div className="questions">
-          {questions.map((question) => (
-            <div key={question.id} className="question">
-              <h3>{question.question}</h3>
-              <div className="options">
-                {question.options.map((option, index) => (
-                  <div key={index}>
+              <div
+                ref={editorRef}
+                style={{
+                  border: '1px solid #555',
+                  backgroundColor: '#343434',
+                  borderRadius: '8px',
+                  height: '300px',
+                  overflow: 'auto',
+                  fontSize: '14px'
+                }}
+              />
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <button
+                  onClick={runTest} disabled={testRunning || submitted}
+                  style={{
+                    marginTop: '1rem',
+                    backgroundColor: '#444',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {testRunning ? 'Running...' : 'Run'}
+                </button>
+
+                <button
+                  onClick={handleSubmit} disabled={!canSubmit || submitted}
+                  style={{
+                    marginTop: '1rem',
+                    backgroundColor: submitted || canSubmit ? 'green' : '#444',
+                    opacity: submitted || !canSubmit ? 0.6 : 1,
+                    cursor: submitted || !canSubmit ? 'not-allowed' : 'pointer',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                  }}
+                >
+                  {submitted ? 'Submitted' : 'Submit'}
+                </button>
+              </div>
+            </div>
+
+            {/* 4. Example Test Cases */}
+            <div className={styles["testcase-sidebar"]} style={{ height: '50%', minHeight: '25%', maxHeight: '75%' }}>
+              <h3>Try Yourself :</h3>
+              <p style={{ marginTop: '25px' }}><b>Input </b></p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
+                {Object.entries(inputValues).map(([key, val]) => (
+                  <div key={key}>
+                    <label style={{ color: 'white', marginRight: '10px', marginBottom: '10px' }}>{key} :</label>
                     <input
-                      type="radio"
-                      id={`${question.id}-${index}`}
-                      name={question.id}
-                      value={option}
-                      onChange={() => handleAnswerChange(question.id, option)}
-                      checked={selectedAnswers[question.id] === option}
-                      disabled={submitted}
+                      type="text"
+                      value={val}
+                      onChange={e => handleInputChange(key, e.target.value)}
+                      className={styles['inputFieldText']}
                     />
-                    <label htmlFor={`${question.id}-${index}`}>{option}</label>
                   </div>
                 ))}
               </div>
+              <p style={{ wordSpacing: '5px', marginTop: '20px', marginRight: '10px' }}><b>Output: </b> {codeOutput} </p>
             </div>
-          ))}
+          </Split>
         </div>
-
-        <div className="run-section">
-          <button
-            className="run-btn"
-            onClick={runTest}
-            disabled={testRunning || submitted}
-          >
-            {testRunning ? 'Test Running...' : 'Run Solution'}
-          </button>
-        </div>
-
-        <div className="submit-section">
-          <button
-            className="submit-btn"
-            onClick={handleSubmit}
-            disabled={!canSubmit || submitted}
-          >
-            {submitted ? 'Test Submitted' : 'Submit Test'}
-          </button>
-        </div>
-
-        <div className="intuition-tab">
-          <h3>Your Problem Solving Intuition</h3>
-          <textarea
-            className="intuition-textarea"
-            placeholder="Write your intuition or approach to solve the problem here..."
-            value={userIntuition}
-            onChange={handleIntuitionChange}
-            disabled={submitted}
-          />
-        </div>
-      </div>
-
-      <footer className="footer">
-        <p>&copy; 2025 HackerRank Replica</p>
-      </footer>
+      </Split>
     </div>
   );
 }

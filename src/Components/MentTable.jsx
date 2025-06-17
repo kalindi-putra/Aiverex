@@ -1,5 +1,6 @@
 import { Avatar, Table, Tooltip,Tag,Space,Button } from "antd";
 import { Divider } from 'antd';
+import styles from '../Pages/Mentors/layout.module.css';
 import CustModal from "./Modal";
 import { useState } from "react";
 
@@ -7,7 +8,7 @@ function Tabletop () {
     const paginationConfig = {
         pageSize: 4, // Number of items per page
         size: 'default', // Size of pagination component ('default', 'small', 'large')
-        showQuickJumper: true, // Display a quick jump input
+        showQuickJumper: false, // Display a quick jump input
         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`, // Custom total display format
       };
     const data = [
@@ -157,6 +158,7 @@ function Tabletop () {
     {/* <Divider orientation="left" >Results</Divider> */}
     {modal&&<CustModal text={modal} onClose={onClose} />}
     <Table 
+    className={styles.customPagination}
     dataSource={data}
     columns={columns}
     pagination={paginationConfig}
