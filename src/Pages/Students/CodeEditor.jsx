@@ -18,6 +18,16 @@ const languageExtensions = {
   cpp
 };
 
+const getLanguageId = (lang) => {
+  const map = {
+    javascript: 63,
+    python: 71,
+    java: 62,
+    cpp: 54
+  };
+  return map[lang];
+};
+
 const defaultCodeSnippets = {
   "cpp": `#include <iostream>
 using namespace std;
@@ -32,7 +42,7 @@ int main() {
         // Your code here
     }
 }`,
-  "javascript": `// Your code here` ,
+  "javascript": `// Your code here`,
   "java": `public class Main {
     public static void main(String[] args) {
         // Your code here
@@ -56,7 +66,7 @@ function Test() {
   const editorRef = useRef(null);
   const viewRef = useRef(null);
   const [language, setLanguage] = useState('javascript');
-  const [code , setCode] = useState(defaultCodeSnippets[language]);
+  const [code, setCode] = useState(defaultCodeSnippets[language]);
   const leftRef = useRef(null);
   const problemListRef = useRef();
   const [inputValues, setInputValues] = useState({});
@@ -66,6 +76,54 @@ function Test() {
     setUserIntuition(data);
     setCanSubmit(true);
   };
+
+  const handleApiRun = async () => {
+    const editorCode = viewRef.current?.state?.doc?.toString() || '';
+    const stdin = Object.values(inputValues).join("\n");
+
+    setTestRunning(true);
+    setCodeOutput("Running...");
+
+    try {
+      const response = await fetch("http://192.168.82.52:2358/submissions?base64_encoded=false&wait=true", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language_id: getLanguageId(language),
+          source_code: editorCode,
+          stdin: stdin,
+          time_limit: currentProblem.timeLimit,
+          memory_limit: currentProblem.memoryLimit
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.status && result.status.id === 5) {
+        setCodeOutput("Time Limit Exceeded");
+      } else if (result.status && result.status.id === 6) {
+        setCodeOutput("Memory Limit Exceeded");
+      } else if (result.stdout) {
+        setCodeOutput(result.stdout);
+        setCanSubmit(true);
+      } else if (result.stderr || result.compile_output) {
+        setCodeOutput(result.stderr || result.compile_output);
+      } else {
+        setCodeOutput("Unknown Error Occurred");
+      }
+    } catch (error) {
+      if (error.name === "TypeError") {
+        setCodeOutput("Network Error: Unable to reach server.");
+      } else {
+        setCodeOutput("Failed to connect to server.");
+      }
+    }
+
+    setTestRunning(false);
+  };
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -78,12 +136,6 @@ function Test() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
-
-  useEffect(() => {
-    if (leftRef.current) {
-      setLeftHeight(leftRef.current.offsetHeight);
-    }
   }, []);
 
   const handleInputChange = (key, value) => {
@@ -99,6 +151,7 @@ function Test() {
     setInputValues(currentProblem.exampleInput);
     setCodeOutput(currentProblem.exampleOutput);
     setUserIntuition("");
+    createEditor(language);
     setSubmitted(false);
     setCanSubmit(false);
     setSelectedAnswers({});
@@ -119,7 +172,7 @@ function Test() {
 
   useEffect(() => {
     createEditor(language);
-    setLanguage(language) ;
+    setLanguage(language);
     setCode(defaultCodeSnippets[language]);
     return () => viewRef.current?.destroy();
   }, [language]);
@@ -304,7 +357,7 @@ function Test() {
                 </div>
               );
             }} style={{ height: '100%' }} gutterSize={6}>
-            <div className={styles['editor-sidebar']} style={{ padding: '1rem', backgroundColor: '#343434', color: 'white', height: '50%', minHeight: '25%', maxHeight: '75%' }}>
+            <div className={styles['editor-sidebar']} style={{ padding: '1rem', backgroundColor: '#343434', color: 'white', height: '60%', minHeight: '25%', maxHeight: '75%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <h5 style={{ marginBottom: '5px' }}>Select Language</h5>
@@ -330,15 +383,16 @@ function Test() {
                   border: '1px solid #555',
                   backgroundColor: '#343434',
                   borderRadius: '8px',
-                  height: '300px',
+                  height: '250px',
                   overflow: 'auto',
                   fontSize: '14px'
                 }}
               />
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', position:'sticky' }}>
                 <button
-                  onClick={runTest} disabled={testRunning || submitted}
+                  onClick={handleApiRun}
+                  disabled={testRunning || submitted}
                   style={{
                     marginTop: '1rem',
                     backgroundColor: '#444',
@@ -371,13 +425,13 @@ function Test() {
             </div>
 
             {/* 4. Example Test Cases */}
-            <div className={styles["testcase-sidebar"]} style={{ height: '50%', minHeight: '25%', maxHeight: '75%' }}>
+            <div className={styles["testcase-sidebar"]} style={{ height: '40%', minHeight: '25%', maxHeight: '75%' }}>
               <h3>Try Yourself :</h3>
               <p style={{ marginTop: '25px' }}><b>Input </b></p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                 {Object.entries(inputValues).map(([key, val]) => (
                   <div key={key}>
-                    <label style={{ color: 'white', marginRight: '10px', marginBottom: '10px' }}>{key} :</label>
+                    <label style={{ color: 'white', marginRight: '10px', marginBottom: '10px', gap:'5px' }}>{key} :</label>
                     <input
                       type="text"
                       value={val}

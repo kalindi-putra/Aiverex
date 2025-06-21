@@ -65,8 +65,6 @@ html{
 .org-btn {
   position: relative;
   overflow: hidden;
-  border: 1px solid #1DACD6 !important;
-  color: #1DACD6 !important;
   background-color: transparent !important;
   transition: color 0.4s ease;
   z-index: 1;
@@ -281,7 +279,7 @@ html{
   } */
 
  .banner-container .card{
-    background:#1a1d20;
+    background:transparent;
   }
   .moveUp{
     width:20rem !important;
@@ -399,20 +397,5 @@ img:active {
     transform: translateY(0px);
     opacity: 1;
   }
-}
-
-
-@font-face {
-  font-family: 'Mooxy';
-  src: url('/assets/font/darkforce.ttf') format('truetype');
-}
-
-
-.darkforce-text {
-  font-family: 'Mooxy', sans-serif;
-  font-size: 70px;
-  font-weight: 100;
-  letter-spacing: 4px;
-  word-spacing: 8px;
 }
 

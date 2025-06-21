@@ -103,7 +103,7 @@ function Home2() {
               <div className="px-5 py-5 mt-5">
                 <div className="px-2 py-2 align-middle">
                   <div className={`${styles['typewriter-wrapper']} font-mono text-center`}>
-                    <div className={styles['darkforce-text']}>
+                    <div >
                       <Typewriter
                         words={getLoopedSequence()}
                         loop={true}
@@ -126,8 +126,8 @@ function Home2() {
                 </div>
                 <div data-aos='fade-zoom-in' className="px-2 py-2">
                   <Link
-                    to={isLoggedIn ? "/home" : "/login"}
-                    className={`${styles["btn"]} btn ${styles["btn-outline-primary"]}`}
+                    to={isLoggedIn ? "/" : "/login"}
+                    className={`${styles["btn"]} btn ${styles["btn-outline-primary"]} primary-button-color`}
                     style={{marginTop:'80px'}}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -171,7 +171,7 @@ function Home2() {
                   <div data-aos='fade-zoom-in' data-aos-anchor-placement="bottom-bottom" className="px-2 py-2">
                     <button
                       type="button"
-                      className={`${styles["btn"]} btn ${styles["btn-outline-primary"]}`}
+                      className={`${styles["btn"]} btn ${styles["btn-outline-primary"]} primary-button-color`}
                       style={{marginTop:'40px'}}
                     >
                       Drop A Review
@@ -255,7 +255,7 @@ function Home2() {
               </div>
               <div data-aos='fade-zoom-in' data-aos-anchor-placement="bottom-bottom" className="col-12 pt-3">
                 <a
-                  className={`${styles["btn"]} btn`}
+                  className={`${styles["btn"]} btn primary-button-color`}
                   style={{ width: "250px" , marginTop:'60px'}}
                   target="_blank"
                   role="button"
@@ -313,7 +313,7 @@ function Home2() {
           </div>
         </div>
         <div
-          className={`${styles["testimonals-container"]} ${styles["text-white"]} ${styles["bg-black"]}`}
+          className={`${styles["testimonals-container"]} ${styles["text-white"]} bg-black`}
           id="testi"
         >
           <div className="container-fluid">
@@ -369,48 +369,6 @@ function Home2() {
                         <div className="card-header">Java Masterclass</div>
                         <div className="card-body">
                           <h5 className="card-title">Begineer Course</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-offset="100"
-                        className={`${styles["card"]} card ${styles["moveUp"]} mb-4`}
-                      >
-                        <div className="card-header">Python </div>
-                        <div className="card-body">
-                          <h5 className="card-title">Python AI</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-offset="100"
-                        className={`${styles["card"]} card ${styles["moveUp"]} move-up mb-4`}
-                      >
-                        <div className="card-header">Python </div>
-                        <div className="card-body">
-                          <h5 className="card-title">Python AI</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-offset="100"
-                        className={`${styles["card"]} card ${styles["moveUp"]} move-up mb-4`}
-                      >
-                        <div className="card-header">Python </div>
-                        <div className="card-body">
-                          <h5 className="card-title">Python AI</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
                             and make up the bulk of the card's content.

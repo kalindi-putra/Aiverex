@@ -125,8 +125,8 @@ const Profile = () => {
                 <span style={{ color: '#707070', flexGrow: 1 }}>Add your resume here</span>
                 <Link
                   to="/link"
+                  className='add-skill-button-background-color'
                   style={{
-                    backgroundColor: '#6B11DC',
                     padding: '5px 10px',
                     borderRadius: '5px',
                     width:'80px',
@@ -161,8 +161,8 @@ const Profile = () => {
                   <span style={{ color: '#707070', flexGrow: 1 }}>Add your GitHub here</span>
                   <Link
                     to="/link"
+                    className='add-skill-button-background-color'
                     style={{
-                      backgroundColor: '#6B11DC',
                       padding: '5px 10px',
                       borderRadius: '5px',
                       width: '80px',
@@ -221,9 +221,8 @@ const Profile = () => {
                         </div>
                         <p>No skills found</p>
                       </div>
-                  <Link to="edit" style={{
+                  <Link className='add-skill-button-background-color' to="edit" style={{
                     height: '35px',
-                    backgroundColor: '#6B11DC',
                     padding: '5px 20px',
                     borderRadius: '5px',
                     textDecoration: 'none',

@@ -19,7 +19,9 @@ const problems = {
       'a' : '5',
       'b' : '3'
     },
-    exampleOutput: '  8',
+    exampleOutput: '8',
+    timeLimit: 1,
+    memoryLimit: 262144,
   },
 
   "Sort Array": {
@@ -29,7 +31,7 @@ const problems = {
       "You are given an integer array of length n. Your task is to implement a function that returns the sorted version of the array in ascending order.",
       "You must not use any built-in sorting functions like sort(). Instead, implement your own sorting logic such as bubble sort, selection sort, or insertion sort."
     ],
-    inputFormat: "An integer array of length n",
+    inputFormat: "An integer n and array of length n where each element is seperated by space",
     outputFormat: "An integer array sorted in ascending order",
     examples: [
       { input: "[5, 2, 9, 1]", output: "[1, 2, 5, 9]" },
@@ -39,10 +41,14 @@ const problems = {
     ],
     explanation: "The input array is sorted in ascending order using a custom sorting algorithm like bubble sort without using built-in methods.",
     exampleInput: {
-      'array': "[5, 2, 9, 1]",
+      'n' : '4',
+      'array': "5 2 9 1",
     },
-    exampleOutput: ["  [1, 2, 5, 9]"],
+    exampleOutput: ["1 2 5 9"],
+    timeLimit: 1,
+    memoryLimit: 262144,
   },
+
   "Trapping Rain Water": {
     title: "Trapping Rain Water",
     duration: "90",
@@ -50,7 +56,7 @@ const problems = {
       "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
       "You must not use any built-in methods that directly solve the problem. Instead, write a custom algorithm using two pointers, stacks, or pre-computed arrays."
     ],
-    inputFormat: "An integer array of length n representing elevation heights",
+    inputFormat: "An integer n and array of length n representing elevation heights where each element is separated by space",
     outputFormat: "A single integer representing the total amount of trapped rain water",
     examples: [
       { input: "[0,1,0,2,1,0,1,3,2,1,2,1]", output: "6" },
@@ -60,9 +66,12 @@ const problems = {
     ],
     explanation: "Using elevation bars as boundaries, trapped water is calculated by comparing the heights from both sides. The total trapped units are summed based on the minimum height between left and right bounds at every index.",
     exampleInput: {
-      'height': "[0,1,0,2,1,0,1,3,2,1,2,1]"
+      'n': '12',
+      'height': "0 1 0 2 1 0 1 3 2 1 2 1"
     },
-    exampleOutput: "6"
+    exampleOutput: "6",
+    timeLimit: 1,
+    memoryLimit: 262144,
   },
   
 };
