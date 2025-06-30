@@ -1,0 +1,375 @@
+body,:root,#root{
+  background-color: #343434 !important;
+}
+
+.AuthDiv{
+  color:white !important;
+	min-height: 85vh;
+  
+    }
+
+    .loginTitle{
+      font-size: 50px;
+      color: white;
+    }
+
+    .loginCard{
+      margin:5% 20%;
+    }
+
+.login-box{
+    font-size: 23px;
+    border-radius: 5px;
+    background: #343434;
+    color: white;
+    margin: 50px auto;
+    display: flex;
+    width:700px;
+    
+  }
+  .login-box .imgDiv img,.register-box .imgDiv img{
+    width: 300px;
+    height: 100%;
+    margin-right: 10px;
+    background: #222;
+    padding: 20px;
+  }
+  
+  .AuthDiv img:hover,.RegDiv img:hover{
+    transform: scale(1);
+  }
+  
+  .register-box{
+    font-size: 23px;
+    border-radius: 5px;
+    background: #343434;
+    color: white;
+    margin: 30px auto;
+    width: 400px;
+  }
+  
+  .hveImg{
+    display: flex;
+    width:800px;
+  }
+  .register-box .imgDiv img{
+    width:350px;
+  }
+  .formDiv{
+    margin: 20px 10px !important;
+  }
+
+  .login-box h2,.register-box h2{
+    padding: 0 0 20px;
+    font-size: 28px;
+    letter-spacing: 1.2px;
+  }
+
+  
+  
+  .form label {
+    display: flex;
+    font-size: 20px;
+    
+  }
+  
+  .para-2 {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 1px;
+  }
+
+  input::placeholder{
+    color: #343434 !important;
+  }
+  .ip,.form-btn{
+    width: 100% !important;
+    border: none !important;
+    outline: none !important;
+    height:40px;
+    border-radius:5px
+  }
+  
+  .para-2  {
+    color: white;
+    font-size: 15px;
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 360px;
+    margin-left: 0px !important;
+    margin-top: 50px;
+  }
+
+  .register-box .form{
+    width: 410px;
+  }
+  
+  .form-btn{
+    
+    border-radius: 5px;
+    outline: none !important;
+    background-color: #1DACD6 !important;
+  color: white !important;
+  text-align: center;
+  }
+
+  .ggl{
+    font-size: 18px;
+    width: auto;
+    margin: 50px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: transparent !important;
+    margin: 0px !important;
+}
+.ggl:hover{
+  color: white;
+}
+
+  .redirect {
+    text-align:center;
+    font-size: 18px;
+    padding: 3px;
+  }
+
+  .or::before, .or::after {
+    content: "";
+    display: inline-block;
+    width: 30%;
+    margin: 0 5px;
+    border-top: 1px solid #ccc;
+    vertical-align: middle;
+  }
+
+.card_design{
+  background-color: #414141 !important;
+}
+
+.form-btn:hover{
+  color: white !important;
+}
+
+.loginButton{
+  display: flex;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (max-width: 800px) {
+  .login-box .imgDiv,.register-box .imgDiv{
+    display: none;
+  }
+  .login-box,.register-box{
+    width: 350px;
+    padding: 10px;
+  }
+  .form{
+    width: 300px !important;
+  }
+}
+
+.RegDiv{
+  color:white !important;
+  min-height: 90vh;
+}
+
+.container{
+  width:700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .regImg{
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+}
+
+.container .cardReg{
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #262626 !important;
+}
+
+.container .cardReg h2{
+  font-size: 25px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.cardReg .redirect{
+  font-size: 18px;
+  color: #ccc;
+  margin-top: 20px;
+  text-decoration: none;
+
+}
+
+.RegDiv .cardReg:nth-child(1) .redirect:hover{
+  color: #4285F4;
+}
+
+.RegDiv .cardReg:nth-child(2) .redirect:hover{
+  color: #905CFF;
+}
+
+.loginOptions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+.googleButton {
+  background-color: #343434 !important;
+  color: white !important;
+  border: none !important;
+  border-color: white;
+  border-radius: 50% !important;
+  width: 50px;
+  height: 42px;
+  align-content:'left';
+  margin-bottom: 8px;
+  filter: brightness(0.75);
+  transition: filter 0.2s ease, background-color 0.2s ease;
+}
+
+.linkedInButton {
+  background-color: #343434 !important;
+  color: white !important;
+  border: none !important;
+  border-color: white;
+  width: 50px;
+  height: 42px;
+  align-content:'left';
+  margin-bottom: 8px;
+  filter: brightness(0.75);
+  transition: filter 0.2s ease, background-color 0.2s ease;
+}
+
+.googleButton:hover , .linkedInButton:hover {
+  background-color: #4285F4 !important;
+  filter: brightness(1);
+}
+
+
+.signUpSideContainerStudent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+    
+.loginForm {
+    grid-column: span 3 / span 3;
+    grid-row: span 5 / span 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.greetingContainerStudent {
+    grid-column: span 2 / span 2;
+    grid-row: span 5 / span 5;
+    grid-column-start: 4;
+    background-color:  #4285F4;
+    border-radius: 40% 60% 0% 100% / 100% 0% 100% 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:30px;
+    padding-left: 70px;
+}
+
+.loginRegisterToggleButton {
+  border-radius: 10px;
+  height: 30px;
+  width: 100px;
+  background-color: white;
+  color: #4285F4;
+  margin-top: 30px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.loginRegisterToggleButton:hover {
+  font-size: 15px;
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: rgb(252, 225, 225) ;
+}
+        
+
+.signUpSideContainerMentor {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+    
+.greetingContainerMentor {
+    grid-column: span 2 / span 2;
+    grid-row: span 5 / span 5;
+    border-radius: 0% 100% 31% 69% / 100% 0% 100% 0% ;
+    background-color:  #4285F4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:30px;
+    padding-left: 70px;
+    height: 400px;
+    width: 420px;
+}
+
+.greetingContainerMentorRegister {
+    grid-column: span 2 / span 2;
+    grid-row: span 5 / span 5;
+    border-radius: 0% 100% 28% 72% / 100% 19% 81% 0% ;
+    background-color:  #4285F4;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding:30px;
+    padding-left: 70px;
+    height: 480px;
+    width: 380px;
+
+}
+
+.greetingContainerStudentRegister {
+    grid-column: span 2 / span 2;
+    grid-row: span 5 / span 5;
+    grid-column-start: 4;
+    background-color:  #4285F4;
+    border-radius: 100% 0% 79% 21% / 17% 100% 0% 83% ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:30px;
+    padding-left: 70px;
+}
+        

@@ -1,0 +1,104 @@
+/* General Layout */
+.exam-instructions-page {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #272822;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .start-test {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    
+    /* Move the button to the right with a specific margin */
+    margin-left: auto; /* Adjust this to move it right */
+    display: block;
+  }
+  
+  /* Header Section */
+  .exam-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #0073e6;
+    border-radius: 10px;
+    color: white;
+  }
+  
+  .exam-header h1 {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .exam-header p {
+    font-size: 18px;
+  }
+  
+  /* Section Styling */
+  .exam-rules,
+  .exam-timing,
+  .exam-format {
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exam-rules h2,
+  .exam-timing h2,
+  .exam-format h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  /* Styling for List Items */
+  .exam-rules ul,
+  .exam-format ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    font-size: 16px;
+  }
+  
+  .exam-rules li,
+  .exam-format li {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  /* Timing Text Styling */
+  .exam-timing p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .exam-instructions-page {
+      padding: 15px;
+    }
+  
+    .exam-header h1 {
+      font-size: 30px;
+    }
+  
+    .exam-header p {
+      font-size: 16px;
+    }
+  
+    .exam-rules h2,
+    .exam-timing h2,
+    .exam-format h2 {
+      font-size: 20px;
+    }
+  }
+  
+  

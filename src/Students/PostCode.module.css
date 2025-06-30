@@ -1,0 +1,96 @@
+.probPart{
+  margin: 10px auto;
+ width: 80vw;
+ border-radius: 10px;
+ overflow: hidden;
+ background-color: #282727 !important;
+ color: #ccc !important;
+ line-height: 30px;
+}
+.ant-menu{
+  background-color: var(--secondary);
+  width: 100%;
+  color: white !important;
+}
+
+.menuLinks{
+  text-decoration: none !important;
+}
+
+
+.probHead{
+  color: white !important;
+  padding: 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  background-color:#282727 !important;
+}
+
+
+
+.postForm{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+
+    
+
+}
+
+.postInput{
+    width: 30vw !important;
+
+
+}
+
+
+.postBtn{
+    background-color: #6B11DB !important;
+    color: white !important;
+    font-weight: 500;
+    width: 90px;
+    align-items: center;
+    text-align: center;
+    outline: none !important;
+    border: none !important;
+}
+
+
+
+.Stepscode{
+    color: #A1A1A1;
+    font-size: 18px;
+}
+
+.Stepscode {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .Stepscode li {
+    width: 48%;
+    margin-bottom: 1em;
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
+  }
+  
+  .Stepscode li::before {
+    content: counter(step-counter);
+    background-color:
+    #434343;
+    color: #939393;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5em;
+    padding: 2px !important;
+  }
+  

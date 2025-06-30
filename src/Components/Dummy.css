@@ -1,0 +1,10 @@
+.cardStyle{
+    text-align:left;
+    margin-top:10px;
+    background:#535353;
+    color:#fff
+}
+
+.cardStyle .ant-card-body{
+    padding: 10px 15px !important;
+}

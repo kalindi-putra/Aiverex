@@ -1,0 +1,53 @@
+.probPart .ant-menu-item{
+    padding:0px 50px ;
+}
+
+.probPart .ant-menu-item-active{
+    color: var(--primary) !important;
+  }
+  .probPart .ant-menu-item-selected{
+    color: var(--primary) !important;
+    background-color: #282727 !important;
+  }
+
+  .probPart .ant-menu-item-selected::after,.probPart .ant-menu-item:hover::after{
+    border-bottom-color: var(--primary) !important;
+  }
+
+
+  .probPart .ant-card-body{
+    background-color: #242424 !important;
+    color: white !important;
+  }
+  .probPart .ant-card-extra{
+    display: none !important;
+  }
+
+  .probPart .ant-card-head{
+    background-color: #434343 !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    min-height: auto !important;
+    border: 0px !important;
+  }
+  .probPart .ant-tabs-tab{
+    color: white !important;
+    padding: 10px 30px !important;
+    margin: 0px !important;
+  }
+
+  .probPart .ant-tabs-tab-active{
+    background-color: #282727 !important;
+    color: var(--primary) !important;
+  }
+
+  .probPart .ant-tabs-tab-btn[aria-selected='true']{
+    color: var(--primary) !important;
+  }
+  .probPart .ant-tabs-tab-btn[aria-selected='true']::after{
+    border-bottom-color: var(--primary) !important;
+  }
+
+  .probPart .activeLinks{
+    color: var(--secondary) !important;
+  }
