@@ -1,7 +1,7 @@
 import React from 'react'
 import {Typography} from 'antd';
 import styles from './layout.module.css';
-import Scores from './Scores';
+import Scores from './scores';
 
 const TestScores = (props) => {
     const progress = props.progress ;

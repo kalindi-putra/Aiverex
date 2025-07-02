@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { initializeApp,getApps } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup , setPersistence,browserSessionPersistence } from 'firebase/auth';

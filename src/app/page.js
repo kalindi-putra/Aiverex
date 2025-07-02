@@ -6,7 +6,7 @@ import { CustDes } from '../Components/Card'
 import { Row, Col } from 'antd';
 import {CustCarosuel} from '../Components/CustCarosuel';
 import { BarChartOutlined,FormOutlined,CodeOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { ExpertsData } from '../store/data';
+import { ExpertsData } from './store/data';
 import {LandNav} from '../Components/CustNav';
 import { AuthContext } from '../context/UserContext';
 

@@ -5,7 +5,7 @@ import { UserOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined, EditOut
 import { auth } from '../../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import Education from './Education';
+import Education from './education';
 import { AuthContext } from '../../context/UserContext';
 import AOS from 'aos';
 import 'aos/dist/aos.css';

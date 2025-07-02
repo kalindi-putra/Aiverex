@@ -1,9 +1,9 @@
 import { Layout, Space, Typography, Avatar, Button, Modal, Progress, Row, Col,Image } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { UserOutlined, createFromIconfontCN } from '@ant-design/icons';
-import CustBadge from './CustBadge';
+import CustBadge from './custBadge';
 import { useEffect, useState } from 'react';
-import Scores from './Scores';
+import Scores from './scores';
 
 let srcSize = false
 
@@ -14,8 +14,8 @@ const IconFont = createFromIconfontCN({
     '//at.alicdn.com/t/font_1788592_a5xf2bdic3u.js', // icon-shoppingcart, icon-python
   ],
 });
-import CustTable from './Table';
-import { CourseList } from './Dashboard';
+import CustTable from './table';
+import { CourseList } from './dashboard';
 const progress = [
   {
     name: 'C',

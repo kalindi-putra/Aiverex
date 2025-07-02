@@ -8,11 +8,11 @@ import styles from './layout.module.css';
 import { CourseList } from '../../store/data';
 import { auth } from '../../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Profile from './Profile';
-import TestScores from './TestScores';
-import Certificates from './Certificates';
-import SubmittedTests from './SubmittedTests';
-import SideMenu from './SideMenu';
+import Profile from './profile';
+import TestScores from './testScores';
+import Certificates from './certificates';
+import SubmittedTests from './submittedTests';
+import SideMenu from './sideMenu';
 
 const progress = [
   {
