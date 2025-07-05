@@ -1,3 +1,4 @@
+"use client";
 import { Card,Typography,Button,Rate } from 'antd';
 import { useRouter } from 'next/navigation';
 const { Title,Text,Paragraph } = Typography;
@@ -77,7 +78,7 @@ const CustDes = (props) => {
     >
       {type === 'expert' ? (
         <div style={{ display: 'flex', flexDirection: isLeft ? 'row-reverse' : 'row', alignItems: 'center', gap: 20 }}>
-          <img src='assets/primaryDot.png' style={{ position:'absolute' , zIndex:'20' ,height:'50px' , width:'50px' , left: !isLeft && '-79px' , right: isLeft && '-81px' , top:'140px'}}></img>
+          <img src='primaryDot.png' style={{ position:'absolute' , zIndex:'20' ,height:'50px' , width:'50px' , left: !isLeft && '-77px' , right: isLeft && '-77px' , top:'140px'}}></img>
           <span style={{
             height: '0',
             width: '0',

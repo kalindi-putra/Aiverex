@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { Badge, Dropdown, List, Typography } from 'antd';
 import { BellOutlined } from '@ant-design/icons';

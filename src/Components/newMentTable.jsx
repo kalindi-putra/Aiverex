@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, Table, Tooltip, Tag, Space, Button } from 'antd';
 import { Divider } from 'antd';
 import CustModal from './Modal';

@@ -59,9 +59,9 @@ const SignInWithGoogle = async (navigate , role) => {
       }
 
       if (userData.role === 'mentor') {
-        navigate('/mentor/dashboard');
+        navigate.push('/mentor/dashboard');
       } else {
-        navigate('/student/dashboard');
+        navigate.push('/student/dashboard');
       }
     } else {
       const userRole = prompt("Are you a student or a mentor? Please type 'student' or 'mentor'.").toLowerCase();
@@ -82,9 +82,9 @@ const SignInWithGoogle = async (navigate , role) => {
       await setDoc(userDocRef, userData);
 
       if (userRole === 'mentor') {
-        navigate('/mentor/dashboard');
+        navigate.push('/mentor/dashboard');
       } else {
-        navigate('/student/dashboard');
+        navigate.push('/student/dashboard');
       }
 
       console.log('First time sign in with Google. User role set as:');

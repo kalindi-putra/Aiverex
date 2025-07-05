@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserDetails } from './firebase';
+import { getUserDetails } from '../../firebase/Firebase';
 
 function OtherPage() {
   const [user, setUser] = useState(null);

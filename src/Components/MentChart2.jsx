@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useContext } from 'react';
 import { Line } from '@ant-design/plots';
 import { AuthContext } from '../context/UserContext'; // Provide the correct path to your AuthContext

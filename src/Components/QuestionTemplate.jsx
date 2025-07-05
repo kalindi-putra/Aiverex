@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef } from 'react';
 import styles from './QuestionTemplate.module.css';
 import CodeEditor from '../pages/student/code_editor';

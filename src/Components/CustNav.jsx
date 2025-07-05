@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef , useContext } from 'react';
 import { SmileTwoTone } from "@ant-design/icons";
 import { useRouter } from 'next/navigation';
@@ -157,7 +158,7 @@ function CustNav(props) {
                         className={`${styles["navItems"]} nav-item 1 pl-2 pl-md-0 ml-0 ml-md-2`}
                         key="logout"
                       >
-                        <Link href="/login" className={`${styles["navLinks"]} nav-link`}>
+                        <Link href="/auth/login" className={`${styles["navLinks"]} nav-link`}>
                           
                             Logout
                           

@@ -1,3 +1,4 @@
+"use client";
 import { Layout, Space, Typography, Avatar, Button, Modal, Progress, Row, Col,Image, Card, Grid, Divider} from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { UserOutlined, createFromIconfontCN } from '@ant-design/icons';

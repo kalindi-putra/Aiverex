@@ -1,0 +1,719 @@
+/* Base styles */
+:root {
+  --primary: #6B11DC;
+  --secondary: #343434;
+  --background: #242424;
+  --text: #fff;
+  --text-secondary: #ccc;
+  --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dashboard container */
+.dashboardContainer {
+  min-height: 100vh;
+  background: #242424;
+  color: #fff;
+  width: 100%;
+}
+
+.header {
+  background: #242424;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mainContent {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.section {
+  background: #343434;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transform: none;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sectionContent {
+  opacity: 1;
+}
+
+/* Profile Grid */
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.profileCard {
+  background: #242424;
+  border-radius: 15px;
+  padding: 2rem 2rem 1rem 2rem;
+  gap: 1rem;
+}
+
+/* Education Grid */
+.educationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  color:white;
+}
+
+.educationCard {
+  background: #242424;
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: white;
+}
+
+/* Scores Grid */
+.scoresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 15px;
+}
+
+.scoreCard {
+  background: var(--secondary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: var(--transition);
+}
+
+.scoreCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.scoreInfo {
+  flex: 1;
+}
+
+.scoreProgress {
+  min-width: 80px;
+}
+
+/* Certifications Grid */
+.certificationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* Courses Grid */
+.coursesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Skills Tags */
+.skillsTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.skillsTags :global(.ant-tag) {
+  font-size: 1rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 0 1rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
+  .profileGrid,
+  .educationGrid,
+  .scoresGrid,
+  .certificationsGrid,
+  .coursesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animation classes */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Scroll animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section specific styles */
+.scores-section,
+.certifications-section,
+.tests-section,
+.courses-section {
+  background: var(--secondary);
+  border-radius: 30px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+/* temporary */
+
+.feature-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2c2c2c;
+  color: white;
+  position: relative;
+}
+
+.feature-card {
+  max-width: 80%;
+  padding: 40px;
+  border-radius: 20px;
+  background-color: #4c4c4c;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  position: absolute;
+}
+
+.feature-card.next {
+  animation: slideInLeft 0.5s forwards;
+}
+
+.feature-card.prev {
+  animation: slideInRight 0.5s forwards;
+}
+
+/* Dashboard Section Animations */
+.dashboard-section {
+  min-height: auto;
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.5s ease-out;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  background: #242424;
+  border-radius: 30px;
+}
+
+.dashboard-section:not(.visible) {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.dashboard-section.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Section content styling */
+.section-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-out;
+}
+
+/* Container styling */
+.dashboard-container {
+  position: relative;
+  overflow-x: hidden;
+  padding: 1rem;
+}
+
+/* Section specific styling */
+.profile-section,
+.education-section,
+.certifications-section,
+.scores-section,
+.tests-section,
+.courses-section {
+  margin-bottom: 2rem;
+  background: #242424;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section transitions */
+.transition-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Social Links */
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* No Skills State */
+.noSkills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.noSkillsIcon {
+  width: 64px;
+  height: 64px;
+  opacity: 0.6;
+}
+
+/* Certificate Cards */
+.certificateCard {
+  background: #242424 !important;
+  border: 1px solid #343434 !important;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.certificateCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #6B11DC !important;
+}
+
+.certificateImageContainer {
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  padding: 1rem;
+}
+
+.certificateImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.certificateDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.addCertificateCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  border: 2px dashed #343434 !important;
+  background: transparent !important;
+}
+
+.addCertificateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: #666;
+}
+
+.addCertificateCard:hover .addCertificateContent {
+  color: #6B11DC;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .socialLinks {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .socialButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .certificationsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tests Container */
+.testsContainer {
+  background: var(--background);
+  border-radius: 15px;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.testsContainer :global(.ant-table) {
+  background: transparent;
+}
+
+.testsContainer :global(.ant-table-thead > tr > th) {
+  background: var(--secondary);
+  color: var(--text);
+  border-bottom: 2px solid var(--primary);
+}
+
+.testsContainer :global(.ant-table-tbody > tr > td) {
+  background: var(--background);
+  color: var(--text);
+  border-bottom: 1px solid var(--secondary);
+}
+
+.testsContainer :global(.ant-table-tbody > tr:hover > td) {
+  background: var(--secondary) !important;
+}
+
+.testsContainer :global(.ant-table-pagination) {
+  margin: 16px 0;
+}
+
+.testsContainer :global(.ant-pagination-item-active) {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.testsContainer :global(.ant-pagination-item-active a) {
+  color: var(--text);
+}
+
+.testsContainer :global(.ant-btn-primary) {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.testsContainer :global(.ant-btn-primary:hover) {
+  background: color-mix(in srgb, var(--primary) 80%, white);
+  border-color: color-mix(in srgb, var(--primary) 80%, white);
+}
+
+/* Scroll effect styles */
+.scrollSection {
+  overflow-y: auto;
+  height: auto;
+  margin-left: 50px;
+}
+
+.scrollItem {
+  height: auto;
+  transition: none;
+  padding: 1% 3%;
+  margin: 1% 3%;
+}
+
+.scrollSection::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollItem .section {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  transition: transform 0.2s ease-out;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.scrollItem .section.active {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+/* No skills state */
+.noSkills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.noSkillsIcon {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.noSkillsIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Certificate image container */
+.certificateImageContainer {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scrollSection {
+    padding: 1rem;
+  }
+
+  .scrollItem {
+    height: auto;
+    min-height: calc(100vh - 64px);
+  }
+}
+
+/*Submitted Tests Styling*/
+/* Override Ant Design Table to match dark theme */
+/* .custom-dark-table .ant-table {
+  background-color: #4c4c4c;
+  color: white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.custom-dark-table .ant-table-thead > tr > th {
+  background-color: #3a3a3a;
+  color: #f0f0f0;
+  border: none;
+  font-weight: 600;
+}
+
+.custom-dark-table .ant-table-tbody > tr > td {
+  background-color: #4c4c4c;
+  color: #ffffff;
+  border-color: #555;
+}
+
+.custom-dark-table .ant-table-tbody > tr:hover > td {
+  background-color: #5a5a5a;
+}
+
+.custom-dark-table .ant-pagination {
+  color: white;
+}
+
+.custom-dark-table .ant-pagination-item {
+  background-color: #333;
+  border: none;
+  color: #ccc;
+}
+
+.custom-dark-table .ant-pagination-item-active {
+  background-color: #6B11DC;
+  color: white;
+}
+
+.custom-dark-table .ant-btn-primary {
+  background-color: #6B11DC;
+  border-radius: 10px;
+  border: none;
+}
+
+.custom-dark-table .ant-tag-purple {
+  background-color: #7d3cff;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+} */
+
+/* .gridParent > div {
+  border: 1px solid #343434 ;
+} */
+
+.overIconEffect {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.overIconEffect:hover {
+  color: #6B11DC;
+  transform: scale(1.2);
+}
+
+.gradientBorderRight {
+  position: relative;
+}
+
+.gradientBorderRight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    #252525, 
+    #343434 30%, 
+    #343434 70%,
+    #252525  
+  );
+}
+
+.dashBoardTabPane {
+  padding: 5px 10px;
+  color: white;
+  transition: color 0.3s ease, margin 0.3s ease, transform 0.3s ease;
+}
+
+.activeTab {
+  border: 1px solid #343434;
+  border-radius: 15px;
+  background-color: #343434;
+  margin-top: -20px ;
+}
+
+:global(.ant-tabs-ink-bar) {
+  background: none !important;
+}
+
+:global(.ant-table) {
+  background-color: #434343;
+  color: white;
+  overflow: hidden;
+}
+
+:global(.ant-table-container) {
+  overflow: hidden;
+}
+
+:global(.ant-table-thead > tr > th) {
+  background-color: #494949 !important;
+  color: white !important;
+  border-bottom: none !important;
+}
+
+:global(.ant-table-tbody > tr > td) {
+  background-color: #2c2c2c !important;
+  color: #ffffff;
+  border-bottom: none !important;
+}
+
+:global(.ant-table-tbody > tr:hover > td) {
+  background-color: #343434 !important;
+  color: #fff !important;
+}
+
+:global(.ant-pagination-item-active) {
+  background-color: #292929 !important;
+  color: white !important;
+  border:none !important ;
+}
+
+:global(.ant-pagination-total-text) {
+  color: white !important;
+}
+
+:global(.ant-pagination-prev button),
+:global(.ant-pagination-next button) {
+  color: white !important;
+  cursor: pointer !important;
+  background-color: transparent;
+}
+
+:global(.ant-pagination-prev button:hover),
+:global(.ant-pagination-next button:hover) {
+  cursor: pointer !important;
+}

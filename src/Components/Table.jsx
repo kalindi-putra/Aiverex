@@ -1,3 +1,4 @@
+"use client";
 import React,{useState} from 'react';
 import { Space, Table, Tag,Button,Modal} from 'antd';
 import CustModal from './Modal';

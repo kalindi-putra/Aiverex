@@ -1,4 +1,6 @@
+"use client";
 import { useState } from "react";
+import Link from 'next/link';
 import { Avatar, Table, Tooltip,Tag,Space,Button } from "antd";
 import { Divider } from 'antd';
 import CustModal from "./Modal";
@@ -67,7 +69,7 @@ function Tabletop () {
             dataIndex: 'id',
             key: 'key',
             render: id=>{
-                return <Link>{id}</Link>
+                return <Link href={'/codeReview'}>{id}</Link>
             }
         },
         // {

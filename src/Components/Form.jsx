@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useContext, useEffect } from 'react';
 import { Button, Card, Form, Input, Select } from 'antd';
 import { Firestore } from 'firebase/firestore';

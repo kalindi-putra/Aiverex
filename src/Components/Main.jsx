@@ -1,6 +1,6 @@
 import { Layout, Space, } from 'antd';
 const { Sider } = Layout;
-import SideMenu from './SideMenu';
+import SideMenu from '../app/student/sideMenu';
 const siderStyle = {
   textAlign: 'center',
   color: '#fff',

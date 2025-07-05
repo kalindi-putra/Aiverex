@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef} from 'react';
 import loader from '@monaco-editor/loader';
 import { Button, Divider, Popover, Segmented, Input} from 'antd';
