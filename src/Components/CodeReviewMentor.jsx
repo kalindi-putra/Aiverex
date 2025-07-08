@@ -3,7 +3,7 @@ import { Layout, Space, Typography, Avatar, Button, Modal, Progress, Row, Col,Im
 const { Header, Footer, Sider, Content } = Layout;
 import { UserOutlined, createFromIconfontCN } from '@ant-design/icons';
 const { Meta } = Card;
-import MyEditor from '../../Components/EditorComp5';
+import MyEditor from './EditorComp5';
 const IconFont = createFromIconfontCN({
   scriptUrl: [
     '//at.alicdn.com/t/font_1788044_0dwu4guekcwr.js',

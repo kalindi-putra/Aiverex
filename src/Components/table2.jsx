@@ -1,10 +1,10 @@
 "use client";
 import React,{useState, useContext, useEffect} from 'react';
 import { Space, Table, Tag,Button,Modal} from 'antd';
-import CustModal from '../../Components/Modal';
-import { AuthContext } from '../../context/UserContext';
+import CustModal from './Modal';
+import { AuthContext } from '../context/UserContext';
 import { collection, doc, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/Firebase';
+import { db } from '../firebase/Firebase';
 
 
 

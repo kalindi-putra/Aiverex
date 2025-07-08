@@ -1,6 +1,6 @@
 import React from 'react'
 import {Typography} from 'antd';
-import styles from './layout.module.css';
+import styles from '../app/student/layout.module.css';
 import { BankOutlined, DotChartOutlined} from '@ant-design/icons';
 import { BuildingIcon } from 'lucide-react';
 

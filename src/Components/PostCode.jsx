@@ -1,11 +1,10 @@
 "use client";
-import styles from './PostCode.module.css';
+import styles from '../app/student/postYourCode/postCode.module.css';
 import { Form, Button, Checkbox, Input, Select, Space, Typography, Card, message, } from 'antd';
 const { Title } = Typography;
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu,Tag } from 'antd';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import './PostMenu.css'
 import { Statistic } from 'antd';
 const { Countdown } = Statistic;

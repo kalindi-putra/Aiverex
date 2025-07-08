@@ -8,7 +8,7 @@ import { auth } from '../../firebase/Firebase';
 import { db } from '../../firebase/Firebase';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/UserContext';
-import styles from './PostCode.module.css';
+import styles from './postCode.module.css';
 
 const isValidGitHubLink = (link) => {
   // Regular expression pattern for matching GitHub repository links

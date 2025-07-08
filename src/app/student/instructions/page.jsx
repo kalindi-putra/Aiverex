@@ -1,5 +1,5 @@
 import React from 'react';
-import './Instructions.css';
+import './instructions.css';
 import { useRouter } from 'next/navigation';
 
 const ExamInstructionsPage = () => {

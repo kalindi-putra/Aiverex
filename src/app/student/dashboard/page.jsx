@@ -9,11 +9,11 @@ import styles from '../layout.module.css';
 import { CourseList } from '../../store/data';
 import { auth } from '../../../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Profile from '../profile';
-import TestScores from '../testScores';
-import Certificates from '../certificates';
-import SubmittedTests from '../submittedTests';
-import SideMenu from '../sideMenu';
+import Profile from '../../../Components/profile';
+import TestScores from '../../../Components/testScores';
+import Certificates from '../../../Components/certificates';
+import SubmittedTests from '../../../Components/submittedTests';
+import SideMenu from '../../../Components/sideMenu';
 
 const progress = [
   {

@@ -1,6 +1,6 @@
 "use client" ;
 import React, { useState, useEffect } from 'react';
-import CodeEditor from './codeEditor/page';
+import CodeEditor from '../app/student/codeEditor/page';
 import axios from 'axios';
 
 function CodeEditorTest() {

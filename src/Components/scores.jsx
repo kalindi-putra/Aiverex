@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext } from 'react';
-import { AuthContext } from '../../context/UserContext';
+import { AuthContext } from '../context/UserContext';
 import { Progress,Typography } from 'antd'
 
 function Scores(props) {

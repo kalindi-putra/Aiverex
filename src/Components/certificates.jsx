@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Card } from 'antd';
-import styles from './layout.module.css';
+import styles from '../app/student/layout.module.css';
 
 const Certificates = (props) => {
 

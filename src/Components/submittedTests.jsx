@@ -1,7 +1,7 @@
 import React from 'react'
 import {Typography} from 'antd';
-import styles from './layout.module.css';
-import CustTable from './table'
+import styles from '../app/student/layout.module.css';
+import CustTable from './Table'
 
 const SubmittedTests = () => {
   return (

@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Typography, Avatar, Button, Tag } from 'antd';
 import { UserOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { auth } from '../../firebase/Firebase';
+import { auth } from '../firebase/Firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Education from './education';
-import { AuthContext } from '../../context/UserContext';
+import { AuthContext } from '../context/UserContext';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import styles from './layout.module.css';
+import styles from '../app/student/layout.module.css';
 
 const { Title, Paragraph, Text } = Typography;
 

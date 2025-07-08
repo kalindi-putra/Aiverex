@@ -2,7 +2,7 @@
 import React,{useState} from 'react';
 import { Space, Table, Tag,Button,Modal} from 'antd';
 import CustModal from './Modal';
-import styles from '../pages/student/layout.module.css';
+import styles from '../app/student/layout.module.css';
 import Link from 'next/link';
 
 
@@ -21,7 +21,7 @@ const CustTable = () =>
       title: 'Test Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <Link legacyBehavior>{text}</Link>,
+      render: (text) => <Link href="/">{text}</Link>,
     },
     {
       title: 'Submitted On',
