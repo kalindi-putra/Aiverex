@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from "./page.module.css";
 import Script from "next/script";
 import { CustDes } from "../Components/Card";
-import { Typography, Row, Col } from "antd";
+import { Typography, Row, Col , Carousel } from "antd";
 import { CustCarosuel, NormalCarosuel } from "../Components/CustCarosuel";
 import {
   BarChartOutlined,
@@ -69,7 +69,7 @@ function home() {
   }, []);
 
   return (
-    <div style={{backgroundColor:'#343434'}}>
+    <div>
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -332,7 +332,46 @@ function home() {
               <h2 data-aos="zoom-in-up" data-aos-anchor-placement="center-bottom" className="card-header">Featured Courses</h2>
               <div className="card-body">
                 <div className="container">
-                  <div className={`${styles["featured-course-wrapper"]} row d-flex flex-wrap`}>
+                  <Carousel
+                    className={styles.carouselWrapper}
+                    arrows
+                    dots={false}
+                    centerMode={false}
+                    infinite={false}
+                    slidesToShow={3}
+                    slidesToScroll={1}
+                    responsive={[
+                      {
+                        breakpoint: 1024,
+                        settings: {
+                          slidesToShow: 2,
+                        },
+                      },
+                      {
+                        breakpoint: 600,
+                        settings: {
+                          slidesToShow: 1,
+                        },
+                      },
+                    ]}
+                  >
+                    <div className="col">
+                      <div
+                        data-aos="fade-zoom-in"
+                        data-aos-easing="ease-in-back"
+                        data-aos-offset="100"
+                        className={`${styles["card"]} card ${styles["moveUp"]} move-up mb-4`}
+                      >
+                        <div className="card-header">Web Development</div>
+                        <div className="card-body">
+                          <h5 className="card-title">Front End + Backend</h5>
+                          <p className="card-text">
+                            Some quick example text to build on the card title and make up the bulk of the card's content.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="col">
                       <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-offset="100"
                         className={`${styles["card"]} card ${styles["moveUp"]} move-up mb-4`}
@@ -340,20 +379,6 @@ function home() {
                         <div className="card-header">Web Development</div>
                         <div className="card-body">
                           <h5 className="card-title">Front End + Backend</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-offset="100"
-                        className={`${styles["card"]} card ${styles["moveUp"]} move-up mb-4`}
-                      >
-                        <div className="card-header">Web3.0</div>
-                        <div className="card-body">
-                          <h5 className="card-title">Web3 and Tools</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
                             and make up the bulk of the card's content.
@@ -417,7 +442,7 @@ function home() {
                         </div>
                       </div>
                     </div>
-                  </div>
+</Carousel>
                 </div>
               </div>
             </div>
@@ -428,7 +453,7 @@ function home() {
             <div>
               <div className="row" style={{ textAlign: "left" }}>
                 <div className="col-md-3 footer-column mr-5">
-                  <Link className={`${styles["navLogo"]} navbar-brand`} href="/">
+                  <Link className={`${styles["navLogo"]} navbar-brand`} style={{color:"#1DACD6"}} href="/">
                     <img
                       src="https://aivirex.in/assets/img/favicon/apple-touch-icon.png"
                       alt=""

@@ -71,7 +71,7 @@ body {
 }
 
 .ant-menu-item-selected::after {
-  border-right: 3px solid #6B11DC !important;
+  border-right: 3px solid var(--button-color) !important;
 }
 
 .ant-menu-item .anticon {
@@ -88,7 +88,7 @@ body {
 
 /* Make selected icon blue */
 .ant-menu-item-selected .anticon {
-  color: #6B11DC !important;
+  color: var(--button-color) !important;
 }
 
 /* LABEL TEXT - hidden initially, shown on hover */

@@ -90,7 +90,7 @@ const Dashboard = () => {
 
 const iconStyle = {
   color: 'white',
-  backgroundColor: '#6B11DC',
+  backgroundColor: `var(--progress-completed-color)`,
   borderRadius: 35,
   fontSize: 54,
   padding: 8,

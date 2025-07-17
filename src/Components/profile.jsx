@@ -10,6 +10,7 @@ import Education from './education';
 import { AuthContext } from '../context/UserContext';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { LandNav } from './CustNav';
 import styles from '../app/student/layout.module.css';
 
 const { Title, Paragraph, Text } = Typography;
@@ -64,6 +65,7 @@ const Profile = () => {
   }, []);
 
   return (
+    <div>
     <div className={styles.scrollItem}>
       <section>
         <div className={`${styles.sectionContent} ${styles.gridParent}`} style={{display:'flex'}}>
@@ -115,26 +117,28 @@ const Profile = () => {
 
               {userData?.resumeLink ? (
                 <a
+                  className={styles.studentProfileButton}
                   href={userData.resumeLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#6B11DC', textDecoration: 'underline', flexGrow: 1 }}
+                  style={{textDecoration: 'underline', flexGrow: 1 }}
                 >
                   View Resume
                 </a>
               ) : (<div style={{display:'flex'}}>
                 <span style={{ color: '#707070', flexGrow: 1 }}>Add your resume here</span>
                 <Link
+                  className={styles.studentProfileButton}
                   href="/link"
                   style={{
-                    backgroundColor: '#6B11DC',
                     padding: '5px 10px',
                     borderRadius: '5px',
                     width:'80px',
                     textDecoration: 'none',
                     color: 'white',
-                    display: 'flex',
-                    alignItems: 'center',
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
                     flexShrink: 0,
                   }}
                 >
@@ -150,10 +154,11 @@ const Profile = () => {
 
               {userData?.githubLink ? (
                 <a
+                className={styles.studentProfileButton}
                   href={userData.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#6B11DC', textDecoration: 'underline', flexGrow: 1 }}
+                  style={{textDecoration: 'underline', flexGrow: 1 }}
                 >
                   View GitHub
                 </a>
@@ -162,14 +167,15 @@ const Profile = () => {
                   <span style={{ color: '#707070', flexGrow: 1 }}>Add your GitHub here</span>
                   <Link
                     href="/link"
+                    className={styles.studentProfileButton}
                     style={{
-                      backgroundColor: '#6B11DC',
                       padding: '5px 10px',
                       borderRadius: '5px',
                       width: '80px',
                       textDecoration: 'none',
                       color: 'white',
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
                       flexShrink: 0,
                     }}
@@ -199,7 +205,7 @@ const Profile = () => {
           </div>
 
           {/* Skills */}
-          <div className={`${styles["gridlayout-skills"]} ${styles.profileCard}`} style={{marginTop:'20px'}}>
+          <div className={`${styles["gridlayout-skills"]} ${styles.profileCard}`}>
             <Title level={4} style={{ color: 'white' ,  marginBottom:'20px' }}>Skills</Title>
             <div style={{display:"flex"}}>
               {skills.length > 0 ? (
@@ -222,9 +228,11 @@ const Profile = () => {
                         </div>
                         <p>No skills found</p>
                       </div>
-                  <Link href="/student/add_skill" style={{
+                  <Link className={styles.studentProfileButton} href="/student/add_skill" style={{
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
                     height: '35px',
-                    backgroundColor: '#6B11DC',
                     padding: '5px 20px',
                     borderRadius: '5px',
                     textDecoration: 'none',
@@ -237,6 +245,7 @@ const Profile = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };

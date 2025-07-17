@@ -16,7 +16,6 @@ const AuthProvider = ({ children }) => {
       auth.onAuthStateChanged(async (user) => {
         if (user) {
           setIsLoggedIn(true);
-
           const userDocRef = doc(db, 'users', user.uid);
           const userDocSnapshot = await getDoc(userDocRef);
           if (userDocSnapshot.exists()) {
