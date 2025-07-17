@@ -61,7 +61,7 @@ const CustTable = () =>
         width: '100%',
         borderRadius:'10px',
         textAlign: 'center',
-        background:'#6B11DC'
+        background:`var(--progress-completed-color)`,
       }}>
               Mentor's Review
             </Button>

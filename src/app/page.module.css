@@ -1,10 +1,10 @@
 .bg-black {
   background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
-  background: linear-gradient(109.6deg, black 11.2%, #242424 51.2%, black 98.6%) !important;
-  background: #1a1d20;
-  margin: 20px;
-  border-radius: 30px;
-  overflow: hidden;
+    background: linear-gradient(109.6deg, black 11.2%, #242424 51.2%, black 98.6%) !important;
+    background:#1a1d20;
+    margin: 20px;
+    border-radius: 30px;
+    overflow: hidden;
 }
 
 .hero-container h2 {
@@ -18,7 +18,7 @@
   display: block;
   width: 70px;
   height: 2px;
-  background-color: #6B11DB;
+  background-color: var(--h2-after-effect-color);
   margin: 10px auto;
 }
 
@@ -28,25 +28,13 @@
 }
 
 .text-white {
-  color: white !important;
-}
-
-.text-black {
-  color: black;
-}
-
-.bg-primary-orange {
-  background-color: #6B11DB;
-}
-
-.primary-orange {
-  color: #6B11DB;
+  color: var(--text-primary-color) !important;
 }
 
 .org-btn,
 .btn {
-  border: 1px solid #6B11DB !important;
-  color: #6B11DB !important;
+  border: 1px solid var(--button-color) !important;
+  color: var(--button-color) !important;
   padding: 0;
   width: 100%;
   margin: auto;
@@ -55,17 +43,8 @@
 
 .org-btn:hover,
 .btn:hover {
-  background-color: #fec503;
-  background-color: #6B11DB !important;
+  background-color: var(--button-color) !important;
   color: white !important;
-}
-
-.light-grey {
-  color: #6c757d;
-}
-
-.bg-light-grey {
-  background-color: #6c757d;
 }
 
 .social-buttons-circle-dark-grey {
@@ -79,7 +58,7 @@
 
 /* Card hover */
 .moveUp:hover {
-  background-color: rgb(107, 17, 219, 0.7) !important;
+  background-color: rgba(97, 95, 100, 0.7) !important;
   /* background: linear-gradient(109.6deg, #242424 11.2%, #6B11DB 51.2%, #343434 98.6%) !important; */
   color: white;
   transition: all .5s;
@@ -97,7 +76,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #1a1d20;
+  background-color: var(--footer-background-color);
   color: white;
   text-align: center;
   top: 75px;
@@ -109,7 +88,7 @@
 
 .navItems {
   font-size: 1rem;
-  color: #6B11DB !important;
+  color: var(--button-color) !important;
   letter-spacing: 1px;
 }
 
@@ -117,6 +96,7 @@
   font-size: 0.9rem;
   color: #fff !important;
   padding: auto 0px !important;
+  opacity: 0.7;
 }
 
 .navbar-brand {
@@ -125,7 +105,7 @@
 }
 
 .navLinks:hover {
-  color: #6B11DB !important;
+  color: var(--button-color) !important;
   /* border-bottom: 1px solid #6B11DB !important ; */
 }
 
@@ -182,7 +162,7 @@
       background:#1a1d20;
     } */
 .banner-container .card {
-  background: #1a1d20;
+  background: transparent;
 }
 
 .moveUp {
@@ -202,7 +182,7 @@
   font-weight: 600;
   padding-bottom: 40px;
   margin-top: 5px;
-  color: #1DACD6 !important;
+  color: var(--typewriter-color) !important;
 }
 
 .typewriter-wrapper .cursor {
@@ -226,9 +206,24 @@
   top: 0;
   left: 49%; 
   transform: translateX(-50%);
-  background: #1DACD6 !important; 
+  background: var(--button-color) !important; 
   z-index: 10;
 }
+
+.carouselWrapper {
+  padding: 10px;
+}
+
+.carouselWrapper :global(.slick-prev:before),
+.carouselWrapper :global(.slick-next:before) {
+  color: var(--button-color) !important;
+}
+
+.carouselWrapper :global(.slick-prev:hover:before),
+.carouselWrapper :global(.slick-next:hover:before) {
+  color: var(--button-color) !important;
+}
+
 
 @keyframes moveline{
   0%{

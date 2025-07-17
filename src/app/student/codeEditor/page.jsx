@@ -283,7 +283,7 @@ function Test() {
             <div className={styles["editor-problem-toggle-icon"]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className={styles['editor-problem-list-icon']} style={{ display: 'flex', alignItems: 'center' }}>
                 <UnorderedListOutlined style={{ fontSize: 15, color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)} />
-                <h6 style={{ marginTop: '5px', color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)}>Problem List</h6>
+                <h4 style={{color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)}>Problem List</h4>
               </div>
 
               <div>
@@ -361,7 +361,7 @@ function Test() {
             <div className={styles['editor-editor-sidebar']} style={{ padding: '1rem', backgroundColor: '#343434', color: 'white', height: '60%', minHeight: '25%', maxHeight: '75%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <h5 style={{ marginBottom: '5px' }}>Select Language</h5>
+                  <h5>Select Language</h5>
                   <select
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}

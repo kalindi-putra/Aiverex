@@ -14,6 +14,7 @@ import TestScores from '../../../Components/testScores';
 import Certificates from '../../../Components/certificates';
 import SubmittedTests from '../../../Components/submittedTests';
 import SideMenu from '../../../Components/sideMenu';
+import { LandNav } from '@/Components/CustNav';
 
 const progress = [
   {
@@ -231,8 +232,8 @@ const Dashboard = () => {
                 </Col>
               ))}
             </Row>
-            <Typography.Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-              <Link href="/student/courses" className="view">View More</Link>
+            <Typography.Title level={2} style={{ color: `var(--progress-completed-color)`, textAlign: 'center' }}>
+              <Link href="/student/courses" style={{ color: `var(--progress-completed-color)`, textAlign: 'center' }} className="view">View More</Link>
             </Typography.Title>
           </section>
         </div>
@@ -242,6 +243,9 @@ const Dashboard = () => {
 
   return (
     <div>
+      <div className={styles["dashboard-land-nav"]}>
+        <LandNav />
+      </div>
       <div className={styles['dashboardContainer']}>
         <div>
           <SideMenu />

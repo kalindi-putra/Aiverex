@@ -156,7 +156,7 @@ const CustDes = (props) => {
                 shape="round"
                 style={{
                   width: '100%',
-                  background: '#6B11DC',
+                  background: `var(--progress-completed-color)`,
                 }}
                 onClick={handler}
               >

@@ -1,7 +1,3 @@
-body,:root,#root{
-  background-color: #343434 !important;
-}
-
 .AuthDiv{
   color:white !important;
 	min-height: 85vh;
@@ -20,7 +16,6 @@ body,:root,#root{
 .login-box{
     font-size: 23px;
     border-radius: 5px;
-    background: #343434;
     color: white;
     margin: 50px auto;
     display: flex;
@@ -42,7 +37,6 @@ body,:root,#root{
   .register-box{
     font-size: 23px;
     border-radius: 5px;
-    background: #343434;
     color: white;
     margin: 30px auto;
     width: 400px;
@@ -107,29 +101,6 @@ body,:root,#root{
   .register-box .form{
     width: 410px;
   }
-  
-  .form-btn{
-    
-    border-radius: 5px;
-    outline: none !important;
-    background-color: #1DACD6 !important;
-  color: white !important;
-  text-align: center;
-  }
-
-  .ggl{
-    font-size: 18px;
-    width: auto;
-    margin: 50px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    background-color: transparent !important;
-    margin: 0px !important;
-}
-.ggl:hover{
-  color: white;
-}
 
   .redirect {
     text-align:center;
@@ -159,6 +130,7 @@ body,:root,#root{
   padding: 0 60px;
   align-items: center;
   justify-content: center;
+  background-color: var(--login-user-greeting-color) !important;
 }
 
 
@@ -221,11 +193,11 @@ body,:root,#root{
 }
 
 .RegDiv .cardReg:nth-child(1) .redirect:hover{
-  color: #4285F4;
+  color: var(--button-color);
 }
 
 .RegDiv .cardReg:nth-child(2) .redirect:hover{
-  color: #905CFF;
+  color: var(--button-color);
 }
 
 .loginOptions{
@@ -263,7 +235,7 @@ body,:root,#root{
 }
 
 .googleButton:hover , .linkedInButton:hover {
-  background-color: #4285F4 !important;
+  background-color: var(--login-user-greeting-color) !important;
   filter: brightness(1);
 }
 
@@ -287,7 +259,7 @@ body,:root,#root{
     grid-column: span 2 / span 2;
     grid-row: span 5 / span 5;
     grid-column-start: 4;
-    background-color:  #4285F4;
+    background-color:  var(--login-user-greeting-color);
     border-radius: 40% 60% 0% 100% / 100% 0% 100% 0%;
     display: flex;
     justify-content: center;
@@ -301,7 +273,7 @@ body,:root,#root{
   height: 30px;
   width: 100px;
   background-color: white;
-  color: #4285F4;
+  color: var(--login-user-greeting-color);
   margin-top: 30px;
   margin-left: 30px;
   display: flex;
@@ -334,29 +306,28 @@ body,:root,#root{
 .greetingContainerMentor {
     grid-column: span 2 / span 2;
     grid-row: span 5 / span 5;
-    border-radius: 0% 100% 31% 69% / 100% 0% 100% 0% ;
-    background-color:  #4285F4;
+    border-radius: 60% 40% 100% 0% / 0% 100% 0% 100%  ;
+    background-color:  var(--login-user-greeting-color);
     display: flex;
     justify-content: center;
     align-items: center;
     padding:30px;
-    padding-left: 70px;
-    height: 400px;
-    width: 420px;
+    padding-left: 30px;
+    width: 35%;
 }
 
 .greetingContainerMentorRegister {
     grid-column: span 2 / span 2;
     grid-row: span 5 / span 5;
     border-radius: 0% 100% 28% 72% / 100% 19% 81% 0% ;
-    background-color:  #4285F4;
+    background-color:  var(--login-user-greeting-color);
     display: flex;
     justify-content: left;
     align-items: center;
     padding:30px;
-    padding-left: 70px;
-    height: 480px;
-    width: 380px;
+    padding-left: 30px;
+    height: 400px;
+    width: 35%;
 
 }
 
@@ -364,7 +335,7 @@ body,:root,#root{
     grid-column: span 2 / span 2;
     grid-row: span 5 / span 5;
     grid-column-start: 4;
-    background-color:  #4285F4;
+    background-color:  var(--login-user-greeting-color);
     border-radius: 100% 0% 79% 21% / 17% 100% 0% 83% ;
     display: flex;
     justify-content: center;
