@@ -700,7 +700,12 @@ html {
 
 .studentProfileButton{
   background-color: var(--button-color) !important;
-  color: white;
+  color: white !important;
+}
+
+.studentProfileButton:hover{
+  background-color: var(--button-color) !important;
+  color: white !important;
 }
 
 .dashboard-land-nav{

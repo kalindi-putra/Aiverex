@@ -288,7 +288,7 @@ function Test() {
 
               <div>
                 {userIntuition ? <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
-                  <CheckCircleOutlined style={{ color: 'green', fontSize: '20px' }} />
+                  <CheckCircleOutlined style={{ color: `var(--codeEditor-intuition-button-color)`, fontSize: '20px' }} />
                   <span style={{ color: 'white', marginLeft: '5px' }}>Intuition Submitted</span>
                 </div>
                   : <IntuitionForm onSubmit={handleIntuitionSubmit} />}
@@ -374,7 +374,7 @@ function Test() {
                   </select>
                 </div>
                 <p className={styles['editor-timer']}>
-                  <ClockCircleOutlined style={{ color: 'green' }} /> {formatTime(timeLeft)}
+                  <ClockCircleOutlined style={{ color: `var(--codeEditor-intuition-button-color)` }} /> {formatTime(timeLeft)}
                 </p>
               </div>
 
@@ -406,7 +406,7 @@ function Test() {
                   className={styles['editor-submit-button']}
                   style={{
                     marginTop: '1rem',
-                    backgroundColor: submitted || canSubmit ? 'green' : '#444',
+                    backgroundColor: submitted || canSubmit ? `var(--codeEditor-intuition-button-color)` : `var(--codeEditor-button-color)`,
                     opacity: submitted || !canSubmit ? 0.6 : 1,
                     cursor: submitted || !canSubmit ? 'not-allowed' : 'pointer',
                     color: 'white',

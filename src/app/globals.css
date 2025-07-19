@@ -1,14 +1,15 @@
 :root,body,#root{
   background: linear-gradient(109.6deg, black 11.2%, #343434 51.2%, black 98.6%) !important;
+  --secondary-background-color: #343434;
   --footer-background-color: #1a1d20;
   --button-color: #1DACD6;
   --h2-after-effect-color: #1DACD6;
   --typewriter-color: #1DACD6;
   --text-primary-color: white;
-  --login-user-greeting-color: #4285F4;
-  --progress-completed-color: #6B11DC;
+  --login-user-greeting-color: #1DACD6;
+  --progress-completed-color: #1DACD6;
   --codeEditor-button-color: #4e4e4e;
-  --codeEditor-intuition-button-color:#6B11DC;
+  --codeEditor-intuition-button-color:#1DACD6;
 }
 
 

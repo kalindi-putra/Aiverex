@@ -171,3 +171,19 @@ body, html {
 .customPagination :global(.ant-pagination-item a) {
   color: #a09f9f !important ;
 }
+
+.mentorStataCard {
+  background: linear-gradient(135deg, rgb(35, 35, 35), #343434) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.mentorStataCard .ant-card-head,
+.mentorStataCard .ant-card-body {
+  background: transparent !important;
+  color: white !important;
+}
+
+.mentorStataCard .ant-card-head-title {
+  color: white !important;
+}
