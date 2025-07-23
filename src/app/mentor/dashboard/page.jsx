@@ -6,6 +6,7 @@ import { getAuth } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Tabletop from '../../../Components/MentTable';
 import styles from './layout.module.css';
+import { LandNav } from '@/Components/CustNav'; 
 
 const { Title, Text } = Typography;
 
@@ -40,13 +41,14 @@ const Dashboard = () => {
   }, []);
 
     return (
+      <div>
+        <LandNav />
         <div className={styles['dashboardContainer']}>
             <div className={styles['scrollSection']} style={{display:'flex'}}>
                 <div id="profile-section" style={{ padding: '20px 60px' }}>
                     <Title level={2} style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <img src={photoURL} style={{ borderRadius: '50%' }} />
                         <Text style={{ color: 'white', fontSize: '24px', paddingTop:'15px' }} strong>{mentorName}</Text>
-                        <p style={{ color: 'blue', fontSize: '18px', paddingTop:'5px', opacity:'0.7' }}>Mentor</p>
                     </Title>
                     <div style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}>
                         <Space size="large" wrap style={{ display: 'flex', flexDirection: 'column' }}>
@@ -74,9 +76,9 @@ const Dashboard = () => {
                         </div>
                         <img src="/mentorGreetImg.png" alt="Welcome" style={{ width: '200px', height: '130px' }} />
                     </div>
-                    <Card style={{ marginTop: 30 , opacity:'0.8' }}>
-                        <Title level={3}>Mentor Stats Summary</Title>
-                        <Text>Total courses reviewed: {totalReviews}</Text>
+                    <Card className={styles["mentorStataCard"]} style={{ marginTop: 30 }}>
+                        <Title level={3} style={{color:'white'}}>Mentor Stats Summary</Title>
+                        <Text style={{color:'white'}}>Total courses reviewed: {totalReviews}</Text>
                     </Card>
 
                     <div style={{ marginTop: 30 }}>
@@ -84,6 +86,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

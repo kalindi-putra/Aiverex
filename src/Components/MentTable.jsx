@@ -69,7 +69,7 @@ function Tabletop () {
             dataIndex: 'id',
             key: 'key',
             render: id=>{
-                return <Link href={'/codeReview'}>{id}</Link>
+                return <Link style={{color:'#1DACD6'}} href={'/codeReview'}>{id}</Link>
             }
         },
         // {

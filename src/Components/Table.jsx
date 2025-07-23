@@ -21,7 +21,7 @@ const CustTable = () =>
       title: 'Test Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <Link href="/">{text}</Link>,
+      render: (text) => <Link style={{color:'#1DACD6'}} href="/">{text}</Link>,
     },
     {
       title: 'Submitted On',

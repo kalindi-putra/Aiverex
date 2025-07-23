@@ -10,6 +10,8 @@
     }
 
     .loginCard{
+      background-color: var(--secondary-background-color) !important;
+      border: none !important;
       margin:5% 20%;
     }
 
@@ -22,6 +24,32 @@
     width:700px;
     
   }
+
+.loginTabs .ant-tabs-nav::before {
+  content: none !important;
+  border-bottom: none !important;
+  background: none !important;
+}
+
+.loginTabs .ant-tabs-tab {
+  color: #ccc !important;
+}
+
+.loginTabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--button-color) !important;
+}
+
+.loginTabs .ant-tabs-ink-bar {
+  background: var(--button-color) !important;
+  height: 3px !important;
+  border-radius: 2px;
+}
+
+.tabLabel {
+  color: #ccc !important;
+}
+
+
   .login-box .imgDiv img,.register-box .imgDiv img{
     width: 300px;
     height: 100%;
