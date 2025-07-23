@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from "./page.module.css";
 import Script from "next/script";
 import { CustDes } from "../Components/Card";
+import Image from "next/image";
 import { Typography, Row, Col , Carousel } from "antd";
 import { CustCarosuel, NormalCarosuel } from "../Components/CustCarosuel";
 import {
@@ -20,7 +21,7 @@ import 'aos/dist/aos.css';
 import { Typewriter } from 'react-simple-typewriter';
 import next from "next";
 
-function home() {
+function Home() {
   const { isLoggedIn } = useContext(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -164,7 +165,7 @@ function home() {
                       produce powerful and efficient solutions. We put a lot of
                       effort into making our mission a reality in both of our
                       daily endeavours: meeting the needs of our clients and
-                      making the world a better place. Let's Innovate!
+                      making the world a better place. Let&apos;s Innovate!
                     </p>
                   </div>
                   <div data-aos='fade-zoom-in' data-aos-anchor-placement="bottom-bottom" className="px-2 py-2">
@@ -182,10 +183,11 @@ function home() {
                 <div className="px-2 py-2">
                   {/* <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_hzfmxrr7.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop controls autoplay></lottie-player> */}
                   {/* <img src="https://img.freepik.com/free-vector/happy-freelancer-with-computer-home-young-man-sitting-armchair-using-laptop-chatting-online-smiling-vector-illustration-distance-work-online-learning-freelance_74855-8401.jpg?w=900&t=st=1667037491~exp=1667038091~hmac=7c71ea8afc8f3cc8065c5ccc05d105e3c8a7b76f0133016cb210a7882dc19611" className="img-fluid" alt="..."/> */}
-                  <img
+                  < Image
                     src="https://sb-ui-kit-pro.startbootstrap.com/assets/img/illustrations/windows.svg"
                     className="img-fluid"
-                    style={{ width: "650px", height: "450px" }}
+                    width= {650}
+                    height={450}
                     alt="..."
                   />
                 </div>
@@ -366,7 +368,7 @@ function home() {
                         <div className="card-body">
                           <h5 className="card-title">Front End + Backend</h5>
                           <p className="card-text">
-                            Some quick example text to build on the card title and make up the bulk of the card's content.
+                            Some quick example text to build on the card title and make up the bulk of the card&lsquo;s content.
                           </p>
                         </div>
                       </div>
@@ -381,7 +383,7 @@ function home() {
                           <h5 className="card-title">Front End + Backend</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            and make up the bulk of the card&apos;s content.
                           </p>
                         </div>
                       </div>
@@ -395,7 +397,7 @@ function home() {
                           <h5 className="card-title">Begineer Course</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            and make up the bulk of the card&apos;s content.
                           </p>
                         </div>
                       </div>
@@ -409,7 +411,7 @@ function home() {
                           <h5 className="card-title">Python AI</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            and make up the bulk of the card&apos;s content.
                           </p>
                         </div>
                       </div>
@@ -423,7 +425,7 @@ function home() {
                           <h5 className="card-title">Python AI</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            and make up the bulk of the card&apos;s content.
                           </p>
                         </div>
                       </div>
@@ -437,7 +439,7 @@ function home() {
                           <h5 className="card-title">Python AI</h5>
                           <p className="card-text">
                             Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
+                            and make up the bulk of the card&apos;s content.
                           </p>
                         </div>
                       </div>
@@ -454,11 +456,11 @@ function home() {
               <div className="row" style={{ textAlign: "left" }}>
                 <div className="col-md-3 footer-column mr-5">
                   <Link className={`${styles["navLogo"]} navbar-brand`} style={{color:"#1DACD6"}} href="/">
-                    <img
+                    <Image
                       src="https://aivirex.in/assets/img/favicon/apple-touch-icon.png"
                       alt=""
-                      width="30"
-                      height="24"
+                      width={30}
+                      height={24}
                       className="d-inline-block align-text-top"
                     />
                     AIVIREX
@@ -582,4 +584,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

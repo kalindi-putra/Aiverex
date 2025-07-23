@@ -13,7 +13,7 @@ import Profile from '../../../Components/profile';
 import TestScores from '../../../Components/testScores';
 import Certificates from '../../../Components/certificates';
 import SubmittedTests from '../../../Components/submittedTests';
-import SideMenu from '../../../Components/sideMenu';
+import SideMenu from '../../../Components/SideMenu';
 import { LandNav } from '@/Components/CustNav';
 
 const progress = [

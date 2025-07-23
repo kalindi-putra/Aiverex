@@ -16,7 +16,7 @@ const contentStyle= {
 };
 
 const CustCarosuel = (props) => {
-  const [scrWidth, setScrWidth] = useState(window.innerWidth);
+  const [scrWidth, setScrWidth] = useState(0);
   //AOS Styling
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {

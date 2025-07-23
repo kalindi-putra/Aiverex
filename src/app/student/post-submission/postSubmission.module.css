@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #282c34; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #61dafb; /* A vibrant color */
+  }
+  
+  .message {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .homeButton {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .homeButton:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }

@@ -1,4 +1,5 @@
-"use client" ;
+"use client";
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ProblemData from '../../store/Problems';
 import styles from './codeEditor.module.css';
@@ -11,6 +12,7 @@ import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { cpp } from '@codemirror/lang-cpp';
 import Split from '@uiw/react-split';
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 const languageExtensions = {
   javascript,
@@ -44,15 +46,11 @@ int main() {
     }
 }`,
   "javascript": `// Your code here`,
-  "java": `public class Main {
-    public static void main(String[] args) {
-        // Your code here
-    }
-  }`,
 };
 
 
 function Test() {
+  const router = useRouter(); // Initialize useRouter
   const [currentProblem, setCurrentProblem] = useState(ProblemData["Sum Of Two Integers"]);
   const [problemListVisible, setProblemListVisible] = useState(false);
   const [timeLeft, setTimeLeft] = useState(parseInt(currentProblem.duration) * 60);
@@ -156,7 +154,7 @@ function Test() {
     setSubmitted(false);
     setCanSubmit(false);
     setSelectedAnswers({});
-  }, [currentProblem]);
+  }, [currentProblem, language]); // Added language to dependency array
 
   const createEditor = (lang) => {
     if (viewRef.current) viewRef.current.destroy();
@@ -171,12 +169,7 @@ function Test() {
     });
   };
 
-  useEffect(() => {
-    createEditor(language);
-    setLanguage(language);
-    setCode(defaultCodeSnippets[language]);
-    return () => viewRef.current?.destroy();
-  }, [language]);
+  
 
   const requestFullScreen = () => {
     const doc = document.documentElement;
@@ -186,46 +179,37 @@ function Test() {
     else if (doc.msRequestFullscreen) doc.msRequestFullscreen();
   };
 
+  const handleSubmitAndRedirect = useCallback(() => {
+    if (!submitted) { 
+      setSubmitted(true);
+      router.push('/student/post-submission'); 
+    }
+  }, [selectedAnswers, userIntuition, submitted, router]);
+
   const checkFullScreen = useCallback(() => {
-    if (!document.fullscreenElement && !fullScreenViolated) {
-      if (warningCount < 2) {
-        alert('Please stay in full-screen mode!');
-        setWarningCount(warningCount + 1);
+    if (!document.fullscreenElement && !submitted) { 
+      if (warningCount < 2) { 
+        alert('Please stay in full-screen mode! You will be terminated after 3 violations.');
+        setWarningCount(prev => prev + 1);
       } else {
         alert('Test terminated due to multiple violations of full-screen mode!');
-        handleSubmit();
+        handleSubmitAndRedirect(); // Terminate and redirect
       }
-      setFullScreenViolated(true);
     }
-  }, [warningCount, fullScreenViolated]);
-
-  const runTest = () => {
-    if (!testRunning) {
-      setTestRunning(true);
-      alert('Running the test solution...');
-      setTimeout(() => {
-        alert('Solution run complete!');
-        setCanSubmit(true);
-        setTestRunning(false);
-      }, 2000);
-    }
-  };
+  }, [warningCount, submitted, handleSubmitAndRedirect]);
 
   const handleSubmit = useCallback(() => {
     if (!canSubmit) {
       alert('Please run the solution first before submitting the test.');
       return;
     }
-    if (userIntuition == "") {
+    if (userIntuition === "") {
       setCanSubmit(false);
       alert('Please submit your intuition before submitting the test.');
       return;
     }
-    setSubmitted(true);
-    alert('Test Submitted!');
-    console.log('Selected Answers:', selectedAnswers);
-    console.log('User Intuition:', userIntuition);
-  }, [canSubmit, selectedAnswers, userIntuition]);
+    handleSubmitAndRedirect(); // Call the function that handles submission and redirection
+  }, [canSubmit, userIntuition, handleSubmitAndRedirect]);
 
   useEffect(() => {
     requestFullScreen();
@@ -234,9 +218,9 @@ function Test() {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerInterval);
-          if (warningCount < 3) {
+          if (!submitted) { 
             alert('Test terminated due to time limit!');
-            handleSubmit();
+            handleSubmitAndRedirect();
           }
           return 0;
         }
@@ -248,11 +232,23 @@ function Test() {
       checkFullScreen();
     }, 1000);
 
+    
+    const handleBeforeUnload = (event) => {
+      if (!submitted) { 
+        event.preventDefault();
+        event.returnValue = ''; 
+        handleSubmitAndRedirect(); 
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       clearInterval(timerInterval);
       clearInterval(fullScreenInterval);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [checkFullScreen, handleSubmit]);
+  }, [checkFullScreen, handleSubmitAndRedirect, submitted]); 
 
   const handleAnswerChange = (questionId, answer) => {
     setSelectedAnswers({ ...selectedAnswers, [questionId]: answer });
@@ -283,7 +279,7 @@ function Test() {
             <div className={styles["editor-problem-toggle-icon"]} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div className={styles['editor-problem-list-icon']} style={{ display: 'flex', alignItems: 'center' }}>
                 <UnorderedListOutlined style={{ fontSize: 15, color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)} />
-                <h4 style={{color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)}>Problem List</h4>
+                <h4 style={{ color: 'white' }} onClick={() => setProblemListVisible(!problemListVisible)}>Problem List</h4>
               </div>
 
               <div>
