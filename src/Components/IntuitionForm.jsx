@@ -26,7 +26,7 @@ const IntuitionForm = ({ onSubmit }) => {
         <div>
             <Button type="primary" style={{backgroundColor:`var(--codeEditor-intuition-button-color)`}} onClick={showFormModal}>
                 <PlusOutlined style={{color:'white'}} />
-                Submit Your Intuition
+                Outline Thinking
             </Button>
 
             <Modal

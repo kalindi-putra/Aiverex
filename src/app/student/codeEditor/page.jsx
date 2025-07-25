@@ -269,7 +269,7 @@ function Test() {
   };
 
   return (
-    <div className={styles["editor-container"]} style={{ height: '100vh' }}>
+    <div className={styles["editor-container"]}>
       <Split mode="horizontal" renderBar={({ onMouseDown, ...props }) => {
         return (
           <div {...props} style={{ boxShadow: 'none', background: 'transparent' }}>
@@ -289,7 +289,7 @@ function Test() {
               <div>
                 {userIntuition ? <div style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
                   <CheckCircleOutlined style={{ color: `var(--codeEditor-intuition-button-color)`, fontSize: '20px' }} />
-                  <span style={{ color: 'white', marginLeft: '5px' }}>Intuition Submitted</span>
+                  <span style={{ color: 'white', marginLeft: '5px' }}>Submitted</span>
                 </div>
                   : <IntuitionForm onSubmit={handleIntuitionSubmit} />}
               </div>
@@ -348,7 +348,7 @@ function Test() {
           <p> {currentProblem.explanation} </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', width: '50%', gap: '8px', maxHeight: '800px', minWidth: '25%', maxWidth: '75%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '50%', gap: '8px', minWidth: '25%', maxWidth: '75%' }}>
           {/* 2. Questions */}
           <Split mode="vertical"
             renderBar={({ onMouseDown, ...props }) => {
@@ -358,7 +358,7 @@ function Test() {
                 </div>
               );
             }} style={{ height: '100%' }} gutterSize={6}>
-            <div className={styles['editor-editor-sidebar']} style={{ padding: '1rem', backgroundColor: '#343434', color: 'white', height: '60%', minHeight: '25%', maxHeight: '75%' }}>
+            <div className={styles['editor-editor-sidebar']} style={{ padding: '1rem', color: 'white', height: '60%', minHeight: '25%', maxHeight: '75%' , width :'100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <h5>Select Language</h5>
@@ -380,11 +380,13 @@ function Test() {
 
               <div
                 ref={editorRef}
+                className={styles['editor-code-compiler']}
                 style={{
                   border: '1px solid #555',
                   backgroundColor: '#343434',
+                  flex: 1, 
                   borderRadius: '8px',
-                  height: '250px',
+                  height: 'auto',
                   overflow: 'auto',
                   fontSize: '14px'
                 }}
@@ -418,7 +420,7 @@ function Test() {
             </div>
 
             {/* 4. Example Test Cases */}
-            <div className={styles["editor-testcase-sidebar"]} style={{ height: '40%', minHeight: '25%', maxHeight: '75%' }}>
+            <div className={styles["editor-testcase-sidebar"]} style={{ height: '40%', minHeight: '25%', maxHeight: '75%' , width :'100%' }}>
               <h3>Try Yourself :</h3>
               <p style={{ marginTop: '25px' }}><b>Input </b></p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>

@@ -1,13 +1,18 @@
-/* src/CodeEditor.css */
 
 .editor-container {
-  padding: 1% 2%;
+  display: flex;
+  flex-direction: column;
+  width: 99%; 
+  height: 99vh;  
+  padding: 1rem; 
+  box-sizing: border-box;
 }
 
 .editor-wrapper {
+  width: 100%;
   overflow-x: auto;
-  border-radius: 8px;
-  margin-top: 30px;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
 }
 
 .editor-table {
@@ -22,37 +27,38 @@
 .editor-header {
   background-color: #3c3c3c;
   border-bottom: 1px solid #555;
-  padding: 10px;
+  padding: 0.75rem;
   text-align: left;
 }
 
 .editor-cell {
   border-bottom: 1px solid #444;
-  padding: 10px;
+  padding: 0.75rem;
 }
 
 .editor-timer {
   color: white;
-  font-size: 18px;
-  word-spacing: 2px;
-  padding: 7px 10px;
+  font-size: 1.1rem;
+  word-spacing: 0.15rem;
+  padding: 0.5rem 0.75rem;
   background-color: #272822;
-  border-radius: 10px;
+  border-radius: 0.5rem;
 }
 
 .editor-CodeEditor {
   background-color: #272822;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 800px;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  max-width: 50vw;
   margin: 0 auto;
 }
 
 .editor-submit-button {
   background-color: var(--codeEditor-button-color);
-  width: 80px;
-  border-radius: 5px;
+  width: auto;  
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
 }
 
 .editor-submit-button:hover {
@@ -60,21 +66,21 @@
 }
 
 .editor-select {
-  font-size: 16px;
-  padding: 8px;
-  border-radius: 4px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
   cursor: pointer;
 }
 
 .editor-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 0.6rem 1.25rem;
+  font-size: 1rem;
   background-color: #3d3c3c;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -90,125 +96,122 @@
 
 .editor-pre {
   background-color: #f1f1f1;
-  padding: 15px;
-  border-radius: 4px;
+  padding: 1rem;
+  border-radius: 0.3rem;
   overflow-x: auto;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 1.25rem;
   color: #333;
 }
 
 .editor-CodeEditor .editor-select,
 .editor-CodeEditor .editor-button {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 0.75rem;
 }
 
 .editor-CodeEditor .editor-editor-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .editor-CodeEditor .editor-output-container {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
-/* Sidebar */
 .editor-problem-sidebar {
+  flex: 1;
+  min-width: 45%;
+  max-width: 50%;
   background-color: #343434;
-  padding: 18px;
-  overflow-y: scroll;
-  max-height: 800px;
-  border-radius: 20px;
-  overflow: auto;
+  padding: 1rem;
+  border-radius: 1rem;
   color: white;
+  overflow-y: auto;
 }
 
-.editor-problem-sidebar::-webkit-scrollbar {
-  display: none;
-}
-.editor-editor-sidebar::-webkit-scrollbar {
-  display: none;
-}
+.editor-problem-sidebar::-webkit-scrollbar,
+.editor-editor-sidebar::-webkit-scrollbar,
+.editor-code-compiler::-webkit-scrollbar,
 .editor-testcase-sidebar::-webkit-scrollbar {
   display: none;
 }
 
 .editor-editor-sidebar {
+  display: flex;
+  flex-direction: column; 
   background-color: #343434;
-  padding: 16px;
-  border-radius: 20px;
-  overflow: auto;
+  padding: 1rem;
+  border-radius: 1rem;
   color: white;
+  overflow: auto;
 }
 
-.editor-testcase-sidebar {
+.editor-testcase-sidebar {         
   background-color: #343434;
-  padding: 16px;
-  max-height: 280px;
-  border-radius: 20px;
-  overflow: auto;
+  padding: 1rem;
+  border-radius: 1rem;
   color: white;
+  overflow-y: auto;   
 }
 
 .editor-intuition-sidebar {
   background-color: #343434;
-  padding: 16px;
-  min-width: 180px;
-  border-radius: 20px;
-  overflow: auto;
+  padding: 1rem;
+  min-width: 12rem;
+  border-radius: 1rem;
   color: white;
+  overflow-y: auto;
 }
 
 .editor-inputFieldText {
-  padding: 8px;
-  border-radius: 6px;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
   border: 1px solid #888;
   background: #2c2c2c;
-  width: 80%;
+  width: 100%;
   color: white;
-  font-size: 14px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
-/* Resizer */
 .editor-resizer-horizontal {
-  width: 5px;
+  width: 0.3rem;
   cursor: col-resize;
   background-color: #ccc;
   transition: background-color 0.2s;
 }
+
 .editor-resizer-horizontal:hover {
   background-color: #999;
 }
 
-/* Main content */
 .editor-main {
   flex: 1;
   background-color: #eaf2ff;
-  padding: 16px;
+  padding: 1rem;
   overflow: auto;
 }
 
-/* Textarea */
 .editor-textarea {
   width: 100%;
-  height: 200px;
+  height: 12rem;
   resize: none;
-  padding: 8px;
+  padding: 0.5rem;
   font-size: 1rem;
 }
 
 .editor-problem-toggle-icon {
   display: flex;
   align-items: center;
-  gap: 10px;
-  top: 20px;
-  right: 80px;
-  padding: 10px;
+  gap: 0.75rem;
+  top: 1.25rem;
+  right: 5rem;
+  padding: 0.75rem;
 }
 
 .editor-problem-list-icon {
@@ -216,7 +219,7 @@
   opacity: 0.6;
   cursor: pointer;
   display: flex;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
 .editor-problem-list-icon:hover {
@@ -226,12 +229,12 @@
 
 .editor-problem-items-visible {
   position: absolute;
-  width: 300px;
+  width: 20rem;
   background-color: #474747;
-  border-radius: 6px;
+  border-radius: 0.4rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  padding: 10px;
+  padding: 0.75rem;
   color: white;
   display: flex;
   flex-direction: column;
@@ -240,9 +243,9 @@
 .editor-problem-list-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  margin-bottom: 12px;
+  gap: 0.75rem;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
 }
 
@@ -251,9 +254,10 @@
   overflow-y: auto;
 }
 
-.editor-problem-item {
-  padding: 7px 5px 7px 10px;
-  border-radius: 4px;
+.editor-problem-item,
+.editor-problem-item-active {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -263,18 +267,13 @@
 }
 
 .editor-problem-item-active {
-  padding: 7px 5px 7px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
   background-color: #333333;
 }
 
-/* Global overrides for CodeMirror */
 :global(.cm-editor) {
   background-color: transparent !important;
   color: white !important;
-  font-size: 14px;
+  font-size: 0.95rem;
 }
 
 :global(.cm-content .cm-line span) {
@@ -291,13 +290,36 @@
 }
 
 :global(.cm-activeLine) {
-  background-color: #3f3f3f !important;
+  background-color: transparent !important;
 }
 
 :global(.cm-activeLineGutter) {
-  background-color: #343434 !important;
+  background-color: transparent !important;
 }
 
 :global(.cm-cursor) {
   border-left: 1px solid #a9a8a8 !important;
+}
+
+@media (max-width: 1024px) {
+  .editor-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .editor-problem-sidebar,
+  .editor-editor-sidebar {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .editor-testcase-sidebar {
+    max-height: auto;
+  }
+}
+
+.cm-editor {
+  height: calc(40vh);
+  min-height: 200px;
+  max-height: 60vh;
 }
