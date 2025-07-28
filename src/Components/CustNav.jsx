@@ -250,7 +250,10 @@ const LandNav = () => {
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav ml-auto py-4 py-md-0">
-                    <li
+
+                    {!isLoggedIn && (
+                      <ul className="navbar-nav ml-auto py-4 py-md-0">
+                        <li
                       className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
                     >
                       <a
@@ -300,8 +303,6 @@ const LandNav = () => {
                         Featured
                       </a>
                     </li>
-
-                    {!isLoggedIn && (
                       <li
                         className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
                       >
@@ -311,6 +312,7 @@ const LandNav = () => {
                           
                         </Link>
                       </li>
+                      </ul>
                     )}
                     {!isLoggedIn && (
                       <li
@@ -324,6 +326,21 @@ const LandNav = () => {
                       </li>
                     )}
                     {isLoggedIn && (
+                      <ul className="navbar-nav ml-auto py-4 py-md-0">
+                        <li
+                        className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
+                      >
+                        <Link href="/" className={`${styles["navLinks"]} nav-link`}>
+                            Home
+                        </Link>
+                      </li>
+                        <li
+                        className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
+                      >
+                        <Link href="/student/codeEditor" className={`${styles["navLinks"]} nav-link`}>
+                            Challenges
+                        </Link>
+                      </li>
                       <li
                         className={`${styles.navItems} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
                         ref={dropdownRef}
@@ -375,6 +392,7 @@ const LandNav = () => {
                           </div>
                         )}
                       </li>
+                      </ul>
                     )}
                   </ul>
                 </div>
