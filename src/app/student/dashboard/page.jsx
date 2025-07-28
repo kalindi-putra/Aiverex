@@ -176,9 +176,6 @@ const Dashboard = () => {
         <LandNav />
       </div>
       <div className={styles['dashboardContainer']}>
-        <div>
-          <SideMenu />
-        </div>
         {/* Main Content */}
         <div className={styles['scrollSection']} ref={scrollContainerRef}>
           {/* Profile Section */}
