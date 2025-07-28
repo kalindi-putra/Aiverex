@@ -3,14 +3,13 @@ import React, { createContext, useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase/Firebase';
 
-// Create a context with default values for mentor authentication
 const MentorAuthContext = createContext({
   isMentor: false,
   isLoggedIn: false,
   mentorData: null,
   isLoading: true,
   error: null,
-  mentorStatus: 'inactive' // Can be 'active', 'inactive', 'pending', 'suspended'
+  mentorStatus: 'inactive' 
 });
 
 const MentorAuthProvider = ({ children }) => {
@@ -30,8 +29,6 @@ const MentorAuthProvider = ({ children }) => {
           try {
             if (user) {
               setIsLoggedIn(true);
-              
-              // Fetch mentor-specific data from Firestore
               const mentorDocRef = doc(db, 'mentors', user.uid);
               const mentorDocSnapshot = await getDoc(mentorDocRef);
               
@@ -40,18 +37,14 @@ const MentorAuthProvider = ({ children }) => {
                 setIsMentor(true);
                 setMentorData(mentorDocData);
                 setMentorStatus(mentorDocData.status || 'inactive');
-                
-                // Verify mentor's credentials and status
                 await verifyMentorCredentials(mentorDocData);
               } else {
-                // User is logged in but not a mentor
                 setIsMentor(false);
                 setMentorData(null);
                 setMentorStatus('inactive');
                 console.warn('User is not registered as a mentor');
               }
             } else {
-              // Reset all states when logged out
               setIsLoggedIn(false);
               setIsMentor(false);
               setMentorData(null);
@@ -73,19 +66,19 @@ const MentorAuthProvider = ({ children }) => {
 
     const verifyMentorCredentials = async (mentorData) => {
       try {
-        // Check mentor's verification status
+  
         if (!mentorData.isVerified) {
           setMentorStatus('pending');
           return;
         }
 
-        // Check if mentor's account is suspended
+  
         if (mentorData.isSuspended) {
           setMentorStatus('suspended');
           return;
         }
 
-        // Check if mentor's credentials are expired
+  
         const credentialsExpiry = new Date(mentorData.credentialsExpiry);
         if (credentialsExpiry < new Date()) {
           setMentorStatus('inactive');
@@ -110,12 +103,12 @@ const MentorAuthProvider = ({ children }) => {
     };
   }, []);
 
-  // Helper function to check if mentor can perform certain actions
+  
   const canPerformMentorActions = () => {
     return isMentor && mentorStatus === 'active' && isLoggedIn;
   };
 
-  // Helper function to get mentor's current availability
+  
   const getMentorAvailability = () => {
     if (!mentorData) return 'unavailable';
     return mentorData.availability || 'unavailable';

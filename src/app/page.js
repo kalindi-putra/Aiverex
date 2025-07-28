@@ -48,11 +48,11 @@ function Home() {
     },
     {
       name: "Login",
-      link: "/login",
+      link: "/auth/login",
     },
     {
       name: "Register",
-      link: "/register",
+      link: "/auth/register",
     },
   ];
 

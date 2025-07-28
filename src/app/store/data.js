@@ -227,7 +227,7 @@ import {
     },
     {
       key: 'take-tests',
-      label: 'Editor',
+      label: 'Challenge',
       icon: FileDoneOutlined,
       sectionId: '/student/codeEditor'
     },
