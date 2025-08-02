@@ -1,0 +1,30 @@
+.violation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.violation-card {
+  color: var(--text-primary-color);
+  max-width: 500px;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 5 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+  border-radius: 12px;
+  background-color: var(--secondary-background-color);;
+}
+
+.icon-wrapper {
+  margin-bottom: 20px;
+}
+
+.violation-go-back-button{
+    background-color: var(--button-color);
+}
+
+.violation-go-back-button:hover {
+  background-color: var(--button-color) !important;
+}

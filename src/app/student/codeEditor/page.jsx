@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import {useRouter } from 'next/navigation';
 import ProblemData from '../../store/Problems';
 import styles from './codeEditor.module.css';
 import IntuitionForm from '../../../Components/IntuitionForm';
@@ -50,7 +51,11 @@ int main() {
 
 
 function Test() {
+<<<<<<< HEAD
   const router = useRouter(); // Initialize useRouter
+=======
+  const router = useRouter();
+>>>>>>> 9d316de74a14a05b7b1d0a8b3b16e1d81d8533f5
   const [currentProblem, setCurrentProblem] = useState(ProblemData["Sum Of Two Integers"]);
   const [problemListVisible, setProblemListVisible] = useState(false);
   const [timeLeft, setTimeLeft] = useState(parseInt(currentProblem.duration) * 60);
@@ -61,6 +66,8 @@ function Test() {
   const [testRunning, setTestRunning] = useState(false);
   const [duration, setDuration] = useState(currentProblem.duration);
   const [fullScreenViolated, setFullScreenViolated] = useState(false);
+  const [showFullscreenModal, setShowFullscreenModal] = useState(false);
+  const [testScreenViolated, setTestScreenViolated] = useState(false);
   const [userIntuition, setUserIntuition] = useState("");
   const editorRef = useRef(null);
   const viewRef = useRef(null);
@@ -171,12 +178,26 @@ function Test() {
 
   
 
+  const handleSubmit = useCallback(() => {
+    if (userIntuition == "") {
+      setCanSubmit(false);
+      alert('Please submit your intuition before submitting the test.');
+      return;
+    }
+    setSubmitted(true);
+    alert('Test Submitted!');
+    console.log('Selected Answers:', selectedAnswers);
+    console.log('User Intuition:', userIntuition);
+  }, [canSubmit, selectedAnswers, userIntuition]);
+
   const requestFullScreen = () => {
     const doc = document.documentElement;
     if (doc.requestFullscreen) doc.requestFullscreen();
     else if (doc.mozRequestFullScreen) doc.mozRequestFullScreen();
     else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
     else if (doc.msRequestFullscreen) doc.msRequestFullscreen();
+
+    setFullScreenViolated(false) ;
   };
 
   const handleSubmitAndRedirect = useCallback(() => {
@@ -187,6 +208,7 @@ function Test() {
   }, [selectedAnswers, userIntuition, submitted, router]);
 
   const checkFullScreen = useCallback(() => {
+<<<<<<< HEAD
     if (!document.fullscreenElement && !submitted) { 
       if (warningCount < 2) { 
         alert('Please stay in full-screen mode! You will be terminated after 3 violations.');
@@ -211,6 +233,59 @@ function Test() {
     handleSubmitAndRedirect(); // Call the function that handles submission and redirection
   }, [canSubmit, userIntuition, handleSubmitAndRedirect]);
 
+=======
+    if (!document.fullscreenElement && !fullScreenViolated) {
+      if (!document.fullscreenElement && !fullScreenViolated) {
+        if (warningCount < 2) {
+          setShowFullscreenModal(true);
+        } else {
+          alert("Test terminated due to multiple violations of full-screen mode!");
+          setSubmitted(true);
+          alert('Test Submitted with current state!');
+          router.push("/student/ViolationLimitedExceeded");
+          setFullScreenViolated(true);
+        }
+      }
+    }
+  }, [warningCount, fullScreenViolated, router]);
+
+  useEffect(() => {
+    document.addEventListener("fullscreenchange", checkFullScreen);
+    return () => document.removeEventListener("fullscreenchange", checkFullScreen);
+  }, [checkFullScreen]);
+
+  const cancelTest = (reason = "Test violated: You navigated away from the tab.") => {
+    setSubmitted(true);
+    alert(reason);
+    router.push("/student/ViolationLimitedExceeded");
+  };
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "hidden") {
+      cancelTest("Test violated: You switched tabs or minimized the window.");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const runTest = () => {
+    if (!testRunning) {
+      setTestRunning(true);
+      alert('Running the test solution...');
+      setTimeout(() => {
+        alert('Solution run complete!');
+        setCanSubmit(true);
+        setTestRunning(false);
+      }, 2000);
+    }
+  };
+
+>>>>>>> 9d316de74a14a05b7b1d0a8b3b16e1d81d8533f5
   useEffect(() => {
     requestFullScreen();
 
@@ -266,6 +341,46 @@ function Test() {
 
   return (
     <div className={styles["editor-container"]}>
+      {showFullscreenModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+          backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex',
+          alignItems: 'center', justifyContent: 'center', zIndex: 9999, color:'white'
+        }}>
+          <div style={{
+            backgroundColor: `var(--codeEditor-button-color)`, padding: '20px', borderRadius: '8px',
+            textAlign: 'center', maxWidth: '400px'
+          }}>
+            <h2>You have exited full-screen mode</h2>
+            <p>Click below to re-enter full screen. Warning {warningCount + 1} of 3.</p>
+            <div style={{display:'flex',gap:'10px' , justifyContent:'center'}}>
+              <button
+                onClick={() => {
+                  setWarningCount(warningCount + 1);
+                  requestFullScreen();
+                  setFullScreenViolated(false);
+                  setShowFullscreenModal(false);
+                }}
+                style={{ backgroundColor:`var(--button-color)` , color:'white' , padding: '10px 20px', borderRadius:'10px' , width:'45%' , marginTop: '10px', cursor: 'pointer' }}
+              >
+                Re-enter Full Screen
+              </button>
+              <button
+                onClick={() => {
+                  setTestScreenViolated(true);
+                  setSubmitted(true);
+                  alert("Test Submitted due to full-screen violation!");
+                  router.push("/student/ViolationLimitedExceeded");
+                }}
+                style={{ backgroundColor:`var(--button-color)`, color:'white' , padding: '10px 20px', borderRadius:'10px', width:'45%' , marginTop: '10px', cursor: 'pointer' }}
+              >
+                Cancel Test
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Split mode="horizontal" renderBar={({ onMouseDown, ...props }) => {
         return (
           <div {...props} style={{ boxShadow: 'none', background: 'transparent' }}>
