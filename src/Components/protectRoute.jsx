@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      router.push('/login');
+      router.push('/auth/login');
     } else if (allowedRoles && !allowedRoles.includes(userData?.role)) {
       router.push('/');
     }

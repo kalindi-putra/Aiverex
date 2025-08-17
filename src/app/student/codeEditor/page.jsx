@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import {useRouter } from 'next/navigation';
 import ProblemData from '../../store/Problems';
 import styles from './codeEditor.module.css';
@@ -13,7 +13,12 @@ import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { cpp } from '@codemirror/lang-cpp';
 import Split from '@uiw/react-split';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { AuthContext } from '@/context/UserContext';
+import { collection , addDoc , serverTimestamp} from 'firebase/firestore'
+import { db} from '../../../firebase/Firebase'
+import { useSearchParams } from 'next/navigation';
+
+
 
 const languageExtensions = {
   javascript,
@@ -51,11 +56,7 @@ int main() {
 
 
 function Test() {
-<<<<<<< HEAD
-  const router = useRouter(); // Initialize useRouter
-=======
   const router = useRouter();
->>>>>>> 9d316de74a14a05b7b1d0a8b3b16e1d81d8533f5
   const [currentProblem, setCurrentProblem] = useState(ProblemData["Sum Of Two Integers"]);
   const [problemListVisible, setProblemListVisible] = useState(false);
   const [timeLeft, setTimeLeft] = useState(parseInt(currentProblem.duration) * 60);
@@ -71,17 +72,25 @@ function Test() {
   const [userIntuition, setUserIntuition] = useState("");
   const editorRef = useRef(null);
   const viewRef = useRef(null);
-  const [language, setLanguage] = useState('javascript');
-  const [code, setCode] = useState(defaultCodeSnippets[language]);
   const leftRef = useRef(null);
   const problemListRef = useRef();
   const [inputValues, setInputValues] = useState({});
   const [codeOutput, setCodeOutput] = useState(currentProblem.exampleOutput);
+const searchParams = useSearchParams();
+const selectLang=searchParams.get('lang') || 'javascript';
+  const [language, setLanguage] = useState(selectLang);
+    const [code, setCode] = useState(defaultCodeSnippets[selectLang]);
+
+
 
   const handleIntuitionSubmit = (data) => {
     setUserIntuition(data);
     setCanSubmit(true);
   };
+
+
+const user=useContext(AuthContext)
+
 
   const handleApiRun = async () => {
     const editorCode = viewRef.current?.state?.doc?.toString() || '';
@@ -91,26 +100,25 @@ function Test() {
     setCodeOutput("Running...");
 
     try {
-      const response = await fetch("http://192.168.82.52:2358/submissions?base64_encoded=false&wait=true", {
+      const response = await fetch("/api/run_code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          language_id: getLanguageId(language),
-          source_code: editorCode,
+          script: editorCode,
           stdin: stdin,
-          time_limit: currentProblem.timeLimit,
-          memory_limit: currentProblem.memoryLimit
+          language: getLanguageId(language),
+          compileOnly: false
         }),
       });
 
       const result = await response.json();
 
-      if (result.status && result.status.id === 5) {
-        setCodeOutput("Time Limit Exceeded");
-      } else if (result.status && result.status.id === 6) {
-        setCodeOutput("Memory Limit Exceeded");
+      if (result.compilationStatus && result.compilationStatus === 1) {
+        setCodeOutput("Compilation Error");
+      } else if (result.statusCode && result.statusCode !== 200) {
+        setCodeOutput("Error Occurred");
       } else if (result.stdout) {
         setCodeOutput(result.stdout);
         setCanSubmit(true);
@@ -161,34 +169,57 @@ function Test() {
     setSubmitted(false);
     setCanSubmit(false);
     setSelectedAnswers({});
-  }, [currentProblem, language]); // Added language to dependency array
+  }, [currentProblem]); // Remove language from dependency array since it won't change
 
-  const createEditor = (lang) => {
+  const createEditor = useCallback(() => {
     if (viewRef.current) viewRef.current.destroy();
-    const extension = languageExtensions[lang]();
+    const extension = languageExtensions[language]();
 
     viewRef.current = new EditorView({
       state: EditorState.create({
-        doc: defaultCodeSnippets[lang],
+        doc: defaultCodeSnippets[language],
         extensions: [basicSetup, extension]
       }),
       parent: editorRef.current
     });
-  };
+  }, [language]);
 
-  
-
-  const handleSubmit = useCallback(() => {
-    if (userIntuition == "") {
+  const handleSubmit = useCallback(async () => {
+   
+    if (userIntuition === "") {
       setCanSubmit(false);
       alert('Please submit your intuition before submitting the test.');
       return;
     }
-    setSubmitted(true);
-    alert('Test Submitted!');
-    console.log('Selected Answers:', selectedAnswers);
-    console.log('User Intuition:', userIntuition);
-  }, [canSubmit, selectedAnswers, userIntuition]);
+
+    try {
+      setSubmitted(true);
+      
+      
+      const submissionData = {
+        userEmail: user.email, // This comes from Firebase Auth
+        selectedAnswers: selectedAnswers,
+        userId:user.id || user.uid,
+        userIntuition: userIntuition,
+        timestamp: serverTimestamp(), 
+        testType: 'practice-test', 
+        submissionId: Date.now() 
+      };
+
+      const docRef = await addDoc(collection(db, 'submissions'), submissionData);
+      
+      console.log('Your submission was saved with ID:', docRef.id);
+      
+      alert('Test Submitted and Saved Successfully!');
+      
+    } catch (error) {
+      console.error('Error saving submission:', error);
+      alert('There was an error saving your submission. Please try again.');
+      setSubmitted(false); 
+    }
+  }, [selectedAnswers, userIntuition, user]);
+
+ 
 
   const requestFullScreen = () => {
     const doc = document.documentElement;
@@ -208,32 +239,6 @@ function Test() {
   }, [selectedAnswers, userIntuition, submitted, router]);
 
   const checkFullScreen = useCallback(() => {
-<<<<<<< HEAD
-    if (!document.fullscreenElement && !submitted) { 
-      if (warningCount < 2) { 
-        alert('Please stay in full-screen mode! You will be terminated after 3 violations.');
-        setWarningCount(prev => prev + 1);
-      } else {
-        alert('Test terminated due to multiple violations of full-screen mode!');
-        handleSubmitAndRedirect(); // Terminate and redirect
-      }
-    }
-  }, [warningCount, submitted, handleSubmitAndRedirect]);
-
-  const handleSubmit = useCallback(() => {
-    if (!canSubmit) {
-      alert('Please run the solution first before submitting the test.');
-      return;
-    }
-    if (userIntuition === "") {
-      setCanSubmit(false);
-      alert('Please submit your intuition before submitting the test.');
-      return;
-    }
-    handleSubmitAndRedirect(); // Call the function that handles submission and redirection
-  }, [canSubmit, userIntuition, handleSubmitAndRedirect]);
-
-=======
     if (!document.fullscreenElement && !fullScreenViolated) {
       if (!document.fullscreenElement && !fullScreenViolated) {
         if (warningCount < 2) {
@@ -285,7 +290,6 @@ function Test() {
     }
   };
 
->>>>>>> 9d316de74a14a05b7b1d0a8b3b16e1d81d8533f5
   useEffect(() => {
     requestFullScreen();
 
@@ -338,6 +342,22 @@ function Test() {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
+
+  useEffect(() => {
+    // Add this at the beginning of your component
+    const selectedLang = searchParams.get('lang');
+    if (!selectedLang) {
+      router.push('/student/courseSelection'); 
+      return;
+    }
+
+    // Check if it's a valid language
+    const validLanguages = ['javascript', 'python', 'java', 'cpp'];
+    if (!validLanguages.includes(selectedLang.toLowerCase())) {
+      router.push('/student/courseSelection');
+      return;
+    }
+  }, []);
 
   return (
     <div className={styles["editor-container"]}>
@@ -472,17 +492,10 @@ function Test() {
             <div className={styles['editor-editor-sidebar']} style={{ padding: '1rem', color: 'white', height: '60%', minHeight: '25%', maxHeight: '75%' , width :'100%' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <h5>Select Language</h5>
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    style={{ padding: '0.3rem', backgroundColor: '#272822', color: 'white', border: 'none' }}
-                  >
-                    <option value="javascript">JavaScript</option>
-                    <option value="python">Python</option>
-                    <option value="java">Java</option>
-                    <option value="cpp">C++</option>
-                  </select>
+                  <h5>Language:</h5>
+                  <span style={{ padding: '0.3rem', backgroundColor: '#272822', color: 'white', borderRadius: '4px' }}>
+                    {language.charAt(0).toUpperCase() + language.slice(1)}
+                  </span>
                 </div>
                 <p className={styles['editor-timer']}>
                   <ClockCircleOutlined style={{ color: `var(--codeEditor-intuition-button-color)` }} /> {formatTime(timeLeft)}

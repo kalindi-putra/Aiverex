@@ -9,6 +9,7 @@ import { SmileOutlined, UserOutlined } from '@ant-design/icons';
 import { AuthContext } from "../context/UserContext";
 import { auth } from "../firebase/Firebase";
 import NotificationBell from './NotificationBell';
+import { sessionManager } from '@/app/sessionManager/page';
 
 function CustNav(props) {
   const {
@@ -337,7 +338,7 @@ const LandNav = () => {
                         <li
                         className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}
                       >
-                        <Link href="/student/codeEditor" className={`${styles["navLinks"]} nav-link`}>
+                        <Link href="/student/courseSelection" className={`${styles["navLinks"]} nav-link`}>
                             Challenges
                         </Link>
                       </li>
@@ -406,25 +407,93 @@ const LandNav = () => {
 };
 
 const MainNav = () => {
-  const { userData, isLoggedIn } = useContext(AuthContext);
-  const role = userData?.role || 'student'; 
-  console.log("User Role:", role);
+  const { userData, isLoggedIn, logout } = useContext(AuthContext);
   const router = useRouter();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef();
 
 
+  // Add session check effect
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownVisible(false);
+    const checkSession = () => {
+      const session = sessionManager.getSession();
+      if (!session && isLoggedIn) {
+        handleLogout();
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+
+    // Check session every minute
+    const interval = setInterval(checkSession, 60000);
+    
+    // Check session on mount
+    checkSession();
+
+    return () => clearInterval(interval);
+  }, [isLoggedIn]);
+
+  // Updated logout handler
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      sessionManager.clearSession();
+      logout(); // Call context logout
+      router.push("/");
+    } catch (error) {
+      console.error("Sign-out error", error);
+    }
+  };
+
+  // Protected route check
+  useEffect(() => {
+    const path = window.location.pathname;
+    const protectedRoutes = ['/student', '/mentor'];
+    
+    if (protectedRoutes.some(route => path.startsWith(route)) && !isLoggedIn) {
+      router.push('/auth/login');
+    }
+  }, [isLoggedIn, router]);
+
+  // Role-based route protection
+  useEffect(() => {
+    const path = window.location.pathname;
+    
+    // Role-based route protection
+    if (isLoggedIn && userData) {
+      if (path.startsWith('/student') && userData.role !== 'student') {
+        router.push('/unauthorized');
+      }
+      if (path.startsWith('/mentor') && userData.role !== 'mentor') {
+        router.push('/unauthorized');
+      }
+    }
+  }, [isLoggedIn, userData, router]);
+
+  // Add this to MainNav
+  useEffect(() => {
+    let sessionTimeout;
+
+    const resetSessionTimer = () => {
+      clearTimeout(sessionTimeout);
+      sessionTimeout = setTimeout(() => {
+        handleLogout();
+      }, 2 * 60 * 60 * 1000); // 2 hours
     };
-  }, []);
+
+    if (isLoggedIn) {
+      // Reset timer on user activity
+      window.addEventListener('mousemove', resetSessionTimer);
+      window.addEventListener('keypress', resetSessionTimer);
+      
+      // Initial timer
+      resetSessionTimer();
+    }
+
+    return () => {
+      clearTimeout(sessionTimeout);
+      window.removeEventListener('mousemove', resetSessionTimer);
+      window.removeEventListener('keypress', resetSessionTimer);
+    };
+  }, [isLoggedIn]);
 
   const mockNotifications = [
     {
@@ -453,15 +522,101 @@ const MainNav = () => {
       time: '5 hours ago'
     }
   ];
-  const handleLogout = () => {
-    auth.signOut()
-      .then(() => {
-        router.push("/");
-        console.log("User signed out");
-      })
-      .catch((error) => {
-        console.error("Sign-out error", error);
-      });
+
+  // Modify the navigation menu rendering
+  const renderNavLinks = () => {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="/" className={`${styles["navLinks"]} nav-link`}>Home</Link>
+          </li>
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="#about" className={`${styles["navLinks"]} nav-link`}>About</Link>
+          </li>
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="#progress" className={`${styles["navLinks"]} nav-link`}>How it works</Link>
+          </li>
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="#team" className={`${styles["navLinks"]} nav-link`}>Team</Link>
+          </li>
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="#featured" className={`${styles["navLinks"]} nav-link`}>Featured</Link>
+          </li>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+          <Link href="/" className={`${styles["navLinks"]} nav-link`}>Home</Link>
+        </li>
+        {userData?.role === 'student' && (
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="/student/courseSelection" className={`${styles["navLinks"]} nav-link`}>
+              Challenges
+            </Link>
+          </li>
+        )}
+        {userData?.role === 'mentor' && (
+          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+            <Link href="/mentor/reviews" className={`${styles["navLinks"]} nav-link`}>
+              Review Submissions
+            </Link>
+          </li>
+        )}
+        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
+          <NotificationBell notifications={mockNotifications} />
+        </li>
+      </>
+    );
+  };
+
+  const renderUserDropdown = () => {
+    if (!isLoggedIn || !userData) return null;
+
+    return (
+      <div
+        ref={dropdownRef}
+        style={{
+          position: 'absolute',
+          top: '70px',
+          right: '20px',
+          background: '#343434',
+          borderRadius: '4px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          zIndex: 1000,
+          minWidth: '160px',
+          color: 'white',
+        }}
+      >
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+          <li style={{ padding: '10px 20px' }}>
+            <Link 
+              href={`/${userData.role}/dashboard`}
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              Profile
+            </Link>
+          </li>
+          <li style={{ padding: '10px 20px' }}>
+            <Link 
+              href={`/${userData.role}/edit-profile`}
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              Edit Profile
+            </Link>
+          </li>
+          <li
+            style={{ padding: '10px 20px', cursor: 'pointer' }}
+            onClick={handleLogout}
+          >
+            Logout
+          </li>
+        </ul>
+      </div>
+    );
   };
 
   return (
@@ -508,43 +663,7 @@ const MainNav = () => {
                   <ul className="navbar-nav ml-auto py-4 py-md-0">
                     {!isLoggedIn ? (
                       <>
-                      <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                      <Link href="/" className={`${styles["navLinks"]} nav-link`}>Home</Link>
-                    </li>
-                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                      <Link href="#about" className={`${styles["navLinks"]} nav-link`}>About</Link>
-                    </li>
-                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                      <Link href="#progress" className={`${styles["navLinks"]} nav-link`}>How it works</Link>
-                    </li>
-                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                      <Link href="#team" className={`${styles["navLinks"]} nav-link`}>Team</Link>
-                    </li>
-                    <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                      <Link href="#featured" className={`${styles["navLinks"]} nav-link`}>Featured</Link>
-                    </li>
-                      </>
-                    ) : (
-                      <>
-                          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                            <Link href="/" className={`${styles["navLinks"]} nav-link`}>Home</Link>
-                          </li>
-                          <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`} style={{paddingLeft:'10px'}}>
-                            <NotificationBell notifications={mockNotifications} />
-                          </li>
-                      </>
-                    )}
-
-                    {/* Auth Links */}
-                    <ul className="navbar-nav ml-auto py-4 py-md-0">
-                    {!isLoggedIn ? (
-                      <>
-                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                          <Link href="/auth/login" className={`${styles["navLinks"]} nav-link`}>Login</Link>
-                        </li>
-                        <li className={`${styles["navItems"]} nav-item pl-2 pl-md-0 ml-0 ml-md-2`}>
-                          <Link href="/auth/register" className={`${styles["navLinks"]} nav-link`}>Register</Link>
-                        </li>
+                      {renderNavLinks()}
                       </>
                     ) : (
                       <>
@@ -559,47 +678,8 @@ const MainNav = () => {
                     )}
                   </ul>
 
-                  {isLoggedIn && dropdownVisible && (
-                    <div
-                      ref={dropdownRef}
-                      style={{
-                        position: 'absolute',
-                        top: '70px',
-                        right: '20px',
-                        background: '#343434',
-                        borderRadius: '4px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-                        zIndex: 1000,
-                        minWidth: '160px',
-                        color: 'white',
-                      }}
-                    >
-                        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                          <li style={{ padding: '10px 20px', }}>
-                            {(isLoggedIn && userData?.role === 'mentor') ? (
-                              <Link href="/mentor/dashboard" style={{ color: 'white', textDecoration: 'none', }}>Profile</Link>
-                            ) : (
-                              <Link href="/student/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Profile</Link>
-                            )}
-                          </li>
-                          <li style={{ padding: '10px 20px' }}>
-                            {(isLoggedIn && userData?.role === 'mentor') ? (
-                              <Link href="/mentor/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
-                            ) : (
-                              <Link href="/student/edit-profile" style={{ color: 'white', textDecoration: 'none' }}>Edit Profile</Link>
-                            )}
-                          </li>
-                          <li
-                            style={{ padding: '10px 20px', cursor: 'pointer' }}
-                            onClick={handleLogout}
-                          >
-                            Logout
-                          </li>
-                        </ul>
-                    </div>
-                  )}
+                  {isLoggedIn && dropdownVisible && renderUserDropdown()}
 
-                  </ul>
                 </div>
               </nav>
             </div>

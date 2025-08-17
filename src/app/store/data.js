@@ -30,7 +30,7 @@ import {
       },
       {
           name: "Login",
-          link: "/login"
+          link: "/auth/login"
       },
       {
           name: "Register",
@@ -38,7 +38,7 @@ import {
       },
       {
         name: "logout",
-        link: "/login",
+        link: "/auth/login",
       },
       [
           {
@@ -288,6 +288,7 @@ import {
     // },
   
   ]
+  
   const progress = [
     {
       name: 'C',

@@ -1,0 +1,133 @@
+/* Base gradients and backgrounds */
+.certificationPage {
+  background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Card styles */
+.certCard {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.certCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Loading animation */
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+}
+
+/* Error message animation */
+.errorMessage {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Button styles */
+.certButton {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.certButton:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.certButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Skill tags */
+.skillTag {
+  background: rgba(147, 51, 234, 0.2);
+  color: rgb(216, 180, 254);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+/* Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Difficulty badges */
+.difficultyBadge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.difficultyBadge.advanced {
+  background: rgba(239, 68, 68, 0.2);
+  color: rgb(252, 165, 165);
+}
+
+.difficultyBadge.intermediate {
+  background: rgba(234, 179, 8, 0.2);
+  color: rgb(253, 224, 71);
+}
+
+.difficultyBadge.beginner {
+  background: rgba(34, 197, 94, 0.2);
+  color: rgb(134, 239, 172);
+}
+
+/* Coming soon overlay */
+.comingSoon {
+  opacity: 0.75;
+  position: relative;
+}
+
+.comingSoonBadge {
+  background: rgba(249, 115, 22, 0.2);
+  color: rgb(253, 186, 116);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}

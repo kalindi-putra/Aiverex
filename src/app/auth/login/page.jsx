@@ -4,9 +4,11 @@ import { useRouter } from 'next/navigation';
 import { Card, Typography, Tabs, Button, Form, Input, message } from 'antd';
 import { ReadOutlined, SolutionOutlined, GoogleOutlined, LinkedinOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import styles from "../Auth.module.css";
-import { SignInWithGoogle, auth } from '../../../firebase/Firebase';
+import { SignInWithGoogle, auth,db } from '../../../firebase/Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AuthContext } from '../../../context/UserContext';
+import { sessionManager } from '@/app/sessionManager/page';
+import { doc, getDoc,setDoc } from 'firebase/firestore';
 
 const { TabPane } = Tabs;
 
@@ -14,8 +16,16 @@ function Login() {
   const [activeTab, setActiveTab] = useState('student');
   const [form] = Form.useForm();
   const [error, setError] = useState('');
-  const navigate = useRouter();
-  const { isLoggedIn } = useContext(AuthContext);
+  const router = useRouter();
+  const { login, isLoggedIn } = useContext(AuthContext);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    const session = sessionManager.getSession();
+    if (session) {
+      router.push(session.role === 'student' ? '/student/dashboard' : '/mentor/dashboard');
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (document.fullscreenElement) {
@@ -25,10 +35,64 @@ function Login() {
 
   const handleGoogleSignIn = async (role) => {
     try {
-      await SignInWithGoogle(navigate, role);
+      const result = await SignInWithGoogle(role);
+      const user = result.user;
+      
+      // Create or update user document in Firestore with role
+      const userDocRef = doc(db, 'users', user.uid);
+      
+      // First check if user exists
+      const userDocSnapshot = await getDoc(userDocRef);
+      
+      let userData;
+      
+      if (userDocSnapshot.exists()) {
+        // If user exists, use existing data but update role if needed
+        userData = {
+          ...userDocSnapshot.data(),
+          role: role, // Update role based on login choice
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        };
+      } else {
+        // If user doesn't exist, create new user data
+        userData = {
+          uid: user.uid,
+          email: user.email,
+          role: role,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString()
+        };
+        
+        // Set the new user data in Firestore
+        await setDoc(userDocRef, userData);
+      }
+
+      console.log("User Data before session:", userData);
+      
+      // Set session with the complete user data
+      sessionManager.setSession(userData);
+      
+      // Update context with the same data
+      login(userData);
+      
+      // Set cookie for middleware with essential data
+      document.cookie = `session=${JSON.stringify({ 
+        isLoggedIn: true, 
+        uid: user.uid,
+        role: role 
+      })}; path=/; max-age=${2 * 60 * 60}`; // 2 hours
+      
+      // Redirect based on role
+      router.push(role === 'student' ? '/student/dashboard' : '/mentor/dashboard');
+      
     } catch (error) {
+      console.error("Google Sign In Error:", error);
       message.error("Unable to login with Google");
-      console.error(error);
     }
   };
 
@@ -43,8 +107,36 @@ function Login() {
   const handleEmailPasswordLogin = async (values) => {
     const { email, password } = values;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate.push('/');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Get additional user data from Firestore
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDocSnapshot = await getDoc(userDocRef);
+      
+      if (userDocSnapshot.exists()) {
+        const userData = {
+          ...userDocSnapshot.data(),
+          role: activeTab,
+          uid: user.uid,
+          email: user.email
+        };
+        
+        // Set session
+        sessionManager.setSession(userData);
+        // Update context
+        login(userData);
+        
+        // Set cookie for middleware
+        document.cookie = `session=${JSON.stringify({ 
+          isLoggedIn: true, 
+          role: activeTab 
+        })}; path=/; max-age=${2 * 60 * 60}`; // 2 hours
+
+        router.push(activeTab === 'student' ? '/student/dashboard' : '/mentor/dashboard');
+      } else {
+        setError('User profile not found');
+      }
     } catch (e) {
       setError('Invalid email or password');
       console.error(e);
@@ -132,7 +224,7 @@ function Login() {
                   <h2 style={{marginBottom:'30px'}}>New to Aivirex Innovations!</h2>
                   <h4>Ready to Learn?</h4>
                   <div>Join Aivirex and Transform Your Tomorrow</div>
-                  <button className={styles["loginRegisterToggleButton"]} onClick={() => navigate.push("/auth/register")}>
+                  <button className={styles["loginRegisterToggleButton"]} onClick={() => router.push("/auth/register")}>
                     SignUp
                   </button>
                 </div>
@@ -150,7 +242,7 @@ function Login() {
                   <h2 style={{marginBottom:'30px'}}>New to Aivirex Innovations!</h2>
                   <h4>Ready to Learn?</h4>
                   <div>Join Aivirex and Transform Your Tomorrow</div>
-                  <button className={styles["loginRegisterToggleButton"]} onClick={() => navigate.push("/auth/register")}>
+                  <button className={styles["loginRegisterToggleButton"]} onClick={() => router.push("/auth/register")}>
                     SignUp
                   </button>
                 </div>
